@@ -5,5 +5,4 @@
 \ : platform  s" sflinux64" ;
 \ : platform  s" hac001" ; \ Nintendo Switch ;)
 
-
-: initial-res  640 480 ;  
+: initial-res  640 480 ;
