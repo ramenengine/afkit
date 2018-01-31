@@ -152,3 +152,5 @@ enum    FMOD_OUTPUTTYPE_XBOX360         \ Xbox 360              - Native hardwar
 enum    FMOD_OUTPUTTYPE_PSP             \ PSP                   - Native hardware output. (Default on PSP) */
 enum   FMOD_OUTPUTTYPE_WII        \ Wii                  - Native hardware output. (Default on Wii) */
 drop
+
+cr .( FMOD 5.x )
