@@ -29,7 +29,7 @@ As proof that Forth can be used to make non-trivial, graphically rich games, see
 ### Details
 
 /kitconfig.f specifies compile-time parameters, primarily the PLATFORM string, which should follow this general format:
-    <systemcode><oscode><archbits>
+    `<systemcode><oscode><archbits>`
     For example: sfwin32 = SwiftForth, Windows, 32-bit
 
 /kit/platforms.f digests the PLATFORM string, creating other compile-time constants and loading platform-specific files such as FFL and Allegro.
@@ -50,7 +50,7 @@ A fancier demonstration is forthcoming.
 
 This component is still being worked on.
 
-To load the (minimal) FMOD bindings, "INCLUDE kit/dlib/<PLATFORM>/fmod5/fmod5.f", replacing <PLATFORM> with the appropriate thing.
+To load the (minimal) FMOD bindings, `"INCLUDE kit/dlib/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
 
 ## Graphics
 
