@@ -1,1 +1,77 @@
-allegroforthkit
+# AllegroForthKit
+
+A barebones foundational package powered by [Allegro 5](http://liballeg.org/).
+
+## Overview
+
+With this package, you can bring up an accelerated graphics window which can be continuously updated by an included main loop (a kind of message pump), allowing you to create modern-level games or other graphical programs in Forth.
+
+Allegro is a portable game development library that abstracts away many platform differences and grants access to accelerated graphics, audio and input devices via an easy API.
+
+Bindings for [FMOD 5 Low-level API](http://www.fmod.org/documentation/#content/generated/lowlevel_api.html) are also included due to its simpler audio API compared to Allegro.
+
+[Forth Foundation Library](http://soton.mpeforth.com/flag/ffl/index.html) is included for capabilities often required when working with modern libaries - features such as XML, Base64, MD5 etc.  XML DOM access and Base64 are automatically loaded to support some higher level features I plan on including in a framework based on this package, but this may change.
+
+This is not a comprehensive game development library; it is a cleaned-up version of [Bubble](http://github.com/rogerlevy/bubble/) with fixed-point, Komodo-specific, and game-development-framework files removed and provisions for portability added.  It is being developed on SwiftForth / Win32.  Bindings for other systems and other modifications to increase its platform reach and ease-of-portability are greatly encouraged.
+
+## Rationale
+
+Forth is a post-fixed, stack-based, interactive language with an emphasis on simplicity and minimalism.   I've found it to be an excellent language for quickly communicating program code to the computer and experimenting interactively with a running game.  While it lacks many advanced features of other languages, and will probably never take advantage of the latest CPU features, it also lacks some of the headaches and obstacles of other languages - i.e. it is simpler, without sacrificing too much run-time performance.  It's also a lot of fun, and it can teach you to be a better programmer.
+
+As proof that Forth can be used to make non-trivial, graphically rich games, see [The Lady](http://store.steampowered.com/app/341060/The_Lady/), a high-definition 2D game I built with a custom engine based on an predecessor of this package.
+
+## Portability
+
+### Currently officially supported platforms:
+
+- SwiftForth (Win32)
+
+### Details
+
+/kitconfig.f specifies compile-time parameters, primarily the PLATFORM string, which should follow this general format:
+    <systemcode><oscode><archbits>
+    For example: sfwin32 = SwiftForth, Windows, 32-bit
+
+/kit/platforms.f digests the PLATFORM string, creating other compile-time constants and loading platform-specific files such as FFL and Allegro.
+
+I've done my best to standardize the codebase.  It assumes ALL optional wordsets are available.  My recommendation for systems that don't support certain words is to either add them or fake them.  Contributions containing definitions or substitute for any missing non-standard words are greatly appreciated.
+
+Contributions containing machine language or depending on any non-cross-platform libraries or system-specific words won't be accepted.
+
+## Getting Started
+
+SwiftForth is available from [FORTH Inc](www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
+
+From the SwiftForth prompt, change the current path to the root of your project (if needed) and "INCLUDE kit/kit.f" and type OK for a simple demonstration.
+
+A fancier demonstration is forthcoming.
+
+## Audio
+
+This component is still being worked on.
+
+To load the (minimal) FMOD bindings, "INCLUDE kit/dlib/<PLATFORM>/fmod5/fmod5.f", replacing <PLATFORM> with the appropriate thing.
+
+## Graphics
+
+Some essential tools are included in kit/gfx.f
+
+## Other utilities
+
+These files are included as part of the foundation:
+
+- kit/lib/files.f - tools for more conveniently working with files
+- kit/lib/strops.f - tools for constructing strings and working with zero-terminated strings
+- kit/lib/roger.f - miscellaneous useful primitives
+
+## The Piston (main loop) - kit/piston.f
+
+This is a standard main loop which you're encouraged to use.
+
+To enter the main loop type OK.  A default program defined in display.f will run.  Stop the loop by pressing CTRL+F12.
+
+The piston has 3 phases.  The event handling phase, the "step" phase, and the display phase.  3 words are used to tell the loop what to do during these phases.  These words have a syntax similar to DOES>.  SHOW> owes its lineage to ColorForth.
+
+- SHOW> changes the display.
+- STEP> changes the logic.
+- GO> changes your event handler and clears the step assignment.  use the words ETYPE and E to process Allegro events here.
