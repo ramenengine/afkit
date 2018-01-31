@@ -30,10 +30,7 @@ defer alert  ( a c -- )
 : ierase   0 ifill ;
 : imove  ( from to count - )  cells move ;
 : time?  ( xt -- ) ucounter 2>r  execute  ucounter 2r> d-  d>s  . ;
-\  : 1af  1f 1sf ;                                         \ fixed-point-to-floats-on-stack primitives (mainly for ALlegro 5)
-\  : 2af  1f 1f 1sf 1sf ;
-\  : 3af  1f 1f 1f 1sf 1sf 1sf ;
-\  : 4af  1f 1f 1f 1f 1sf 1sf 1sf 1sf ;
+
 : kbytes  #1024 * ;
 : megs    #1024 * 1024 * ;
 : udup  over swap ;
