@@ -13,7 +13,4 @@ defer system
 [platform] sflinux [if] true constant linux [then]
 [in-platform] sf   [if] true constant swiftforth  :noname s" swiftforth" ; is system [then]
 : [system]  parse-word system compare 0= ;
-[platform] sfwin32 [if]
-    include kit/lib/ffl/sfwin32/ffl.f   \ FFL: DOM; FFL loads FPMATH
-    include kit/dlib/sfwin32/allegro5/allegro-5.2.f
-[then]
+[platform] sfwin32 [if] include kit/plat/sfwin32.f [then]
