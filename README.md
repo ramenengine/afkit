@@ -1,6 +1,6 @@
 # AllegroForthKit
 
-A barebones foundational package powered by [Allegro 5](http://liballeg.org/).
+A barebones foundational package for programming with [Allegro 5](http://liballeg.org/) in standard Forth.
 
 ## Overview
 
@@ -74,4 +74,4 @@ The piston has 3 phases.  The event handling phase, the "step" phase, and the di
 
 - SHOW> changes the display.
 - STEP> changes the logic.
-- GO> changes your event handler and clears the step assignment.  use the words ETYPE and E to process Allegro events here.
+- GO> changes your event handler and clears the step assignment.  use the words ETYPE and EVT to process Allegro events here.
