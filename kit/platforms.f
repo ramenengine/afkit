@@ -1,5 +1,5 @@
 cr .( NOTICE: Audio and other addons will not work on Windows unless you copy all of the )
-cr .( dependency DLL's to Swiftforth's bin folder. I tried everything and they just would not )
+cr .( dependency DLL's to your host Forth's bin folder. I tried everything and they just would not )
 cr .( work from the lib\ folder. I'm guessing it's a security measure. This shouldn't affect )
 cr .( released applications; so long as the DLL's are in the same folder as the turnkey executable,)
 cr .( they should load.  You can still load the Allegro DLL without doing this; you just won't )
