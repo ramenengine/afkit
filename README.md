@@ -32,7 +32,7 @@ As proof that Forth can be used to make non-trivial, graphically rich games, see
     `<systemcode><oscode><archbits>`
     For example: sfwin32 = SwiftForth, Windows, 32-bit
 
-/kit/platforms.f digests the PLATFORM string, creating other compile-time constants and loading platform-specific files such as FFL and Allegro.
+/kit/platforms.f digests the PLATFORM string, creating other compile-time constants and loading platform-specific files such as FFL and Allegro via the platform configurations in plat/.  These files are the appropriate place to put "adapter" definitions or INCLUDEs to libraries that provide optional wordsets.
 
 I've done my best to standardize the codebase.  It assumes ALL optional wordsets are available.  My recommendation for systems that don't support certain words is to either add them or fake them.  Contributions containing definitions or substitute for any missing non-standard words are greatly appreciated.
 
