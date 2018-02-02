@@ -4,7 +4,7 @@
     s" kitconfig.f" file-exists [if]
         include kitconfig.f
     [else]
-        true abort" Missing kitconfig.f!!!"
+        .( Missing kitconfig.f!!!) QUIT
     [then]
     include kit/platforms.f
 
