@@ -6,7 +6,7 @@ A barebones foundational package for programming with [Allegro 5](http://liballe
 
 With this package, you can bring up an accelerated graphics window which can be continuously updated by an included main loop (a kind of message pump), allowing you to create modern-level games or other graphical programs in virtually any supported 32-bit ANS-compliant or compatible Forth.
 
-Allegro is a portable game development library that abstracts away many platform differences and grants access to accelerated graphics, audio and input devices via an easy API.
+Allegro is a portable game development library that abstracts away many platform differences and grants access to accelerated graphics, audio and input devices via a rich API.
 
 Bindings for [FMOD 5 Low-level API](http://www.fmod.org/documentation/#content/generated/lowlevel_api.html) are also included due to its simpler audio API compared to Allegro.
 
