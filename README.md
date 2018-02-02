@@ -1,10 +1,10 @@
 # AllegroForthKit
 
-A barebones foundational package for programming with [Allegro 5](http://liballeg.org/) in standard Forth.
+A barebones foundational package for programming with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
 
 ## Overview
 
-With this package, you can bring up an accelerated graphics window which can be continuously updated by an included main loop (a kind of message pump), allowing you to create modern-level games or other graphical programs in Forth.
+With this package, you can bring up an accelerated graphics window which can be continuously updated by an included main loop (a kind of message pump), allowing you to create modern-level games or other graphical programs in virtually any supported 32-bit ANS-compliant or compatible Forth.
 
 Allegro is a portable game development library that abstracts away many platform differences and grants access to accelerated graphics, audio and input devices via an easy API.
 
