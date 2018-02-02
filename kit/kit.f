@@ -10,7 +10,6 @@
 
     true constant EXTERNALS_LOADED
 
-    $F320000 'FPOPT !  \ hopefully fixes fixed point math on linux
     cd kit/lib/ffl
         ffling +order
             include ffl/dom.fs
