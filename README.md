@@ -78,6 +78,7 @@ The piston has 3 phases.  The event handling phase, the "step" phase, and the di
 
 ## Links and Resources
 
+- [Forth Programming 21st Century on Facebook](https://www.facebook.com/groups/PROGRAMMINGFORTH/) - The current active and growing forum on the web for modern desktop Forth programming (as opposed to on embedded or classic computers.)  Ask questions about Forth or AllegroForthKit and get quick answers!
 - [Allegro 5.2.3 Documentation](http://liballeg.org/a5docs/5.2.3/)
 - [Allegro 5.0 Documentation on allegro.cc](https://www.allegro.cc/manual/5/) - Integration with the forums. Will likely be out-of-date in places
 - [Allegro.cc forum](https://www.allegro.cc/forums) - A very helpful and fairly active community.  And gladly, language-agnostic.
