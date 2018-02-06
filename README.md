@@ -76,6 +76,14 @@ The piston has 3 phases.  The event handling phase, the "step" phase, and the di
 - STEP> changes the logic.
 - GO> changes your event handler and clears the step assignment.  use the words ETYPE and EVT to process Allegro events here.
 
+## Roadmap
+
+- [ ] Update the in-game IDE (i.e. graphical terminal)
+- [ ] Add Linux external library bindings
+- [ ] Add SwiftForth/Linux support
+- [ ] Add portable directory walker utility
+- [ ] Add or create official AF-Kit public domain 32-bit Intel ANS Forth (possibly based on ntForth) and add support for it to bindings etc
+
 ## Links and Resources
 
 - [Forth Programming 21st Century on Facebook](https://www.facebook.com/groups/PROGRAMMINGFORTH/) - The current active and growing forum on the web for modern desktop Forth programming (as opposed to on embedded or classic computers.)  Ask questions about Forth or AllegroForthKit and get quick answers!
