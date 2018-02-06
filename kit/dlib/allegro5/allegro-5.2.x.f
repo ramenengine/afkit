@@ -23,35 +23,40 @@ decimal \ important
 #define ALLEGRO_WIP_VERSION      3
 #define ALLEGRO_RELEASE_NUMBER   0
 
-
-[defined] linux [if]
-    : linux-library  library ;
-    library /usr/lib/i386-linux-gnu/liballegro.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_memfile.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_primitives.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_acodec.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_audio.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_color.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_font.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_image.so.5.2
-    library /usr/lib/i386-linux-gnu/liballegro_font.so.5.2
-[else]
-    cd kit/dlib/sfwin32/allegro5
-    : linux-library  0 parse 2drop ;
-    [defined] allegro-debug [if]
-      library allegro_monolith-debug-5.2.dll
-    [else]
-      library allegro_monolith-5.2.dll
-    [then]
-    cd ../../../..
-    warning off
-[then]
-
 ALLEGRO_VERSION 24 lshift
 ALLEGRO_SUB_VERSION 16 lshift or
 ALLEGRO_WIP_VERSION 8 lshift or
 ALLEGRO_RELEASE_NUMBER or
 constant ALLEGRO_VERSION_INT
+
+
+cd kit
+[defined] linux [if]
+    create libcmd 256 allot
+    : linux-library
+        s" library dlib/allegro5/5.2.2/" libcmd place
+        0 parse libcmd append
+        libcmd count evaluate
+    ;
+    linux-library liballegro.so.5.2
+    linux-library liballegro_memfile.so.5.2
+    linux-library liballegro_primitives.so.5.2
+    linux-library liballegro_acodec.so.5.2
+    linux-library liballegro_audio.so.5.2
+    linux-library liballegro_color.so.5.2
+    linux-library liballegro_font.so.5.2
+    linux-library liballegro_image.so.5.2
+    linux-library liballegro_font.so.5.2
+[else]
+    : linux-library  0 parse 2drop ;
+    [defined] allegro-debug [if]
+      library dlib/allegro5/5.2.3/allegro_monolith-debug-5.2.dll
+    [else]
+      library dlib/allegro5/5.2.3/allegro_monolith-5.2.dll
+    [then]
+    warning off
+[then]
+cd ..
 
 : void ;
 
