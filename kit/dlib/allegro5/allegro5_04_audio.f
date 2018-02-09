@@ -1,4 +1,4 @@
-linux-library /usr/lib/i386-linux-gnu/liballegro_acodec.so.5.2
+linux-library liballegro_acodec.so.5.2
 
 decimal \ important
 

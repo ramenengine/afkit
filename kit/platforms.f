@@ -6,11 +6,21 @@ cr .( they should load.  You can still load the Allegro DLL without doing this; 
 cr .( be able to play anything but WAV files.)
 
 : PARSE-WORD ( "<spaces>name" -- c-addr u )   /SOURCE OVER >R  BL SKIP DROP R> - >IN +!  BL PARSE ;
-: [platform]  parse-word platform compare 0= ;
-: [in-platform]  parse-word platform search nip nip ;
-defer system
-[platform] sfwin32 [if] true constant win32 [then]
-[platform] sflinux [if] true constant linux [then]
-[in-platform] sf   [if] true constant swiftforth  :noname s" swiftforth" ; is system [then]
+: [platform]     platform parse-word compare 0= ; immediate
+: [in-platform]  platform parse-word search nip nip ; immediate
+
+[in-platform] win32 [if] true constant win32 [then]
+[in-platform] linux [if] true constant linux [then]
+
+\ Platforms ------------------------------------------------------------------------------------------
+
+\ SwiftForth
+[in-platform] sf [if]
+    true constant swiftforth
+    [defined] win32 [if] include kit/plat/sfwin32.f [then]
+    [defined] linux [if] include kit/plat/sflinux.f [then]
+[then]
+
+
+\ End platforms -------------------------------------------------------------------------------------
 : [system]  parse-word system compare 0= ;
-[platform] sfwin32 [if] include kit/plat/sfwin32.f [then]
