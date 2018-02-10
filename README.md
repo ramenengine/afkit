@@ -24,7 +24,7 @@ As proof that Forth can be used to make non-trivial, graphically rich games, see
 
 ### Currently officially supported platforms:
 
-- SwiftForth (Win32)
+- sfwin32 - SwiftForth (Win32)
 
 ### Details
 
@@ -40,6 +40,11 @@ Contributions containing machine language or depending on any non-cross-platform
 
 ## Getting Started
 
+Make copies of kitconfig.f_ and allegro5.cfg_, removing the underscores.  You should be left with "kitconfig.f" and "allegro5.cfg".
+
+Set platform to the appropriate string.  See Portability for strings.
+
+### SwiftForth
 SwiftForth is available from [FORTH Inc](www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
 
 From the SwiftForth prompt, change the current path to the root of your project (if needed) and "INCLUDE kit/kit.f" and type OK for a simple demonstration.
