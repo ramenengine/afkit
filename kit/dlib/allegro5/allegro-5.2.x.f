@@ -64,12 +64,12 @@ cd ..
 
 \ ----------------------------- load files --------------------------------
 
-include kit/dlib/sfwin32/allegro5/01_allegro5_general.f
-include kit/dlib/sfwin32/allegro5/02_allegro5_events.f
-include kit/dlib/sfwin32/allegro5/03_allegro5_keys.f
-include kit/dlib/sfwin32/allegro5/04_allegro5_audio.f
-include kit/dlib/sfwin32/allegro5/05_allegro5_graphics.f
-include kit/dlib/sfwin32/allegro5/06_allegro5_fs.f
+include kit/dlib/allegro5/allegro5_01_general.f
+include kit/dlib/allegro5/allegro5_02_events.f
+include kit/dlib/allegro5/allegro5_03_keys.f
+include kit/dlib/allegro5/allegro5_04_audio.f
+include kit/dlib/allegro5/allegro5_05_graphics.f
+include kit/dlib/allegro5/allegro5_06_fs.f
 
 \ =============================== END ==================================
 

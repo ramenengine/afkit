@@ -1,6 +1,6 @@
-cd kit/dlib/sfwin32/fmod5
+cd kit/dlib/fmod5
 library fmod.dll
-cd ../../../..
+cd ../../..
 
 function: FMOD_System_Create  ( &dest -- ) \ dest receives system
 \ function: FMOD_ErrorString

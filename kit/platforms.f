@@ -23,4 +23,3 @@ cr .( be able to play anything but WAV files.)
 
 
 \ End platforms -------------------------------------------------------------------------------------
-: [system]  parse-word system compare 0= ;
