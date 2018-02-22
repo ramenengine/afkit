@@ -20,7 +20,7 @@ Forth is a post-fixed, stack-based, typeless, interactive language with an empha
 
 For proof that Forth can do non-trivial, graphically demanding games, check out [The Lady](http://store.steampowered.com/app/341060/The_Lady/), a high-definition 2D game I built with a custom engine based on an predecessor of this package.
 
-## Portability
+## Cross-platform Support
 
 ### Currently officially supported platforms:
 
@@ -40,9 +40,9 @@ Contributions containing machine language or depending on any non-cross-platform
 
 ## Getting Started
 
-Make copies of kitconfig.f_ and allegro5.cfg_, removing the underscores.  You should be left with "kitconfig.f" and "allegro5.cfg".
+Make copies of kitconfig.f_ and allegro5.cfg_, removing the underscores.
 
-Set platform to the appropriate string.  See Portability for strings.
+Set platform to the appropriate string.  See the Cross-platform Support section.
 
 ### SwiftForth
 SwiftForth is available from [FORTH Inc](www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
