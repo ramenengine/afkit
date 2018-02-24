@@ -18,17 +18,18 @@ drop
 
 function: al_get_fs_entry_mode ( fsentry -- n )
 
-\ AL_FUNC(time_t,               al_get_fs_entry_atime,(ALLEGRO_FS_ENTRY *e));
-\ AL_FUNC(time_t,               al_get_fs_entry_mtime,(ALLEGRO_FS_ENTRY *e));
-\ AL_FUNC(time_t,               al_get_fs_entry_ctime,(ALLEGRO_FS_ENTRY *e));
-\ AL_FUNC(off_t,                al_get_fs_entry_size,(ALLEGRO_FS_ENTRY *e));
-\ AL_FUNC(bool,                 al_fs_entry_exists,  (ALLEGRO_FS_ENTRY *e));
-\ AL_FUNC(bool,                 al_remove_fs_entry,  (ALLEGRO_FS_ENTRY *e));
-\
+function: al_get_fs_entry_atime ( ALLEGRO_FS_ENTRY -- ms )
+function: al_get_fs_entry_mtime ( ALLEGRO_FS_ENTRY -- ms )
+function: al_get_fs_entry_ctime ( ALLEGRO_FS_ENTRY -- ms )
+function: al_get_fs_entry_size  ( ALLEGRO_FS_ENTRY -- ofs )
+function: al_fs_entry_exists    ( ALLEGRO_FS_ENTRY -- flag )
+function: al_remove_fs_entry    ( ALLEGRO_FS_ENTRY -- flag )
+
 function: al_open_directory   ( ALLEGRO_FS_ENTRY -- bool )
 function: al_read_directory   ( ALLEGRO_FS_ENTRY -- fsentry )
 function: al_close_directory  ( ALLEGRO_FS_ENTRY -- bool )
-\
+
+
 \ AL_FUNC(bool,                 al_filename_exists,  (const char *path));
 \ AL_FUNC(bool,                 al_remove_filename,  (const char *path));
 \ AL_FUNC(char *,               al_get_current_directory, (void));
