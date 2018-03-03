@@ -113,6 +113,7 @@ variable newfs
 variable x  variable vx  1 vx !
 variable y  variable vy  1 vy !
 :noname
+    show>
     0e 0e 0.5e 1e 4sf al_clear_to_color
     x @ y @ over 50 + over 50 + 4s>f 4sf 1e 1e 1e 1e 4sf al_draw_filled_rectangle
     vx @ x +!  vy @ y +!
@@ -120,4 +121,4 @@ variable y  variable vy  1 vy !
     vy @ 0< if  y @ 0 < if  vy @ negate vy !  then then
     vx @ 0> if  x @ displayw 50 - >= if  vx @ negate vx !  then then
     vy @ 0> if  y @ displayh 50 - >= if  vy @ negate vy !  then then
-    ; >code  to 'show
+    ;  execute

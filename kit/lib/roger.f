@@ -19,12 +19,7 @@ defer alert  ( a c -- )
 : >>  " rshift" evaluate ; immediate
 : bit  dup constant  1 << ;
 : clamp  ( n low high -- n ) -rot max min ;
-\ : 2clamp  ( x y lowx lowy highx highy -- x y ) 2>r 2max 2r> 2min ;
 [defined] locate [if] : l locate ; [then]
-
-\ : getset  ( -- <name> <getcode> ; <setcode> ; )
-\     >in @  create
-\     >in !
 
 : ifill  ( c-addr count val - )  -rot  0 do  over !+  loop  2drop ;
 : ierase   0 ifill ;
@@ -39,9 +34,10 @@ defer alert  ( a c -- )
 : 4,  2swap swap , , swap , , ;
 : :is  :noname  postpone [  [compile] is  ] ;
 : 2move  ( src /pitch dest /pitch #rows /bytes -- )
-  locals| #bytes #rows deststride dest srcstride src |
+  locals| #bytes #rows destpitch dest srcpitch src |
   #rows 0 do
     src dest #bytes move
-    srcstride +to src  deststride +to dest
+    srcpitch +to src  destpitch +to dest
   loop ;
 : reverse   ( ... count -- ... ) 1+ 1 max 1 ?do i 1- roll loop ;
+
