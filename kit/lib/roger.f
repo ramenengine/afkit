@@ -7,7 +7,7 @@ defer alert  ( a c -- )
 [undefined] third [if] : third  >r over r> swap ; [then]
 [undefined] @+ [if] : @+  dup @ swap cell+ swap ; [then]
 : u+  rot + swap ;  \ "under plus"
-: ?lit  state @ if postpone literal then ; immediate
+: ?lit  state @ if postpone literal then ; 
 : do postpone ?do ; immediate
 : for  " 0 do" evaluate ; immediate
 : buffer  here swap /allot ;
@@ -41,3 +41,8 @@ defer alert  ( a c -- )
   loop ;
 : reverse   ( ... count -- ... ) 1+ 1 max 1 ?do i 1- roll loop ;
 
+\ Random numbers
+0 VALUE seed
+: /rnd  ucounter drop to seed ;  /rnd
+: random ( -- u ) seed $107465 * $234567 + DUP TO seed ;
+: rnd ( n -- 0..n-1 ) random um* nip ;
