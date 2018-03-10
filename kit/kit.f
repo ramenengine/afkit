@@ -81,7 +81,7 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 ;
 
 : valid?  ['] @ catch nip 0 = ;
-[undefined] initial-scale [if] initial-scale [else] 1 [then] value global-scale
+[defined] initial-scale [if] initial-scale [else] 1 [then] value global-scale
 [undefined] initial-res [if]  : initial-res  640 480 ;  [then]
 
 : +display  display valid? ?exit  initial-res initDisplay ;
