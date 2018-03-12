@@ -40,9 +40,13 @@ defer alert  ( a c -- )
     srcpitch +to src  destpitch +to dest
   loop ;
 : reverse   ( ... count -- ... ) 1+ 1 max 1 ?do i 1- roll loop ;
+: cfill  fill ;
 
 \ Random numbers
 0 VALUE seed
 : /rnd  ucounter drop to seed ;  /rnd
 : random ( -- u ) seed $107465 * $234567 + DUP TO seed ;
 : rnd ( n -- 0..n-1 ) random um* nip ;
+
+\ vocabulary helper
+: define  >in @  vocabulary  >in !  only forth also ' execute definitions ;

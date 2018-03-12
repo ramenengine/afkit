@@ -139,8 +139,6 @@ create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 \ Graphics essentials; no-fixed-point version
 16 cells constant /transform
 : transformation  create  here  /transform allot  al_identity_transform ;
-transformation m0
-: 1-1  m0 al_identity_transform  m0 al_use_transform ;
 
 \ integer stuff
 : bmpw   ( bmp -- n )  al_get_bitmap_width  ;
