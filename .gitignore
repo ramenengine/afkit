@@ -1,5 +1,4 @@
-.komodotools
-temp
-kitconfig.f
-allegro5.cfg
-*.komodoproject
+/*/**
+/*/
+!/kit/
+!/kit/**
