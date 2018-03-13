@@ -2,3 +2,7 @@
 /*/
 !/kit/
 !/kit/**
+*.komodoproject
+.komodotools
+kitconfig.f
+allegro5.cfg
