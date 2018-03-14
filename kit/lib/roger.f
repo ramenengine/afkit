@@ -50,3 +50,10 @@ defer alert  ( a c -- )
 
 \ vocabulary helper
 : define  >in @  vocabulary  >in !  only forth also ' execute definitions ;
+
+\ simple versioning
+: [version]  ( n -- <ver> )
+    depth 0 <= abort" Version number is required!"
+    bl parse evaluate  >r
+    dup $FF0000 and r@ $FF0000 and <> abort" Incompatible major version!"
+    $FF00 and r> $FF00 and > if cr ." WARNING: Potential minor version incompatibility: " including -path type then ;
