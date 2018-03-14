@@ -16,7 +16,11 @@
             include ffl/b64.fs
         ffling -order
     cd ../../..
+
+    : empty  only forth s" (empty) marker (empty)" evaluate ;
+    marker (empty)
 [then]
+
 
 include kit/lib/section
 
