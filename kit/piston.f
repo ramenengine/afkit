@@ -66,7 +66,7 @@ variable (catch)
       <rctrl>  of  true to ctrl?  endof
       <enter>  of  alt? -exit  fs @ not fs ! endof
       <f4>     of  alt? -exit  0 ExitProcess endof
-      <f12>    of  ctrl? -exit  break  endof
+      <f12>    of  break  endof
       <tilde>  of  alt? -exit  info @ not info !  endof
     endcase
   then
