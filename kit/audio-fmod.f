@@ -1,5 +1,5 @@
 [platform] sfwin32 [if]
-    include kit/dlib/fmod5/fmod5.f
+    include kit/ext/fmod5/fmod5.f
 [then]
 
 variable fmod

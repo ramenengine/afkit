@@ -1,4 +1,4 @@
-cd kit/dlib/fmod5
+cd kit/ext/fmod5
 library fmod.dll
 cd ../../..
 

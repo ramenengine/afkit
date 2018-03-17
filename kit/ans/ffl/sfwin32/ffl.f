@@ -1,4 +1,4 @@
-cd kit/lib/ffl
+cd kit/ans/ffl
 
     wordlist constant ffling
     get-order get-current ffling +order definitions

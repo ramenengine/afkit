@@ -55,7 +55,7 @@ A fancier demonstration is forthcoming.
 
 This component is still being worked on.
 
-To load the (minimal) FMOD bindings, `"INCLUDE kit/dlib/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
+To load the (minimal) FMOD bindings, `"INCLUDE kit/ext/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
 
 ## Graphics
 
@@ -65,9 +65,9 @@ Some essential tools are included in kit/gfx.f
 
 These files are included as part of the foundation:
 
-- kit/lib/files.f - tools for more conveniently working with files
-- kit/lib/strops.f - tools for constructing strings and working with zero-terminated strings
-- kit/lib/roger.f - miscellaneous useful primitives
+- kit/ans/files.f - tools for more conveniently working with files
+- kit/ans/strops.f - tools for constructing strings and working with zero-terminated strings
+- kit/ans/roger.f - miscellaneous useful primitives
 
 ## The Piston (main loop) - kit/piston.f
 

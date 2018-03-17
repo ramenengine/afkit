@@ -1,4 +1,4 @@
-include kit/lib/version.f
+include kit/ans/version.f
 $000601 [version] kit-version
 
 \ Load external libraries
@@ -12,7 +12,7 @@ $000601 [version] kit-version
 
     true constant EXTERNALS_LOADED
 
-    cd kit/lib/ffl
+    cd kit/ans/ffl
         ffling +order
             include ffl/dom.fs
             include ffl/b64.fs
@@ -24,14 +24,14 @@ $000601 [version] kit-version
 [then]
 
 
-include kit/lib/section
+include kit/ans/section
 
 [section] Libraries
 \ Load support libraries
-include kit/lib/win/fpext      \ depends on FPMATH
-include kit/lib/strops         \ ANS
-include kit/lib/files          \ ANS
-include kit/lib/roger          \ ANS
+include kit/plat/win/fpext      \ depends on FPMATH
+include kit/ans/strops         \ ANS
+include kit/ans/files          \ ANS
+include kit/ans/roger          \ ANS
 
 [section] Audio
 [defined] ALLEGRO_AUDIO
@@ -153,6 +153,7 @@ create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 : hold>  ( -- <code> )  1 al_hold_bitmap_drawing  r> call  0 al_hold_bitmap_drawing ;
 : loadbmp  ( adr c -- bmp ) zstring al_load_bitmap ;
 : savebmp  ( bmp adr c -- ) zstring swap al_save_bitmap 0= abort" Allegro: Error saving bitmap." ;
+: -bmp  ?dup -exit al_destroy_bitmap ;
 
 create oldblender  6 cells allot
 : blend>  ( op src dest aop asrc adest -- )
@@ -163,6 +164,12 @@ create oldblender  6 cells allot
 : add-rgba    ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_ONE  ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ONE  ;
 : blend-rgba  ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA  ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ONE ;
 blend-rgba al_set_separate_blender
+
+\ Pen
+create penx  0 ,  here 0 ,  constant peny
+: at   ( x y -- )  penx 2! ;
+: +at  ( x y -- )  penx 2+! ;
+: at@  ( -- x y )  penx 2@ ;
 
 \ --------------------------------------------------------------------------------------------------
 [section] Piston

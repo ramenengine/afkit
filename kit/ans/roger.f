@@ -54,6 +54,13 @@ defer alert  ( a c -- )
 
 
 \ on-stack vector stuff (roger)
+: 2!  swap over cell+ ! ! ;
+: 2@  dup @ swap cell+ @ ;
+: 2+!  swap over cell+ +! +! ;
+: 3@  dup @ swap cell+ dup @ swap cell+ @ ;
+: 4@  dup @ swap cell+ dup @ swap cell+ dup @ swap cell+ @ ;
+: 3!  dup >r  2 cells + !  r> 2! ;
+: 4!  dup >r  2 cells + 2! r> 2! ;
 : 2min  rot min >r min r> ;
 : 2max  rot max >r max r> ;
 : 2+  rot + >r + r> ;
