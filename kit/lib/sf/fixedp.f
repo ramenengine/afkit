@@ -221,6 +221,7 @@ fixpointing +order definitions
     : rshift  1i rshift ;
     : << lshift ;
     : >> rshift ;
+    : .0 ; immediate
 previous definitions
 
 

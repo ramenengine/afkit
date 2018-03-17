@@ -1,3 +1,5 @@
+include kit/lib/version.f
+$000600 [version] kit-version
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
