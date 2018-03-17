@@ -26,11 +26,22 @@
 \   i = integer
 
 [undefined] f+ [if]
-requires fpmath
+    requires fpmath
 [then]
 
-[undefined] +s [if]
-include string-operations.f
+[undefined] s[ [if]
+    create $buffers  16384 allot  \ string concatenation buffer stack (circular)
+    variable >s                   \ pointer into $buffers
+    : s[  ( adr c - )  >s @ 256 + 16383 and >s !  >s @ $buffers + place ;
+    : +s  ( adr c - )  >s @ $buffers + append ;
+    : c+s  ( c - )     >s @ $buffers + count + c!  1 >s @ $buffers + c+! ;
+    create $outbufs  16384 allot \ output buffers; circular stack of buffers
+    variable >out
+    : ]s  ( - adr c )  \ fetch finished string
+      >s @ $buffers + count >out @ $outbufs + place
+      >out @ $outbufs + count
+      >out @ 256 + 16383 and >out !
+      >s @ 256 - 16383 and >s ! ;
 [then]
 
 12 constant /FRAC
@@ -68,17 +79,15 @@ fixpointing +order
        RET   END-CODE
 
 \ NTS: keep these as one-liners, I might make them macros...
-: s>p  " /FRAC alshift" evaluate ; immediate
-: 2s>p  s>p swap s>p swap ;
-\ : 1i  pgran / ;
-: 1i  " /frac arshift" evaluate ; immediate
+: 1p  s" /FRAC alshift" evaluate ; immediate
+: 2p  1p swap 1p swap ;
+: 1i  s" /frac arshift" evaluate ; immediate
 : 2i  swap 1i swap 1i ;
 : 3i  rot 1i rot 1i rot 1i ;
 : 4i  2i 2swap 2i 2swap ;
-: f  s>f FPGRAN f/ ;
-: 1f  f ;  \ not recommended, looks very similar to "if"
-: 2f  swap f f ;
-: 3f  rot f 2f ;
+: 1f  s>f FPGRAN f/ ;
+: 2f  swap 1f 1f ;
+: 3f  rot 1f 2f ;
 : 4f  2swap 2f 2f ;
 : pfloor  INT_MASK and ;
 : pceil   pfloor 1.0 + ;
@@ -87,28 +96,25 @@ fixpointing +order
 : f>p  FPGRAN f* f>s ;
 
 definitions
-\ NTS: keep these as one-liners, I might make them macros...
-: *  ( n n -- n )  1f s>f f* f>s ;
+    \ NTS: keep these as one-liners, I might make them macros...
+    : *  ( n n -- n )  1f s>f f* f>s ;
 previous definitions fixpointing +order
 : p*  * ;
 definitions
-: /  ( n n -- n )  swap s>f 1f f/ f>s ;
-: /mod  ( n n -- r q ) 2dup mod -rot / ;
-: ++  1.0 swap +! ;
-: --  -1.0 swap +! ;
-
-: 2*  rot * >r * r> ;
-: 2/  rot swap / >r / r> ;
-
-: i.  . ;
-: .   ints @ if  .  else  1f f.  then ;
-: p.  . ;
-: ?   @ . ;
-: 2.  swap . . ;
-: 3.  rot . 2. ;
-: 2?  swap ? ? ;
-: 3?  rot ? 2? ;
-
+    : /  ( n n -- n )  swap s>f 1f f/ f>s ;
+    : /mod  ( n n -- r q ) 2dup mod -rot / ;
+    : ++  1.0 swap +! ;
+    : --  -1.0 swap +! ;
+    : 2*  rot * >r * r> ;
+    : 2/  rot swap / >r / r> ;
+    : i.  . ;
+    : .   ints @ if  .  else  1f f.  then ;
+    : p.  . ;
+    : ?   @ . ;
+    : 2.  swap . . ;
+    : 3.  rot . 2. ;
+    : 2?  swap ? ? ;
+    : 3?  rot ? 2? ;
 previous definitions fixpointing +order
 
 
@@ -151,81 +157,75 @@ variable sign
   then  0  ;
 
 definitions
-: .S ( ? -- ? )
-  CR DEPTH 0> IF DEPTH 0 ?DO S0 @ I 1+ CELLS - @ . LOOP THEN
-  DEPTH 0< ABORT" Underflow"
-  FDEPTH ?DUP IF
-    ."  FSTACK: "
-    0  DO  I' I - 1- FPICK N.  LOOP
-  THEN ;
-
+    : .S ( ? -- ? )
+      CR DEPTH 0> IF DEPTH 0 ?DO S0 @ I 1+ CELLS - @ . LOOP THEN
+      DEPTH 0< ABORT" Underflow"
+      FDEPTH ?DUP IF
+        ."  FSTACK: "
+        0  DO  I' I - 1- FPICK N.  LOOP
+      THEN ;
 previous definitions fixpointing +order
 
 
 \ -------- Add fixed-point interpreter to SwiftForth -------
 PACKAGE STATUS-TOOLS
-public
-[undefined] linux [if]
-    : SB.BASE2  ( -- )
-      ints @ 0 = if
-        s" FIX"
-      else
-        BASE @ PSTK (.BASE)
-      then
-      1 SF-STATUS PANE-TYPE ;
-    : SB.STACK2 ( -- )
-      ints @ if
-        PSTK Z(.S) ZCOUNT s[
-      else
-        s" " s[
-        DEPTH 0 >= IF
-          DEPTH 0 ?DO
-            S0 @ I 1 + CELLS - @
-            dup 0 < if s"  " +s then
-            f 3 (f.) +s
-          LOOP
-        ELSE
-          s" Underflow" +s
-        THEN
-      then
-      FDEPTH ?DUP IF
-        s"  FSTACK:" +s
-        0 DO  I' I - 1 - FPICK 3 (f.) +s  LOOP
-      THEN
-      ]s 0 SF-STATUS PANE-RIGHT ;
+    public
+    [undefined] linux [if]
+        : SB.BASE2  ( -- )
+          ints @ 0 = if
+            s" FIX"
+          else
+            BASE @ PSTK (.BASE)
+          then
+          1 SF-STATUS PANE-TYPE ;
+        : SB.STACK2 ( -- )
+          ints @ if
+            PSTK Z(.S) ZCOUNT s[
+          else
+            s" " s[
+            DEPTH 0 >= IF
+              DEPTH 0 ?DO
+                S0 @ I 1 + CELLS - @
+                dup 0 < if s"  " +s then
+                1f 3 (f.) +s
+              LOOP
+            ELSE
+              s" Underflow" +s
+            THEN
+          then
+          FDEPTH ?DUP IF
+            s"  FSTACK:" +s
+            0 DO  I' I - 1 - FPICK 3 (f.) +s  LOOP
+          THEN
+          ]s 0 SF-STATUS PANE-RIGHT ;
 
-    : STATUS.STACK2 ( -- )    SB.BASE2  SB.STACK2 ;
+        : STATUS.STACK2 ( -- )    SB.BASE2  SB.STACK2 ;
 
-    ' status.stack2 is .stack
-[then] \ not linux
+        ' status.stack2 is .stack
+    [then] \ not linux
 
-' pnumber2? number-conversion >chain
-' pnumber? number-conversion >chain
+    ' pnumber2? number-conversion >chain
+    ' pnumber? number-conversion >chain
 
 END-PACKAGE
 
 \ ------------------------------------------------------------
-
-
 decimal
 
 fixpointing +order definitions
-: cells  1i cells ;
-: bytes  1i ;
-: hwords 1i 1 lshift ;
-: loop  " 1.0 +loop" evaluate ; immediate
-: lshift  1i lshift ;
-: rshift  1i rshift ;
-: << lshift ;
-: >> rshift ; 
+    : cells  1i cells ;
+    : bytes  1i ;
+    : hwords 1i 1 lshift ;
+    : loop  s" 1.0 +loop" evaluate ; immediate
+    : lshift  1i lshift ;
+    : rshift  1i rshift ;
+    : << lshift ;
+    : >> rshift ;
 previous definitions
 
 
-: ?fixed  ?exit fixed ;
-: include   ints @ >r  fixed include  r> ?fixed ;
-: included  ints @ >r  fixed included  r> ?fixed ;
-: import    ints @ >r  fixed import   r> ?fixed ;
-: idiom     ints @ >r  idiom   r> ?fixed ;
-[defined] /only [if]
-    :noname [ is /only ] only forth ints @ not if fixpointing +order then ;
-[then]
+: include   ints @ >r  fixed include  r> ?exit fixed  ;
+: included  ints @ >r  fixed included  r> ?exit fixed  ;
+: forth  forth  ints @ not if fixpointing +order then ;
+
+fixed
