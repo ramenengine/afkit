@@ -19,7 +19,8 @@ defer alert  ( a c -- )
 : >>  " rshift" evaluate ; immediate
 : bit  dup constant  1 << ;
 : clamp  ( n low high -- n ) -rot max min ;
-[defined] locate [if] : l locate ; [then]
+: ++  1 swap +! ;
+: --  -1 swap +! ;
 
 : ifill  ( c-addr count val - )  -rot  0 do  over !+  loop  2drop ;
 : ierase   0 ifill ;
@@ -57,3 +58,11 @@ defer alert  ( a c -- )
     bl parse evaluate  >r
     dup $FF0000 and r@ $FF0000 and <> abort" Incompatible major version!"
     $FF00 and r> $FF00 and > if cr ." WARNING: Potential minor version incompatibility: " including -path type then ;
+
+\ on-stack vector stuff (roger)
+: 2min  rot min >r min r> ;
+: 2max  rot max >r max r> ;
+: 2+  rot + >r + r> ;
+: 2-  rot swap - >r - r> ;
+: 2negate  negate swap negate swap ;
+: 2clamp  ( x y lowx lowy highx highy -- x y ) 2>r 2max 2r> 2min ;
