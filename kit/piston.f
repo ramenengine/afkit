@@ -103,10 +103,10 @@ variable newfs
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
 : go>  r> to 'go   0 to 'step ;  ( -- <code> )  ( -- )
+: @event  ( -- flag )  eventq evt al_get_next_event  logevents @ if  etype h.  then ;
 : attend
-    begin  eventq evt al_get_next_event  breaking? not and while
-        logevents @ if  etype h.  then
-        standard-events  ?system  'go try to goerr
+    begin  @event  breaking? not and while
+        'go try to goerr  standard-events  ?system
     repeat ;
 : ok    /ok   begin  show  1 +to #frames  attend  poll  step  ?fs  breaking?  until  ok/ ;
 
