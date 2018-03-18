@@ -17,7 +17,7 @@ variable >out
 : tempbuf    >out @ $outbufs +   >out @ 256 + 16383 and >out ! ;
 create zbuf 1024 allot
 : zstring  ( addr c - zaddr )   zbuf zplace  zbuf ;
-: cappend  ( c adr - )   dup >r  count + c!  1 r> c+! ;
+: cappend  ( adr c - )   swap dup >r  count + c!  1 r> c+! ;
 : uncount  ( adr c - adr-1 )   drop 1 - ;
 : strjoin  ( first c second c - first+second c )   2swap s[ +s ]s ;
 : input  ( adr c - )   over 1 +  swap accept  swap  c! ;
