@@ -113,8 +113,8 @@ definitions
     : ?   @ . ;
     : 2.  swap . . ;
     : 3.  rot . 2. ;
-    : 2?  swap ? ? ;
-    : 3?  rot ? 2? ;
+    : 2?  dup ? cell+ ? ;
+    : 3?  dup ? cell+ dup ? cell+ ? ;
 previous definitions fixpointing +order
 
 
