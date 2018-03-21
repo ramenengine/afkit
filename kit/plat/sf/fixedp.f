@@ -29,6 +29,8 @@
     requires fpmath
 [then]
 
+only forth definitions
+
 [undefined] s[ [if]
     create $buffers  16384 allot  \ string concatenation buffer stack (circular)
     variable >s                   \ pointer into $buffers
@@ -44,6 +46,7 @@
       >s @ 256 - 16383 and >s ! ;
 [then]
 
+only forth definitions
 12 constant /FRAC
 $FFFFF000 constant INT_MASK
 $00000FFF constant FRAC_MASK
@@ -56,14 +59,6 @@ $1000 constant 1.0
 variable ints  ints on  \ set/disable integer mode on both display and interpretation
 
 wordlist constant fixpointing
-fixpointing +order
-
-: fixed   fixpointing +order  ints off decimal ;
-: decimal fixpointing -order  ints on  decimal ;
-: binary  fixpointing -order  ints on  binary ;
-: hex     fixpointing -order  ints on  hex ;
-: octal   fixpointing -order  ints on  octal ;
-
 
 \ private
     \ SwiftForth/X86 only - arithmetic shift
@@ -78,47 +73,47 @@ fixpointing +order
        EBX CL SHL                       \ and shift bits right
        RET   END-CODE
 
-\ NTS: keep these as one-liners, I might make them macros...
-: 1p  s" /FRAC alshift" evaluate ; immediate
-: 2p  1p swap 1p swap ;
-: 1i  s" /frac arshift" evaluate ; immediate
-: 2i  swap 1i swap 1i ;
-: 3i  rot 1i rot 1i rot 1i ;
-: 4i  2i 2swap 2i 2swap ;
-: 1f  s>f FPGRAN f/ ;
-: 2f  swap 1f 1f ;
-: 3f  rot 1f 2f ;
-: 4f  2swap 2f 2f ;
-: pfloor  INT_MASK and ;
-: pceil   pfloor 1.0 + ;
-: 2pfloor  pfloor swap pfloor swap ;
-: 2pceil   pceil swap pceil swap ;
-: f>p  FPGRAN f* f>s ;
+: ?:  >in @  exists if  0 parse 2drop  drop exit  else  >in !  :  then ;
 
-definitions
-    \ NTS: keep these as one-liners, I might make them macros...
-    : *  ( n n -- n )  1f s>f f* f>s ;
-previous definitions fixpointing +order
-: p*  * ;
-definitions
-    : /  ( n n -- n )  swap s>f 1f f/ f>s ;
-    : /mod  ( n n -- r q ) 2dup mod -rot / ;
+\ NTS: keep these as one-liners, I might make them macros...
+?: 1p  s" /FRAC alshift" evaluate ; immediate
+?: 2p  1p swap 1p swap ;
+?: 1i  s" /frac arshift" evaluate ; immediate
+?: 2i  swap 1i swap 1i ;
+?: 3i  rot 1i rot 1i rot 1i ;
+?: 4i  2i 2swap 2i 2swap ;
+?: 1f  s>f FPGRAN f/ ;
+?: 2f  swap 1f 1f ;
+?: 3f  rot 1f 2f ;
+?: 4f  2swap 2f 2f ;
+?: pfloor  INT_MASK and ;
+?: pceil   pfloor 1.0 + ;
+?: 2pfloor  pfloor swap pfloor swap ;
+?: 2pceil   pceil swap pceil swap ;
+?: f>p  FPGRAN f* f>s ;
+?: p*  1f s>f f* f>s ;
+?: p/  swap s>f 1f f/ f>s ;
+?: i.  . ;
+?: i?  ? ;
+?: p.  1f f. ;
+
+fixpointing +order definitions
+    : *  ( n n -- n )  p* ;
+    : /  ( n n -- n )  p/ ;
+    : /mod  ( n n -- r q ) 2dup mod -rot p/ ;
     : ++  1.0 swap +! ;
     : --  -1.0 swap +! ;
-    : 2*  rot * >r * r> ;
-    : 2/  rot swap / >r / r> ;
-    : i.  . ;
-    : .   ints @ if  .  else  1f f.  then ;
-    : p.  . ;
+    : 2*  rot p* >r p* r> ;
+    : 2/  rot swap p/ >r p/ r> ;
+    : .   ints @ if  i.  else  p.  then ;
     : ?   @ . ;
     : 2.  swap . . ;
     : 3.  rot . 2. ;
     : 2?  dup ? cell+ ? ;
     : 3?  dup ? cell+ dup ? cell+ ? ;
-previous definitions fixpointing +order
-
 
 \ --------------------------- swiftforth-specific -----------------------------
+only forth definitions
 \ extend literals to support fixed-point
 variable sign
 : pconvert ( a -- 0 | a -1 ) ( -- | r )
@@ -156,7 +151,7 @@ variable sign
       then
   then  0  ;
 
-definitions
+fixpointing +order definitions
     : .S ( ? -- ? )
       CR DEPTH 0> IF DEPTH 0 ?DO S0 @ I 1+ CELLS - @ . LOOP THEN
       DEPTH 0< ABORT" Underflow"
@@ -164,10 +159,10 @@ definitions
         ."  FSTACK: "
         0  DO  I' I - 1- FPICK N.  LOOP
       THEN ;
-previous definitions fixpointing +order
-
 
 \ -------- Add fixed-point interpreter to SwiftForth -------
+only forth definitions fixpointing +order
+
 PACKAGE STATUS-TOOLS
     public
     [undefined] linux [if]
@@ -210,23 +205,29 @@ PACKAGE STATUS-TOOLS
 END-PACKAGE
 
 \ ------------------------------------------------------------
-decimal
-
-fixpointing +order definitions
+only forth fixpointing +order definitions
     : cells  1i cells ;
     : bytes  1i ;
-    : hwords 1i 1 lshift ;
+    : hwords 1i #1 lshift ;
     : loop  s" 1.0 +loop" evaluate ; immediate
     : lshift  1i lshift ;
     : rshift  1i rshift ;
-    : << lshift ;
-    : >> rshift ;
+    : <<      lshift ;
+    : >>      rshift ;
     : .0 ; immediate
-previous definitions
 
-
+only forth definitions fixpointing +order
+order
+: fixed   fixpointing +order  ints off #10 base ! ;
+: decimal fixpointing -order  ints on  #10 base ! ;
+: binary  fixpointing -order  ints on  binary ;
+: hex     fixpointing -order  ints on  hex ;
+: octal   fixpointing -order  ints on  octal ;
 : include   ints @ >r  fixed include  r> ?exit fixed  ;
 : included  ints @ >r  fixed included  r> ?exit fixed  ;
-: forth  forth  ints @ not if fixpointing +order then ;
+: only     '   only   execute   ints @ ?exit  fixpointing +order ;
+: definitions
+    get-order over fixpointing = if  fixpointing -order  definitions  fixpointing +order
+    else  definitions  then  set-order ;
 
 fixed
