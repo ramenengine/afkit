@@ -52,7 +52,7 @@ include kit/ans/roger          \ ANS
 \   simplified to sidestep degenerative stalling bug
 \   derived from Bubble
 
-include kit/al
+include kit/al.f
 
 : assertAllegro
     allegro? ?exit   true to allegro?  init-allegro-all
@@ -173,7 +173,7 @@ create penx  0 ,  here 0 ,  constant peny
 
 \ --------------------------------------------------------------------------------------------------
 [section] Piston
-include kit/piston
+include kit/piston.f
 \ --------------------------------------------------------------------------------------------------
 [section] Init
 +display

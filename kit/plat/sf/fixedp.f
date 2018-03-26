@@ -217,7 +217,6 @@ only forth fixpointing +order definitions
     : .0 ; immediate
 
 only forth definitions fixpointing +order
-order
 : fixed   fixpointing +order  ints off #10 base ! ;
 : decimal fixpointing -order  ints on  #10 base ! ;
 : binary  fixpointing -order  ints on  binary ;

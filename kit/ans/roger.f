@@ -67,3 +67,12 @@ defer alert  ( a c -- )
 : 2-  rot swap - >r - r> ;
 : 2negate  negate swap negate swap ;
 : 2clamp  ( x y lowx lowy highx highy -- x y ) 2>r 2max 2r> 2min ;
+
+\ Word tools
+: defined ( -- c-addr 0 | xt -1 | -- xt 1 )  bl word find ;
+: exists ( -- flag )   defined 0<> nip ;
+
+\ Conditional INCLUDE
+: require  ( filepath -- )
+    >in @  exists if  >in !  exit then
+    dup >in !  create   >in !  include ;
