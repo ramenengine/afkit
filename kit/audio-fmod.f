@@ -1,3 +1,5 @@
+[platform] sflinux [if] \\ [then]
+
 [platform] sfwin32 [if]
     include kit/ext/fmod5/fmod5.f
 [then]

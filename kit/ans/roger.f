@@ -3,7 +3,8 @@
 : zlength ( zaddr -- n )   zcount nip ;
 : zplace ( from n to -- )   tuck over + >r  cmove  0 r> c! ;
 : zappend ( from n to -- )   zcount + zplace ;
-defer alert  ( a c -- )
+\ defer alert  ( a c -- )
+: alert  type true abort ;
 [undefined] third [if] : third  >r over r> swap ; [then]
 [undefined] @+ [if] : @+  dup @ swap cell+ swap ; [then]
 : u+  rot + swap ;  \ "under plus"

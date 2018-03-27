@@ -269,7 +269,7 @@ function: al_get_timer_started ( timer -- f )
 
 function: al_get_display_event_source ( display -- source )
 
-linux-library liballegro_memfile.so.5.2
+linux-library liballegro_memfile
 
 function: al_open_memfile ( void-*mem, int64_t size, const-char-*mode -- ALLEGRO_FILE )
 function: al_fclose ( ALLEGRO_FILE-*f -- )

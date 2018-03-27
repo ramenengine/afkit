@@ -19,8 +19,8 @@ decimal \ important
 
 
 #define ALLEGRO_VERSION          5
-#define ALLEGRO_SUB_VERSION      2
-#define ALLEGRO_WIP_VERSION      3
+#define ALLEGRO_SUB_VERSION      0
+#define ALLEGRO_WIP_VERSION      10
 #define ALLEGRO_RELEASE_NUMBER   0
 
 ALLEGRO_VERSION 24 lshift
@@ -36,17 +36,18 @@ cd kit
     : linux-library
         s" library ext/allegro5/5.0.10/" libcmd place
         0 parse libcmd append
+        s" .so.5.0.10" libcmd append
         libcmd count evaluate
     ;
-    linux-library liballegro.so.5.0.10
-    linux-library liballegro_memfile.so.5.0.10
-    linux-library liballegro_primitives.so.5.0.10
-    linux-library liballegro_acodec.so.5.0.10
-    linux-library liballegro_audio.so.5.0.10
-    linux-library liballegro_color.so.5.0.10
-    linux-library liballegro_font.so.5.0.10
-    linux-library liballegro_image.so.5.0.10
-    linux-library liballegro_font.so.5.0.10
+    linux-library liballegro
+    linux-library liballegro_memfile
+    linux-library liballegro_primitives
+\    linux-library liballegro_acodec
+\    linux-library liballegro_audio
+    linux-library liballegro_color
+    linux-library liballegro_font
+    linux-library liballegro_image
+    linux-library liballegro_font
 [else]
     : linux-library  0 parse 2drop ;
     [defined] allegro-debug [if]
@@ -63,13 +64,15 @@ cd ..
 : /* postpone \ ; immediate
 
 \ ----------------------------- load files --------------------------------
+: [COMPATIBLE]   ( ver subver -- )
+   16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and > if 0 parse 2drop then ;
 
-include kit/ext/sfwin32/allegro5/01_allegro5_general.f
-include kit/ext/sfwin32/allegro5/02_allegro5_events.f
-include kit/ext/sfwin32/allegro5/03_allegro5_keys.f
-include kit/ext/sfwin32/allegro5/04_allegro5_audio.f
-include kit/ext/sfwin32/allegro5/05_allegro5_graphics.f
-include kit/ext/sfwin32/allegro5/06_allegro5_fs.f
+include kit/ext/allegro5/allegro5_01_general.f
+include kit/ext/allegro5/allegro5_02_events.f
+include kit/ext/allegro5/allegro5_03_keys.f
+[undefined] linux [if] include kit/ext/allegro5/allegro5_04_audio.f [then]
+include kit/ext/allegro5/allegro5_05_graphics.f
+include kit/ext/allegro5/allegro5_06_fs.f
 
 \ =============================== END ==================================
 

@@ -31,7 +31,7 @@ variable logevents  \ enables spitting out of event codes
 defer ?overlay  ' noop is ?overlay  \ render ide
 defer ?system   ' noop is ?system   \ system events
 defer onDisplayClose
-:is onDisplayClose  0 ExitProcess ;
+:is onDisplayClose  bye ;
 
 create evt  256 /allot
 : etype  evt ALLEGRO_EVENT.TYPE @ ;
@@ -65,7 +65,7 @@ variable (catch)
       <lctrl>  of  true to ctrl?  endof
       <rctrl>  of  true to ctrl?  endof
       <enter>  of  alt? -exit  fs @ not fs ! endof
-      <f4>     of  alt? -exit  0 ExitProcess endof
+      <f4>     of  alt? -exit  bye  endof
       <f12>    of  break  endof
       <tilde>  of  alt? -exit  info @ not info !  endof
     endcase

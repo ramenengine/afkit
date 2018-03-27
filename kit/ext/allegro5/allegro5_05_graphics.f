@@ -79,7 +79,7 @@ function: al_destroy_bitmap ( ALLEGRO_BITMAP-*bitmap -- )
 
 function: al_convert_mask_to_alpha ( ALLEGRO_BITMAP-*bitmap, float-r float-g float-b float-a -- )
 
-function: al_convert_bitmap ( ALLEGRO_BITMAP -- )
+5 2 [COMPATIBLE] function: al_convert_bitmap ( ALLEGRO_BITMAP -- )
 
 \ bitmaps
 0
@@ -166,12 +166,12 @@ function:    al_get_opengl_fbo           ( ALLEGRO_BITMAP-*bitmap -- gluint )
 function: al_set_current_opengl_context   ( ALLEGRO_DISPLAY-*display -- )
 
 \ addon: image
-linux-library liballegro_image.so.5.2
+linux-library liballegro_image
 function:  al_init_image_addon ( -- bool )
 function:  al_get_allegro_image_version ( -- ver )
 
 \ addon: primitives
-linux-library liballegro_primitives.so.5.2
+linux-library liballegro_primitives
 
 0
 enum ALLEGRO_PRIM_LINE_LIST
@@ -240,9 +240,13 @@ function: al_draw_filled_circle ( float-cx float-cy float-r float-r float-g floa
 function: al_draw_filled_rounded_rectangle ( float-x1 float-y1 float-x2 float-y2 float-rx float-ry float-r float-g float-b float-a -- )
 
 \ font addon
-linux-library liballegro_font.so.5.2
 
+[undefined] linux [if]
+linux-library liballegro_ttf
 function: al_init_ttf_addon ( -- bool )
+[then]
+
+linux-library liballegro_font
 function: al_init_font_addon ( -- bool )
 function: al_shutdown_font_addon ( -- )
 \ function: al_get_allegro_font_version ( -- int )
@@ -332,10 +336,10 @@ macro: rp16]   (rp) @ rp! ;
 \ : al_calculate_ribbon             [rp16 al_calculate_ribbon rp16] ;
 \ : al_calculate_arc                [rp16 al_calculate_arc rp16] ;
 
-linux-library liballegro_primitives.so.5.2
+linux-library liballegro_primitives
 
-function: al_draw_polygon  ( vertices count joinstyle r g b a thickness miterlimit -- )
-function: al_draw_filled_polygon  ( vertices count r g b a -- )
+5 2 [compatible] function: al_draw_polygon  ( vertices count joinstyle r g b a thickness miterlimit -- )
+5 2 [compatible] function: al_draw_filled_polygon  ( vertices count r g b a -- )
 
 0
 enum ALLEGRO_LINE_JOIN_NONE
@@ -363,22 +367,22 @@ drop
 #define ALLEGRO_SHADER_VAR_USE_TEX           z" al_use_tex"
 #define ALLEGRO_SHADER_VAR_USE_TEX_MATRIX    z" al_use_tex_matrix"
 
-function: al_create_shader ( ALLEGRO_SHADER_PLATFORM-platform -- shader )
-function: al_attach_shader_source   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type  const-char-*source -- bool )
-function: al_attach_shader_source_file   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type   const-char-*filename -- bool )
-function: al_build_shader   ( ALLEGRO_SHADER-*shader -- bool   )
-function: al_get_shader_log   ( ALLEGRO_SHADER-shader -- zstr )
-function: al_get_shader_platform   ( ALLEGRO_SHADER-shader -- ALLEGRO_SHADER_PLATFORM )
-function: al_use_shader   ( ALLEGRO_SHADER-shader -- bool   )
-function: al_destroy_shader   ( ALLEGRO_SHADER-shader -- )
-function: al_set_shader_sampler   ( const-char-name   ALLEGRO_BITMAP-bitmap  int-unit -- bool )
-function: al_set_shader_matrix   ( const-char-name  const-ALLEGRO_TRANSFORM-matrix -- bool  )
-function: al_set_shader_int   ( const-char-name   int-i -- bool )
-function: al_set_shader_float   ( const-char-name   float-f -- bool )
-function: al_set_shader_int_vector   ( const-char-name   int-num_components  const-int-i   int-num_elems -- bool )
-function: al_set_shader_float_vector   ( const-char-name   int-num_components     const-float-f   int-num_elems -- bool )
-function: al_set_shader_bool   ( const-char-name   bool-b -- bool )
-function: al_get_default_shader_source   ( ALLEGRO_SHADER_PLATFORM-platform  ALLEGRO_SHADER_TYPE-type -- zstr )
+5 2 [compatible] function: al_create_shader ( ALLEGRO_SHADER_PLATFORM-platform -- shader )
+5 2 [compatible] function: al_attach_shader_source   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type  const-char-*source -- bool )
+5 2 [compatible] function: al_attach_shader_source_file   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type   const-char-*filename -- bool )
+5 2 [compatible] function: al_build_shader   ( ALLEGRO_SHADER-*shader -- bool   )
+5 2 [compatible] function: al_get_shader_log   ( ALLEGRO_SHADER-shader -- zstr )
+5 2 [compatible] function: al_get_shader_platform   ( ALLEGRO_SHADER-shader -- ALLEGRO_SHADER_PLATFORM )
+5 2 [compatible] function: al_use_shader   ( ALLEGRO_SHADER-shader -- bool   )
+5 2 [compatible] function: al_destroy_shader   ( ALLEGRO_SHADER-shader -- )
+5 2 [compatible] function: al_set_shader_sampler   ( const-char-name   ALLEGRO_BITMAP-bitmap  int-unit -- bool )
+5 2 [compatible] function: al_set_shader_matrix   ( const-char-name  const-ALLEGRO_TRANSFORM-matrix -- bool  )
+5 2 [compatible] function: al_set_shader_int   ( const-char-name   int-i -- bool )
+5 2 [compatible] function: al_set_shader_float   ( const-char-name   float-f -- bool )
+5 2 [compatible] function: al_set_shader_int_vector   ( const-char-name   int-num_components  const-int-i   int-num_elems -- bool )
+5 2 [compatible] function: al_set_shader_float_vector   ( const-char-name   int-num_components     const-float-f   int-num_elems -- bool )
+5 2 [compatible] function: al_set_shader_bool   ( const-char-name   bool-b -- bool )
+5 2 [compatible] function: al_get_default_shader_source   ( ALLEGRO_SHADER_PLATFORM-platform  ALLEGRO_SHADER_TYPE-type -- zstr )
 
 #1
 enum ALLEGRO_VERTEX_SHADER

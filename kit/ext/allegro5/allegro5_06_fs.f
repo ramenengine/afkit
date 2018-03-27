@@ -49,7 +49,7 @@ enum   ALLEGRO_FOR_EACH_FS_ENTRY_OK    \ =  0
 enum   ALLEGRO_FOR_EACH_FS_ENTRY_SKIP  \ =  1
 enum   ALLEGRO_FOR_EACH_FS_ENTRY_STOP  \ =  2
 drop
-function:  al_for_each_fs_entry  ( fs_entry_dir callback extra -- int )  \ ( fs_entry extra -- enum )
+5 2 [compatible] function:  al_for_each_fs_entry  ( fs_entry_dir callback extra -- int )  \ ( fs_entry extra -- enum )
 \ AL_FUNC(int,  al_for_each_fs_entry, (ALLEGRO_FS_ENTRY *dir,
 \                                      int (*callback)(ALLEGRO_FS_ENTRY *entry, void *extra),
 \                                      void *extra));

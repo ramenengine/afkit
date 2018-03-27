@@ -1,4 +1,4 @@
-linux-library liballegro_acodec.so.5.2
+linux-library liballegro_acodec
 
 decimal \ important
 
