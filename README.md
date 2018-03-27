@@ -87,7 +87,7 @@ The piston has 3 phases.  The event handling phase, the "step" phase, and the di
 - [ ] Add Linux external library bindings
 - [ ] Add SwiftForth/Linux support
 - [ ] Add portable directory walker utility
-- [ ] Add or create official AF-Kit public domain 32-bit Intel ANS Forth (possibly based on ntForth) and add support for it to bindings etc
+- [ ] Add or create official AF-Kit public domain 32-bit Intel ANS Forth and add support for it to bindings etc
 
 ## Links and Resources
 
