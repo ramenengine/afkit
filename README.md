@@ -2,13 +2,13 @@
 
 A package for programming with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
 
-Note:  AF-Kit now has a versioning system!  You must either provide a version when INCLUDEing kit/kit.f, or bypass it by pushing 0.  
+**Note:  AF-Kit now has a versioning system!  You must either provide a version when INCLUDEing kit/kit.f, or bypass it by pushing 0.**  
 
 ## Overview
 
-This package brings up a hardware-accelerated graphics window on which you can write games or other graphical programs.
+This package brings up a hardware-accelerated graphics window so you can write games or other graphical programs in Forth.
 
-Allegro is a portable gamedev library that grants access to graphics cards, audio and input devices via a rich and easy-to-use API.
+Allegro is a portable low-level game development library. http://liballeg.org/
 
 Bindings for [FMOD 5 Low-level API](http://www.fmod.org/documentation/#content/generated/lowlevel_api.html) are also included due to its simpler audio API.
 
