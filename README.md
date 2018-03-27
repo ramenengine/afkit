@@ -49,7 +49,7 @@ Set platform to the appropriate string.  See the Cross-platform Support section.
 ### SwiftForth
 SwiftForth is available from [FORTH Inc](www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
 
-From the SwiftForth prompt, change the current path to the root of your project (if needed) and "INCLUDE kit/kit.f" and type OK for a simple demonstration.
+From the SwiftForth prompt, change the current path to the root of your project (if needed) and "0 INCLUDE kit/kit.f" and type OK for a simple demonstration.
 
 A fancier demonstration is forthcoming.
 
