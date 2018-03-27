@@ -2,6 +2,8 @@
 
 A package for programming with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
 
+Note:  AF-Kit now has a versioning system!  You must either provide a version when INCLUDEing kit/kit.f, or bypass it by pushing 0.  
+
 ## Overview
 
 This package brings up a hardware-accelerated graphics window on which you can write games or other graphical programs.
