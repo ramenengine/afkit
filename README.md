@@ -1,6 +1,6 @@
 # AllegroForthKit
 
-A package for programming with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
+A portable framework for programming games and other applications with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
 
 ## Overview
 
