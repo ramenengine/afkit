@@ -12,13 +12,7 @@ Bindings for [FMOD 5 Low-level API](http://www.fmod.org/documentation/#content/g
 
 [Forth Foundation Library](http://soton.mpeforth.com/flag/ffl/index.html) is included for capabilities often required when working with modern libaries and file formats- features such as XML, Base64, MD5 etc.  XML DOM access and Base64 are automatically loaded to support some higher level features I plan on including in a framework based on this package, but this may change.
 
-This is not a comprehensive game development library; it is a cleaned-up version of [Bubble](http://github.com/rogerlevy/bubble/) with fixed-point, Komodo-specific, and game-development-framework files removed and provisions for portability added.  It is being developed on SwiftForth / Win32.  Bindings for other systems and other modifications to increase its platform reach and ease-of-portability are greatly encouraged.
-
-## Rationale
-
-Forth is a post-fixed, stack-based, typeless, interactive language with an emphasis on simplicity and minimalism.   From my over 15 years of using and researching with it, I've found it to be an excellent language for experimenting interactively with a running game.  While it lacks many advanced features of other languages, and will probably never take advantage of the latest CPU features, it also lacks some of the headaches and obstacles of other languages.  In short it's simpler, without sacrificing too much run-time performance.  It's also lots of fun, and it can even teach you to be a better programmer.
-
-For proof that Forth can do non-trivial, graphically demanding games, check out [The Lady](http://store.steampowered.com/app/341060/The_Lady/), a high-definition 2D game I built with a custom engine based on an predecessor of this package.
+This is not a comprehensive game development library; it is a cleaned-up version of [Bubble](http://github.com/rogerlevy/bubble/) with fixed-point, Komodo-specific, and game-development-framework files removed and provisions for portability added.  
 
 ## Cross-platform Support
 
