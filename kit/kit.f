@@ -57,7 +57,7 @@ include kit/al.f
 : assertAllegro
     allegro? ?exit   true to allegro?  init-allegro-all
     \    usere al_init_user_event_source
-  init-audio
+  [undefined] linux [if] init-audio [then]
 ;
 
 assertAllegro

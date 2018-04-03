@@ -29,24 +29,24 @@ ALLEGRO_WIP_VERSION 8 lshift or
 ALLEGRO_RELEASE_NUMBER or
 constant ALLEGRO_VERSION_INT
 
-
 cd kit
 [defined] linux [if]
     create libcmd 256 allot
     : linux-library
         s" library ext/allegro5/5.2.2/" libcmd place
         0 parse libcmd append
+        s" .so.5.2.2" libcmd append
         libcmd count evaluate
     ;
-    linux-library liballegro.so.5.2
-    linux-library liballegro_memfile.so.5.2
-    linux-library liballegro_primitives.so.5.2
-    linux-library liballegro_acodec.so.5.2
-    linux-library liballegro_audio.so.5.2
-    linux-library liballegro_color.so.5.2
-    linux-library liballegro_font.so.5.2
-    linux-library liballegro_image.so.5.2
-    linux-library liballegro_font.so.5.2
+    linux-library liballegro
+    linux-library liballegro_memfile
+    linux-library liballegro_primitives
+    linux-library liballegro_acodec
+    linux-library liballegro_audio
+    linux-library liballegro_color
+    linux-library liballegro_font
+    linux-library liballegro_image
+    linux-library liballegro_font
 [else]
     : linux-library  0 parse 2drop ;
     [defined] allegro-debug [if]
@@ -63,6 +63,8 @@ cd ..
 : /* postpone \ ; immediate
 
 \ ----------------------------- load files --------------------------------
+: [COMPATIBLE]   ( ver subver -- )
+   16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and < if 0 parse 2drop then ;
 
 include kit/ext/allegro5/allegro5_01_general.f
 include kit/ext/allegro5/allegro5_02_events.f

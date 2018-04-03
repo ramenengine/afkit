@@ -2,11 +2,13 @@
 
 A portable framework for programming games and other applications with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
 
+**Note:  AF-Kit now has a versioning system!  You must either provide a version when INCLUDEing kit/kit.f, or bypass it by pushing 0.**  
+
 ## Overview
 
-This package brings up a hardware-accelerated graphics window on which you can write games or other graphical programs.
+This package brings up a hardware-accelerated graphics window so you can write games or other graphical programs in Forth.
 
-Allegro is a portable gamedev library that grants access to graphics cards, audio and input devices via a rich and easy-to-use API.
+Allegro is a portable low-level game development library. http://liballeg.org/
 
 Bindings for [FMOD 5 Low-level API](http://www.fmod.org/documentation/#content/generated/lowlevel_api.html) are also included due to its simpler audio API.
 
@@ -41,7 +43,7 @@ Set platform to the appropriate string.  See the Cross-platform Support section.
 ### SwiftForth
 SwiftForth is available from [FORTH Inc](www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
 
-From the SwiftForth prompt, change the current path to the root of your project (if needed) and "INCLUDE kit/kit.f" and type OK for a simple demonstration.
+From the SwiftForth prompt, change the current path to the root of your project (if needed) and "0 INCLUDE kit/kit.f" and type OK for a simple demonstration.
 
 A fancier demonstration is forthcoming.
 

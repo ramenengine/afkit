@@ -1,6 +1,6 @@
 [undefined] [version] [if]
 : [version]  ( n n -- <ver> )
-    depth 0 <= abort" Version number is required!"
+    depth 2 < abort" Version number is required!"
     over #-1 = if 2drop bl word drop exit then
     dup >r constant
     dup $FF0000 and r@ $FF0000 and <> abort" Incompatible major version!"
