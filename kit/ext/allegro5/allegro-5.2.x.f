@@ -20,22 +20,17 @@ decimal \ important
 
 #define ALLEGRO_VERSION          5
 #define ALLEGRO_SUB_VERSION      2
-#define ALLEGRO_WIP_VERSION      3
-#define ALLEGRO_RELEASE_NUMBER   0
 
-ALLEGRO_VERSION 24 lshift
-ALLEGRO_SUB_VERSION 16 lshift or
-ALLEGRO_WIP_VERSION 8 lshift or
-ALLEGRO_RELEASE_NUMBER or
-constant ALLEGRO_VERSION_INT
 
 cd kit
 [defined] linux [if]
+    #define ALLEGRO_WIP_VERSION      4
+
     create libcmd 256 allot
     : linux-library
-        s" library ext/allegro5/5.2.2/" libcmd place
+        s" library ext/allegro5/5.2.4/" libcmd place
         0 parse libcmd append
-        s" .so.5.2.2" libcmd append
+        s" .so.5.2.4" libcmd append
         libcmd count evaluate
     ;
     linux-library liballegro
@@ -48,6 +43,7 @@ cd kit
     linux-library liballegro_image
     linux-library liballegro_font
 [else]
+    #define ALLEGRO_WIP_VERSION      3
     : linux-library  0 parse 2drop ;
     [defined] allegro-debug [if]
       library ext/allegro5/5.2.3/allegro_monolith-debug-5.2.dll
@@ -62,6 +58,15 @@ cd ..
 
 : /* postpone \ ; immediate
 
+#define ALLEGRO_RELEASE_NUMBER   0
+
+ALLEGRO_VERSION 24 lshift
+ALLEGRO_SUB_VERSION 16 lshift or
+ALLEGRO_WIP_VERSION 8 lshift or
+ALLEGRO_RELEASE_NUMBER or
+constant ALLEGRO_VERSION_INT
+
+
 \ ----------------------------- load files --------------------------------
 : [COMPATIBLE]   ( ver subver -- )
    16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and < if 0 parse 2drop then ;
@@ -72,6 +77,7 @@ include kit/ext/allegro5/allegro5_03_keys.f
 include kit/ext/allegro5/allegro5_04_audio.f
 include kit/ext/allegro5/allegro5_05_graphics.f
 include kit/ext/allegro5/allegro5_06_fs.f
+include kit/ext/allegro5/allegro5_07_misc.f
 
 \ =============================== END ==================================
 

@@ -99,16 +99,33 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 
 \ ----------------------------------- words for switching windows ----------------------------------
 [defined] linux [if]
-    : focus  drop ;
-    : >display ;  : >ide ;
-[else]
-    : focus  ( winapi-window - )  \ force window via handle to be the active window
-      dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
-    : >display  ( -- )  display al_get_win_window_handle focus ;  \ force allegro display window to take focus
+    variable _hwnd
+    variable _disp
+
+    0 XOpenDisplay _disp !
+    _disp @ _hwnd here XGetInputFocus
+
+    : HWND  _hwnd @ ;
+
+    : focus  ?dup -exit
+        _disp @ over 0 0 XSetInputFocus
+        _disp @ swap XRaiseWindow
+        _disp @ 0 XSync ;
+
+    : >display  display al_get_x_window_id  focus ;
+
     defer >ide
-    :noname [ is >ide ]  ( -- )  HWND focus ;                                                     \ force the Forth prompt to take focus
-    >ide
+    :noname [ is >ide ]  ( -- )  HWND focus ;
+
+[else]
+    : focus  ( winapi-window - )
+      dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
+    : >display  ( -- )  display al_get_win_window_handle focus ;
+    defer >ide
+    :noname [ is >ide ]  ( -- )  HWND focus ;
 [then]
+
+>ide
 
 [section] Input
 \ keyboard and joystick support, integer/float version

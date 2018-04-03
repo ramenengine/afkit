@@ -73,6 +73,7 @@ include kit/ext/allegro5/allegro5_03_keys.f
 [undefined] linux [if] include kit/ext/allegro5/allegro5_04_audio.f [then]
 include kit/ext/allegro5/allegro5_05_graphics.f
 include kit/ext/allegro5/allegro5_06_fs.f
+include kit/ext/allegro5/allegro5_07_misc.f
 
 \ =============================== END ==================================
 
