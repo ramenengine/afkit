@@ -20,8 +20,8 @@ This is not a comprehensive game development library; it is a cleaned-up version
 
 ### Currently officially supported platforms:
 
-- sfwin32 - SwiftForth (Win32)
-- sflinux - SwiftForth (Linux)
+- sfwin32 - [SwiftForth](https://www.forth.com/download/) (Win32)
+- sflinux - [SwiftForth](https://www.forth.com/download/) (Linux)
 
 ### Details
 
@@ -54,7 +54,7 @@ liballegro-video5.2:i386
 ```
 
 ### SwiftForth
-SwiftForth is available from [FORTH Inc](www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
+[SwiftForth](https://www.forth.com/download/) is available from [FORTH Inc](http://www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
 
 From the SwiftForth prompt, change the current path to the root of your project (if needed) and "0 INCLUDE kit/kit.f" and type OK for a simple demonstration.
 
