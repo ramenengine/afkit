@@ -28,7 +28,7 @@ cd kit
 
     create libcmd 256 allot
     : linux-library
-        s" library dep/allegro5/5.2.4/" libcmd place
+        s" library " libcmd place
         0 parse libcmd append
         s" .so.5.2.4" libcmd append
         libcmd count evaluate
