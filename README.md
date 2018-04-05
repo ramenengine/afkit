@@ -21,6 +21,7 @@ This is not a comprehensive game development library; it is a cleaned-up version
 ### Currently officially supported platforms:
 
 - sfwin32 - SwiftForth (Win32)
+- sflinux - SwiftForth (Linux)
 
 ### Details
 
