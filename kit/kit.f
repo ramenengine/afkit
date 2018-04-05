@@ -107,24 +107,20 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 
     : HWND  _hwnd @ ;
 
-    : focus  ?dup -exit
+    : focus
         _disp @ over 0 0 XSetInputFocus
         _disp @ swap XRaiseWindow
         _disp @ 0 XSync ;
 
-    : >display  display al_get_x_window_id  focus ;
-
-    defer >ide
-    :noname [ is >ide ]  ( -- )  HWND focus ;
-
+    : >display  display al_get_x_window_id focus ;
 [else]
     : focus  ( winapi-window - )
       dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
     : >display  ( -- )  display al_get_win_window_handle focus ;
-    defer >ide
-    :noname [ is >ide ]  ( -- )  HWND focus ;
 [then]
 
+defer >ide
+:noname [ is >ide ]  ( -- )  HWND focus ;
 >ide
 
 [section] Input

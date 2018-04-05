@@ -28,7 +28,7 @@ cd kit
 
     create libcmd 256 allot
     : linux-library
-        s" library ext/allegro5/5.2.4/" libcmd place
+        s" library dep/allegro5/5.2.4/" libcmd place
         0 parse libcmd append
         s" .so.5.2.4" libcmd append
         libcmd count evaluate
@@ -46,9 +46,9 @@ cd kit
     #define ALLEGRO_WIP_VERSION      3
     : linux-library  0 parse 2drop ;
     [defined] allegro-debug [if]
-      library ext/allegro5/5.2.3/allegro_monolith-debug-5.2.dll
+      library dep/allegro5/5.2.3/allegro_monolith-debug-5.2.dll
     [else]
-      library ext/allegro5/5.2.3/allegro_monolith-5.2.dll
+      library dep/allegro5/5.2.3/allegro_monolith-5.2.dll
     [then]
     warning off
 [then]
@@ -71,13 +71,13 @@ constant ALLEGRO_VERSION_INT
 : [COMPATIBLE]   ( ver subver -- )
    16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and < if 0 parse 2drop then ;
 
-include kit/ext/allegro5/allegro5_01_general.f
-include kit/ext/allegro5/allegro5_02_events.f
-include kit/ext/allegro5/allegro5_03_keys.f
-include kit/ext/allegro5/allegro5_04_audio.f
-include kit/ext/allegro5/allegro5_05_graphics.f
-include kit/ext/allegro5/allegro5_06_fs.f
-include kit/ext/allegro5/allegro5_07_misc.f
+include kit/dep/allegro5/allegro5_01_general.f
+include kit/dep/allegro5/allegro5_02_events.f
+include kit/dep/allegro5/allegro5_03_keys.f
+include kit/dep/allegro5/allegro5_04_audio.f
+include kit/dep/allegro5/allegro5_05_graphics.f
+include kit/dep/allegro5/allegro5_06_fs.f
+include kit/dep/allegro5/allegro5_07_misc.f
 
 \ =============================== END ==================================
 

@@ -51,7 +51,7 @@ A fancier demonstration is forthcoming.
 
 This component is still being worked on.
 
-To load the (minimal) FMOD bindings, `"INCLUDE kit/ext/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
+To load the (minimal) FMOD bindings, `"INCLUDE kit/dep/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
 
 ## Graphics
 
