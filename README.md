@@ -41,7 +41,7 @@ Make copies of kitconfig.f_ and allegro5.cfg_, removing the underscores.
 
 Set platform to the appropriate string.  See the Cross-platform Support section.
 
-On Linux, you will need to install Allegro and the addons.  
+On Linux, you will need to install Allegro and the addons.  As of this writing 5.2 is the latest version.
 ```
 sudo apt-get install liballegro5.2:i386 \
 liballegro-acodec5.2:i386 \
