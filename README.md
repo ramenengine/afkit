@@ -54,7 +54,7 @@ liballegro-video5.2:i386
 ```
 
 ### SwiftForth
-[SwiftForth](https://www.forth.com/download/) is available from [FORTH Inc](http://www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
+[SwiftForth](https://www.forth.com/download/) is available from [FORTH Inc](http://www.forth.com).  The trial is fully functional apart from lacking source code.
 
 From the SwiftForth prompt, change the current path to the root of your project (if needed) and "0 INCLUDE kit/kit.f" and type OK for a simple demonstration.
 
