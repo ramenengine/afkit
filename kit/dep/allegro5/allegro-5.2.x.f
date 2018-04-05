@@ -30,7 +30,7 @@ cd kit
     : linux-library
         s" library " libcmd place
         0 parse libcmd append
-        s" .so.5.2.4" libcmd append
+        s" .so.5.2" libcmd append
         libcmd count evaluate
     ;
     linux-library liballegro
