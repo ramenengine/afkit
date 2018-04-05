@@ -40,6 +40,18 @@ Make copies of kitconfig.f_ and allegro5.cfg_, removing the underscores.
 
 Set platform to the appropriate string.  See the Cross-platform Support section.
 
+On Linux, you will need to install Allegro and the addons.  
+```
+sudo apt-get install liballegro5.2:i386 \
+liballegro-acodec5.2:i386 \
+liballegro-audio5.2:i386 \
+liballegro-dialog5.2:i386 \
+liballegro-image5.2:i386 \
+liballegro-physfs5.2:i386 \
+liballegro-ttf5.2:i386 \
+liballegro-video5.2:i386 
+```
+
 ### SwiftForth
 SwiftForth is available from [FORTH Inc](www.forth.com).  There is a 3-second-nag trial version with executable-exporting disabled.
 
@@ -51,7 +63,7 @@ A fancier demonstration is forthcoming.
 
 This component is still being worked on.
 
-To load the (minimal) FMOD bindings, `"INCLUDE kit/ext/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
+To load the (minimal) FMOD bindings, `"INCLUDE kit/dep/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
 
 ## Graphics
 
@@ -79,9 +91,8 @@ The piston has 3 phases.  The event handling phase, the "step" phase, and the di
 
 ## Roadmap
 
-- [ ] Update the in-game IDE (i.e. graphical terminal)
-- [ ] Add Linux external library bindings
-- [ ] Add SwiftForth/Linux support
+- [ ] In-game terminal
+- [x] Add SwiftForth/Linux support
 - [ ] Add portable directory walker utility
 - [ ] Add or create official AF-Kit public domain 32-bit Intel ANS Forth and add support for it to bindings etc
 

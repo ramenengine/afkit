@@ -1,5 +1,5 @@
 include kit/ans/ffl/sflinux/ffl.f   \ FFL: DOM; FFL loads FPMATH
-include kit/ext/allegro5/allegro-5.2.x.f
+include kit/dep/allegro5/allegro-5.2.x.f
 
 library libX11.so
 
