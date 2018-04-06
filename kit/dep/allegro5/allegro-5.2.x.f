@@ -50,7 +50,6 @@ cd kit
     [else]
       library dep/allegro5/5.2.3/allegro_monolith-5.2.dll
     [then]
-    warning off
 [then]
 cd ..
 
@@ -80,7 +79,5 @@ include kit/dep/allegro5/allegro5_06_fs.f
 include kit/dep/allegro5/allegro5_07_misc.f
 
 \ =============================== END ==================================
-
-warning on
 
 cr .( Allegro 5.2 )
