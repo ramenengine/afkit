@@ -12,3 +12,6 @@ function: XRaiseWindow ( display  window -- )
 
 function: XSetInputFocus ( display window revert time -- )
 function: XGetInputFocus ( display &window &revert -- )
+
+: l locate ;
+: e edit ;
