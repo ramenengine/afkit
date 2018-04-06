@@ -206,7 +206,7 @@ END-PACKAGE
 
 \ ------------------------------------------------------------
 only forth fixpointing +order definitions
-    : cells  1i cells ;
+    : cells  1i #2 lshift ;
     : bytes  1i ;
     : hwords 1i #1 lshift ;
     : loop  s" 1.0 +loop" evaluate ; immediate
