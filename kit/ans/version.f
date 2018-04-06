@@ -1,7 +1,7 @@
 [undefined] [version] [if]
 : [version]  ( n n -- <ver> )
     depth 2 < abort" Version number is required!"
-    over #-1 = if 2drop bl word drop exit then
+    over 0 = if 2drop bl word drop exit then
     dup >r constant
     dup $FF0000 and r@ $FF0000 and <> abort" Incompatible major version!"
     $FF00 and r> $FF00 and <> if cr ." ::: WARNING: Potential minor version incompatibility --> " including -path type then ;
