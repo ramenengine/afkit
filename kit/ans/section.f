@@ -1,3 +1,4 @@
+[defined] [section] [if] \\ [then]
 create section$  256 /allot
 : (reload)  ( -- <file> <section> )
     >in @   bl word drop  bl word count 2dup upcase section$ place  >in !  include
