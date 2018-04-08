@@ -108,6 +108,7 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
     : HWND  _hwnd @ ;
 
     : focus
+        0 XOpenDisplay _disp !
         _disp @ over 0 0 XSetInputFocus
         _disp @ swap XRaiseWindow
         _disp @ 0 XSync ;
