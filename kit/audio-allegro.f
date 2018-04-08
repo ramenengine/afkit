@@ -1,24 +1,32 @@
-\ Allegro's audio API freaking sucks, so this is here just for people who don't want to
+\ Allegro's audio API is more difficult to use, but this is here for people who don't want to
 \ worry about FMOD licensing.   ($100 one-time fee for "indie" programmers w/ revenue <=$250k )
 \ Allegro's audio API has been loaded already, so we don't load it here.
 
 0 value mixer
+0 value voice
 
 : -audio
-    mixer 0 al_set_mixer_playing drop
+    mixer -exit
+    mixer al_destroy_mixer
+    voice al_destroy_voice
 ;
 
 : +audio
-    #16 al_reserve_samples not if  " Allegro: Error reserving samples." alert -1 abort  then
-    al_get_default_mixer to mixer
+    mixer ?exit
+    #44100 ALLEGRO_AUDIO_DEPTH_INT16 ALLEGRO_CHANNEL_CONF_2 al_create_voice to voice
+    #44100 ALLEGRO_AUDIO_DEPTH_FLOAT32 ALLEGRO_CHANNEL_CONF_2 al_create_mixer to mixer
+    mixer voice al_attach_mixer_to_voice 0= abort" Couldn't initialize audio"
+    mixer al_set_default_mixer
     mixer #1 al_set_mixer_playing drop
 ;
 
-: init-audio
+: initaudio
+    0 to mixer  0 to voice
     al_init_acodec_addon not if  " Allegro: Couldn't initialize audio codec addon." alert -1 abort  then
     al_install_audio not if  " Allegro: Couldn't initialize audio." alert -1 abort  then
+    #32 al_reserve_samples not if  " Allegro: Error reserving samples." alert -1 abort  then
     +audio
 ;
 
-: audio-update
+: updateaudio
 ;

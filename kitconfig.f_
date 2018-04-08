@@ -11,3 +11,5 @@
 : initial-res  640 480 ;
 
 \ true constant allegro-debug
+
+\ true constant ALLEGRO_AUDIO
