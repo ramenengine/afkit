@@ -1,5 +1,3 @@
-\ Allegro's audio API is more difficult to use, but this is here for people who don't want to
-\ worry about FMOD licensing.   ($100 one-time fee for "indie" programmers w/ revenue <=$250k )
 \ Allegro's audio API has been loaded already, so we don't load it here.
 
 0 value mixer

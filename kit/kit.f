@@ -34,8 +34,7 @@ include kit/ans/files          \ ANS
 include kit/ans/roger          \ ANS
 
 [section] Audio
-[defined] ALLEGRO_AUDIO
-    [if]  include kit/audio-allegro  [else]  include kit/audio-fmod  [then]
+[defined] ALLEGRO_AUDIO [if]  include kit/audio-allegro  [then]
 
 \ --------------------------------------------------------------------------------------------------
 [section] Variables

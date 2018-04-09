@@ -10,8 +10,6 @@ This package brings up a hardware-accelerated graphics window so you can write g
 
 Allegro is a portable low-level game development library. http://liballeg.org/
 
-Bindings for [FMOD 5 Low-level API](http://www.fmod.org/documentation/#content/generated/lowlevel_api.html) are also included due to its simpler audio API.
-
 [Forth Foundation Library](http://soton.mpeforth.com/flag/ffl/index.html) is included for capabilities often required when working with modern libaries and file formats- features such as XML, Base64, MD5 etc.  XML DOM access and Base64 are automatically loaded to support some higher level features I plan on including in a framework based on this package, but this may change.
 
 This is not a comprehensive game development library; it is a cleaned-up version of [Bubble](http://github.com/rogerlevy/bubble/) with fixed-point, Komodo-specific, and game-development-framework files removed and provisions for portability added.  
@@ -62,9 +60,7 @@ A fancier demonstration is forthcoming.
 
 ## Audio
 
-This component is still being worked on.
-
-To load the (minimal) FMOD bindings, `"INCLUDE kit/dep/<PLATFORM>/fmod5/fmod5.f"`, replacing `<PLATFORM>` with the appropriate thing.
+When ALLEGRO_AUDIO is defined, audio-allegro.f will be loaded, which reserves 32 samples for playing samples with play_sample, and a default mixer and voice.  
 
 ## Graphics
 
@@ -103,5 +99,4 @@ The piston has 3 phases.  The event handling phase, the "step" phase, and the di
 - [Allegro 5.2.3 Documentation](http://liballeg.org/a5docs/5.2.3/)
 - [Allegro 5.0 Documentation on allegro.cc](https://www.allegro.cc/manual/5/) - Integration with the forums. Will likely be out-of-date in places
 - [Allegro.cc forum](https://www.allegro.cc/forums) - A very helpful and fairly active community.  And gladly, language-agnostic.
-- [FMOD 5 documentation](http://www.fmod.org/documentation/#content/generated/lowlevel_api.html) - Functions are organized as classes and methods but they map logically to the C function interface which the bindings use.
 - [The DPANS94 Forth Standard](http://dl.forth.com/sitedocs/dpans94.pdf)
