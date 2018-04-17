@@ -1,7 +1,12 @@
+$000100 [version] xml-ver
+
 \ XML reading tools
 
-: parsexml ( adr len -- rootnode )
+: parsexml ( adr len -- dom-rootnode )
     dom-new >r  true r@ dom-read-string 0= throw  r> dom>iter nni-root ;
+
+: loadxml  ( adr c -- dom-rootnode )  file@  2dup parsexml  >r  drop free throw  r> ;
+
 
 define xmling
     : value@  ( node -- adr c )  dom>node>value str-get ;
@@ -15,6 +20,8 @@ define xmling
 previous definitions
 
 also xmling
+
+: xmlname  dom>node>name str-get ;
 
 \ get # of child elements of given name
 : xmlcount  ( node adr c -- n ) 0 locals| n c adr |

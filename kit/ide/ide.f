@@ -19,9 +19,6 @@
 \   OUTPUT  ( -- variable )  variable that stores the bitmap to draw text output onto.
 \   /S  reset the Forth stack
 
-bu: idiom ide:
-import kit/mo/draw
-import kit/mo/rect
 
 variable consolas
 consolas value cmdfont
@@ -78,8 +75,8 @@ public:
 \ --------------------------------------------------------------------------------------------------
 \ Output words
 private:
-    : get-xy  ( -- #col #row )  cursor x 2v@  lm tm 2-  fw fh 2/ 2i ;
-    : at-xy   ( #col #row -- )  2s>p fw fh 2*  lm tm 2+  cursor x 2v! ;
+    : get-xy  ( -- #col #row )  cursor x 2@  lm tm 2-  fw fh 2/ 2i ;
+    : at-xy   ( #col #row -- )  2s>p fw fh 2*  lm tm 2+  cursor x 2! ;
     : fill  ( w h bitmap -- )  onto  write-rgba blend>  rectf ;
     : clear  ( w h bitmap -- )  0 0 0 0 color  fill ;
     : outputw  rm lm - ;
@@ -98,7 +95,7 @@ private:
     ;
     : (emit)
         ch c!
-        cursor x 2v@ at  ch #1 print
+        cursor x 2@ at  ch #1 print
         fw cursor x +!
         cursor x @ rm >= if  cr  then
     ;
@@ -224,7 +221,7 @@ function: al_load_ttf_font  ( zfilename size flags -- font )
 : .output   untinted  output @ blit ;
 : .cmdline
     output @ >r  display al_get_backbuffer output !
-    get-xy 2>r  at@ cursor x 2v!  bar  scrolling off  .s2  cr  .idiom  .cmdbuf  scrolling on   2r> at-xy
+    get-xy 2>r  at@ cursor x 2!  bar  scrolling off  .s2  cr  .idiom  .cmdbuf  scrolling on   2r> at-xy
     r> output !
 ;
 : /cmdline
