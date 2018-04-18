@@ -19,7 +19,7 @@ This is not a comprehensive game development library; it is a cleaned-up version
 ### Currently officially supported platforms:
 
 - sfwin32 - [SwiftForth](https://www.forth.com/download/) (Win32)
-- sflinux - [SwiftForth](https://www.forth.com/download/) (Linux)
+- sflinux32 - [SwiftForth](https://www.forth.com/download/) (Linux)
 
 ### Details
 
