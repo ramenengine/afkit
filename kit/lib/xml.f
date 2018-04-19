@@ -45,4 +45,12 @@ also xmling
 : xmltext  ( node -- adr c | 0 )
     >first begin dup while  dom.text istype if  value@ exit  then  >next repeat ;
 
+: xmleach>  ( node -- <code> )  ( child -- )
+    r> swap xmlfirst
+        begin dup while  2dup 2>r  swap call  2r> xmlnext  repeat
+    2drop ;
+
+: ?xml  ( node adr c -- node true | false )
+    third >r  named dup if  r> swap  exit then  r> drop ;
+
 previous
