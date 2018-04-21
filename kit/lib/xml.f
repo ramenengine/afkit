@@ -2,55 +2,57 @@ $000100 [version] xml-ver
 
 \ XML reading tools
 
-: parsexml ( adr len -- dom-rootnode )
-    dom-new >r  true r@ dom-read-string 0= throw  r> dom>iter nni-root ;
+: parsexml ( adr len -- dom )
+   dom-new >r  r@ dom-read-string 0= throw  r> ;
 
-: loadxml  ( adr c -- dom-rootnode )  file@  2dup parsexml  >r  drop free throw  r> ;
+: loadxml  ( adr c -- dom nnn-root )
+    file@  2dup parsexml -rot  drop free throw  dom>tree nnt-root@ ;
 
 
 define xmling
-    : value@  ( node -- adr c )  dom>node>value str-get ;
-    : istype  ( node type -- node flag )  over dom>node>type @ = ;
-    : named  ( node adr c -- node flag ) third dom>node>name str-get compare 0= ;
-    : >first  nnn>children dnl>first @ ;
-    : >next  ( node -- node|0 )  nnn>dnn dnn-next@ ;
+    : value@  ( dom-nnn -- adr c )  dom>node>value str-get ;
+    : istype  ( dom-nnn type -- dom-nnn flag )  over dom>node>type @ = ;
+    : named  ( dom-nnn adr c -- dom-nnn flag ) third dom>node>name str-get compare 0= ;
+    : >first  dom-nnn>children dnl>first @ ;
+    : >next  ( dom-nnn -- dom-nnn|0 )  dom-nnn>dnn dnn-next@ ;
 
-    : stash   2dup pocket place ;
-    : ?print  dup if  pocket count type space  then ;
-previous definitions
+    \ : stash   2dup pocket place ;
+    \ : ?print  dup if  pocket count type space  then ;
+    \ : xmlname  dom>node>name str-get ;
 
-also xmling
+    \ get # of child elements of given name
+    : #elements  ( dom-nnn adr c -- n ) 0 locals| n c adr |
+        >first begin ?dup while  dom.element istype if  adr c named if  1 +to n  then  then
+        >next  repeat  n ;
 
-: xmlname  dom>node>name str-get ;
+    : (find)  ( dom-nnn adr c type -- dom-nnn | 0 )  locals| type c adr |
+        begin dup while  type istype if  adr c named ?exit  then  >next  repeat ;
 
-\ get # of child elements of given name
-: xmlcount  ( node adr c -- n ) 0 locals| n c adr |
-    >first begin ?dup while  dom.element istype if  adr c named if  1 +to n  then  then
-    >next  repeat  n ;
+    : findchild  3>r >first 3r> (find) ;
 
-: (find)  ( node adr c type -- node | 0 )  locals| type c adr |
-    begin dup while  type istype if  adr c named ?exit  then  >next  repeat  ;
+    : next  ( dom-nnn adr c -- dom-nnn | 0 )      \ get next element with given name
+        rot >next -rot dom.element (find) ;
 
-\ get next sibling of given name
-: xmlnext  ( node adr c -- node | 0 )  rot >next -rot dom.element (find) ;
+    : element  ( dom-nnn adr c n -- dom-nnn )
+        locals| n c adr |
+        adr c dom.element findchild ?dup ?exit
+        >next
+        n 1 - 0 do  adr c dom.element (find) dup 0= abort" XML element not found"  loop ;
 
-\ get first child of given name
-: xmlfirst  ( node adr c -- node | 0 )  rot >first -rot dom.element (find) ;
+    : attr?  dom.attribute findchild 0<> ;
 
-\ get value of an attribute as a string
-: xmlvalue  ( node adr c -- adr c true | 0 )
-    rot >first -rot dom.attribute (find) if  value@ true  else  false  then ;
+    : val  ( dom-nnn adr c -- adr c )       \ get value of an attribute as a string
+        dom.attribute findchild dup 0= abort" XML attribute not found"
+        value@ ;
 
-\ get text content of a node
-: xmltext  ( node -- adr c | 0 )
-    >first begin dup while  dom.text istype if  value@ exit  then  >next repeat ;
+    : pval  ( dom-nnn adr c -- n )  val evaluate ;
 
-: xmleach>  ( node -- <code> )  ( child -- )
-    r> swap xmlfirst
-        begin dup while  2dup 2>r  swap call  2r> xmlnext  repeat
-    2drop ;
+    : text  ( dom-nnn -- adr c | 0 )  " " dom.text findchild value@ ;
 
-: ?xml  ( node adr c -- node true | false )
-    third >r  named dup if  r> swap  exit then  r> drop ;
+    : eachelement>  ( dom-nnn -- <code> )  ( dom-nnn -- )
+        r> swap >first
+        begin dup while  dom.element istype if
+            2dup 2>r  swap call  2r>
+        then   >next  repeat  2drop ;
 
-previous
+only forth definitions
