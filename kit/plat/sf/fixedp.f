@@ -215,6 +215,9 @@ only forth fixpointing +order definitions
     : <<      lshift ;
     : >>      rshift ;
     : .0 ; immediate
+    : ifill  swap 1i swap ifill ;
+    : ierase  0 ifill ;
+    : imove  1i imove ;
 
 only forth definitions fixpointing +order
 : fixed   fixpointing +order  ints off #10 base ! ;

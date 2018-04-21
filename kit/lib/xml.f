@@ -13,8 +13,8 @@ define xmling
     : value@  ( dom-nnn -- adr c )  dom>node>value str-get ;
     : istype  ( dom-nnn type -- dom-nnn flag )  over dom>node>type @ = ;
     : named  ( dom-nnn adr c -- dom-nnn flag ) third dom>node>name str-get compare 0= ;
-    : >first  dom-nnn>children dnl>first @ ;
-    : >next  ( dom-nnn -- dom-nnn|0 )  dom-nnn>dnn dnn-next@ ;
+    : >first  nnn>children dnl>first @ ;
+    : >next  ( dom-nnn -- dom-nnn|0 )  nnn>dnn dnn-next@ ;
 
     \ : stash   2dup pocket place ;
     \ : ?print  dup if  pocket count type space  then ;
@@ -28,7 +28,7 @@ define xmling
     : (find)  ( dom-nnn adr c type -- dom-nnn | 0 )  locals| type c adr |
         begin dup while  type istype if  adr c named ?exit  then  >next  repeat ;
 
-    : findchild  3>r >first 3r> (find) ;
+    : findchild  2>r >r >first r> 2r> (find) ;
 
     : next  ( dom-nnn adr c -- dom-nnn | 0 )      \ get next element with given name
         rot >next -rot dom.element (find) ;
