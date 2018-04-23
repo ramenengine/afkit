@@ -51,7 +51,7 @@
 : rnd ( n -- 0..n-1 ) random um* nip ;
 
 \ vocabulary helper
-: define  >in @  vocabulary  >in !  only forth also ' execute definitions ;
+: define  >in @  vocabulary  >in !  also ' execute definitions ;
 
 
 \ on-stack vector stuff (roger)
