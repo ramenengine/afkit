@@ -50,10 +50,10 @@ define xmling
 
     : text  ( dom-nnn -- adr c | 0 )  " " dom.text findchild value@ ;
 
-    : eachelement>  ( dom-nnn -- <code> )  ( dom-nnn -- )
-        r> swap >first
-        begin dup while  dom.element istype if
-            2dup 2>r  swap call  2r>
-        then   >next  repeat  2drop ;
+\    : eachelement>  ( dom-nnn -- <code> )  ( dom-nnn -- )
+\        r> swap >first
+\        begin dup while  dom.element istype if
+\            2dup 2>r  swap call  2r>
+\        then   >next  repeat  2drop ;
 
 only forth definitions
