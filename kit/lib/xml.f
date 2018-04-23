@@ -3,10 +3,10 @@ $000100 [version] xml-ver
 \ XML reading tools
 
 : parsexml ( adr len -- dom )
-   dom-new >r  r@ dom-read-string 0= throw  r> ;
+   dom-new >r  true r@ dom-read-string 0= throw  r> ;
 
 : loadxml  ( adr c -- dom nnn-root )
-    file@  2dup parsexml -rot  drop free throw  dom>tree nnt-root@ ;
+    file@  2dup parsexml -rot  drop free throw  dup  dom>tree nnt-root@ ;
 
 
 define xmling
@@ -30,14 +30,15 @@ define xmling
 
     : findchild  2>r >r >first r> 2r> (find) ;
 
-    : next  ( dom-nnn adr c -- dom-nnn | 0 )      \ get next element with given name
-        rot >next -rot dom.element (find) ;
+    \ : next  ( dom-nnn adr c -- dom-nnn | 0 )      \ get next element with given name
+    \    rot >next -rot dom.element (find) ;
 
-    : element  ( dom-nnn adr c n -- dom-nnn )
-        locals| n c adr |
+    : element  ( dom-nnn c n adr -- dom-nnn )
+        locals| c adr n |
         adr c dom.element findchild ?dup ?exit
         >next
-        n 1 - 0 do  adr c dom.element (find) dup 0= abort" XML element not found"  loop ;
+        n 1 = abort" XML element not found"
+        n 1 - for  adr c dom.element (find) dup 0= abort" XML element not found"  loop ;
 
     : attr?  dom.attribute findchild 0<> ;
 
