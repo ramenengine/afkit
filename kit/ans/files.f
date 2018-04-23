@@ -37,3 +37,15 @@ decimal
 \ usage: <filename> file,
 : file,  ( filename c -- )  \ file comma
   file 2drop ;
+
+
+: ending ( addr len char -- addr len )
+   >r begin  2dup r@ scan
+      ?dup while  2swap 2drop  #1 /string
+   repeat  r> 2drop ;
+
+[defined] linux [if]
+: -filename ( a n -- a n )  2dup  [char] / ending  nip - ;
+[else]
+: -filename ( a n -- a n )  2dup  [char] \ ending  nip - ;
+[then]
