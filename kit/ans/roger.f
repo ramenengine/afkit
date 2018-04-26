@@ -35,12 +35,6 @@
 : 3,  rot , swap , , ;
 : 4,  2swap swap , , swap , , ;
 : :is  :noname  postpone [  [compile] is  ] ;
-: 2move  ( src /pitch dest /pitch #rows /bytes -- )
-  locals| #bytes #rows destpitch dest srcpitch src |
-  #rows 0 do
-    src dest #bytes move
-    srcpitch +to src  destpitch +to dest
-  loop ;
 : reverse   ( ... count -- ... ) 1+ 1 max 1 ?do i 1- roll loop ;
 : cfill  fill ;
 
