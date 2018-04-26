@@ -97,7 +97,7 @@ variable newfs
     fs @ newfs ! ;
 
 : show  unmount  'show try to renderr  unmount  ?overlay  al_flip_display ;
-: step  'step try to steperr ;
+: step  'step try to steperr  1 +to #frames ;
 : /ok  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : ok/  eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
@@ -108,7 +108,7 @@ variable newfs
     begin  @event  breaking? not and while
         'go try to goerr  standard-events  ?system
     repeat ;
-: ok    /ok   begin  show  1 +to #frames  attend  poll  step  ?fs  breaking?  until  ok/ ;
+: ok    /ok   begin  show  attend  poll  step  ?fs  breaking?  until  ok/ ;
 
 \ default demo: dark blue screen with bouncing white square
 variable x  variable vx  1 vx !
