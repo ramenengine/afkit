@@ -53,6 +53,7 @@ function: al_stop_samples ( -- )
 function: al_load_sample ( const-char-*filename -- ALLEGRO_SAMPLE )
 function: al_load_audio_stream ( const-char-*filename, size_t-buffer_count, unsigned-int-samples -- ALLEGRO_AUDIO_STREAM )
 function: al_save_sample ( const-char-*filename, ALLEGRO_SAMPLE-*spl -- bool )
+function: al_get_sample_data ( sample -- data )
 
 \ stream
 function: al_create_audio_stream ( size_t-buffer_count, unsigned-int-samples, unsigned-int-freq, ALLEGRO_AUDIO_DEPTH-depth, ALLEGRO_CHANNEL_CONF-chan_conf -- ALLEGRO_AUDIO_STREAM )
