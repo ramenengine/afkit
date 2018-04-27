@@ -28,7 +28,7 @@ include kit/ans/section
 
 [section] Libraries
 \ Load support libraries
-include kit/plat/win/fpext      \ depends on FPMATH
+include kit/plat/sf/fpext      \ depends on FPMATH
 include kit/ans/strops         \ ANS
 include kit/ans/files          \ ANS
 include kit/ans/roger          \ ANS
