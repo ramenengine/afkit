@@ -47,5 +47,6 @@ decimal
 [defined] linux [if]
 : -filename ( a n -- a n )  2dup  [char] / ending  nip - ;
 [else]
-: -filename ( a n -- a n )  2dup  [char] \ ending  nip - ;
+: slashes  2dup  over + swap do  i c@ [char] / = if  [char] \ i c!  then  #1 +loop ;
+: -filename ( a n -- a n )  slashes 2dup  [char] \ ending  nip - ;
 [then]
