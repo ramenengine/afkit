@@ -30,12 +30,11 @@ define xmling
 
     : findchild  2>r >r >first r> 2r> (find) ;
 
-    : element  ( dom-nnn n adr c -- dom-nnn )
+    : element  ( dom-nnn n adr c -- dom-nnn|0 )
         locals| c adr n |
-        adr c dom.element findchild ?dup ?exit
-        >next
-        n 1 = abort" XML element not found"
-        n 1 - for  adr c dom.element (find) dup 0= abort" XML element not found"  loop ;
+        >first
+        n 1 + for  adr c dom.element (find) dup 0= abort" XML element not found"
+            i n <> if >next then  loop ;
 
     : attr?  dom.attribute findchild 0<> ;
 
