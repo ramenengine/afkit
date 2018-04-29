@@ -227,7 +227,10 @@ only forth definitions fixpointing +order
 : octal   fixpointing -order  ints on  octal ;
 : include   ints @ >r  fixed include  r> ?exit fixed  ;
 : included  ints @ >r  fixed included  r> ?exit fixed  ;
-: only     '   only   execute   ints @ ?exit  fixpointing +order ;
+: (only)  only  execute   ints @ ?exit  fixpointing +order ;
+: only
+    state @ if  postpone [']  postpone (only)
+            else  '  (only)  then  ; immediate
 : definitions
     get-order over fixpointing = if  fixpointing -order  definitions  fixpointing +order
     else  definitions  then  set-order ;
