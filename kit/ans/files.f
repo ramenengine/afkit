@@ -44,9 +44,10 @@ decimal
       ?dup while  2swap 2drop  #1 /string
    repeat  r> 2drop ;
 
+: slashes  2dup  over + swap do  i c@ [char] / = if  [char] \ i c!  then  #1 +loop ;
+
 [defined] linux [if]
 : -filename ( a n -- a n )  2dup  [char] / ending  nip - ;
 [else]
-: slashes  2dup  over + swap do  i c@ [char] / = if  [char] \ i c!  then  #1 +loop ;
 : -filename ( a n -- a n )  slashes 2dup  [char] \ ending  nip - ;
 [then]
