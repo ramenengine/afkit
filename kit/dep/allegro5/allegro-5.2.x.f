@@ -68,7 +68,7 @@ constant ALLEGRO_VERSION_INT
 
 \ ----------------------------- load files --------------------------------
 : [COMPATIBLE]   ( ver subver -- )
-   16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and < if 0 parse 2drop then ;
+   16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and  > if 0 parse 2drop then ;
 
 include kit/dep/allegro5/allegro5_01_general.f
 include kit/dep/allegro5/allegro5_02_events.f
