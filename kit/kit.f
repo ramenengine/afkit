@@ -83,6 +83,8 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
     display al_get_display_refresh_rate ?dup 0= if 60 then to fps
     eventq                al_get_mouse_event_source    al_register_event_source
     eventq                al_get_keyboard_event_source al_register_event_source
+
+    ALLEGRO_DEPTH_TEST 0 al_set_render_state
 ;
 
 : valid?  ['] @ catch nip 0 = ;
