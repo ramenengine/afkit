@@ -43,7 +43,7 @@ create fse  256 /allot  \ fullscreen event
 : break  true to breaking? ;
 transformation m1
 : unmount  ( -- )
-    m1 al_identity_transform  m1 global-scale s>f 1sf dup al_scale_transform  m1 al_use_transform
+    m1 al_identity_transform  m1 #globalscale s>f 1sf dup al_scale_transform  m1 al_use_transform
     0 0 displayw displayh al_set_clipping_rectangle
     ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA  ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ONE al_set_separate_blender
     display al_set_target_backbuffer ;
