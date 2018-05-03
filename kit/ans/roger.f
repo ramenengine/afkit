@@ -11,7 +11,7 @@
 : ?lit  state @ if postpone literal then ; 
 : do postpone ?do ; immediate
 : for  " 0 do" evaluate ; immediate
-: buffer  here swap /allot ;
+: allotment  here swap /allot ;
 : move,   here over allot swap move ;
 : h?  @ h. ;
 : reclaim  h ! ;
