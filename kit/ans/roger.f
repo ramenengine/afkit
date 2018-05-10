@@ -22,12 +22,10 @@
 : clamp  ( n low high -- n ) -rot max min ;
 : ++  1 swap +! ;
 : --  -1 swap +! ;
-
 : ifill  ( c-addr count val - )  -rot  0 do  over !+  loop  2drop ;
 : ierase   0 ifill ;
 : imove  ( from to count - )  cells move ;
 : time?  ( xt -- ) ucounter 2>r  execute  ucounter 2r> d-  d>s  . ;
-
 : kbytes  #1024 * ;
 : megs    #1024 * 1024 * ;
 : udup  over swap ;
@@ -44,11 +42,10 @@
 : random ( -- u ) seed $107465 * $234567 + DUP TO seed ;
 : rnd ( n -- 0..n-1 ) random um* nip ;
 
-\ vocabulary helper
+\ Vocabulary helper
 : define  >in @  vocabulary  >in !  also ' execute definitions ;
 
-
-\ on-stack vector stuff (roger)
+\ On-stack vector stuff
 : 2!  swap over cell+ ! ! ;
 : 2@  dup @ swap cell+ @ ;
 : 2+!  swap over cell+ +! +! ;

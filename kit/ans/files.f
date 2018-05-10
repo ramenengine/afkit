@@ -1,14 +1,12 @@
 decimal
 
 \ intent: create file and write string to the file
-\ usage: <string> <filename>
 : file!  ( addr count filename c -- )  \ file store
   w/o create-file throw >r
   r@ write-file throw
   r> close-file throw ;
 
 \ intent: fetch file contents into destination buffer
-\ usage: <filename> <destination> @file
 : @file  ( filename c dest -- size )  \ fetch file
   -rot r/o open-file throw >r
   r@ file-size drop throw r@ read-file throw
@@ -18,7 +16,6 @@ decimal
 \ system heap version
 
 \ intent: fetch file contents into memory
-\ usage: <filename> file@
 : file@  ( filename c -- allocated-mem size )  \ file fetch
   r/o open-file throw >r
   r@ file-size throw d>s dup dup allocate throw dup rot
@@ -29,16 +26,15 @@ decimal
 \ dictionary version
 
 \ intent: fetch file contents into dictionary
-\ usage: <filename> file>
 : file  ( filename c -- addr size )  \ file from
   file@  2dup here dup >r  swap  dup /allot  move  swap free throw  r> swap ;
 
 \ intent: comma a file into the dictionary (same as file> except drops off returned values)
-\ usage: <filename> file,
 : file,  ( filename c -- )  \ file comma
   file 2drop ;
 
 
+\ File path tools
 : ending ( addr len char -- addr len )
    >r begin  2dup r@ scan
       ?dup while  2swap 2drop  #1 /string
@@ -56,3 +52,20 @@ decimal
 : -PATH ( a n -- a n )   slashes  [CHAR] \ ENDING  0 MAX ;
 [then]
 
+create incpath 256 allot
+: including  ( -- adr c | 0 )
+    source-id -exit
+    source-id #-1 = if  0 exit  then
+    [in-platform] win [if]
+        source-id incpath #255 0 GetFinalPathNameByHandle drop
+    [then]
+    [in-platform] linux [if]
+
+    [then]
+;
+
+
+\ Relative path tool
+create abspath  256 allot
+: along  ( adr c -- adr c )
+    including -filename abspath place  abspath append  abspath count ;
