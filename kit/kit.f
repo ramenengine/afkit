@@ -1,5 +1,5 @@
 include kit/ans/version.f
-$000910 [version] kit-ver
+$000903 [version] kit-ver
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
