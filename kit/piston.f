@@ -98,7 +98,8 @@ variable newfs
 
 : show  unmount  'show try to renderr  unmount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
-: /ok  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
+: closesrc  source-id close-file ;
+: /ok  closesrc  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : ok/  eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
