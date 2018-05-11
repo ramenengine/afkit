@@ -51,21 +51,3 @@ decimal
 : -filename ( a n -- a n )  slashes 2dup  [char] \ ending  nip - ;
 : -PATH ( a n -- a n )   slashes  [CHAR] \ ENDING  0 MAX ;
 [then]
-
-create incpath 256 allot
-: including  ( -- adr c | 0 )
-    source-id -exit
-    source-id #-1 = if  0 exit  then
-    [in-platform] win [if]
-        source-id incpath #255 0 GetFinalPathNameByHandle drop
-    [then]
-    [in-platform] linux [if]
-
-    [then]
-;
-
-
-\ Relative path tool
-create abspath  256 allot
-: along  ( adr c -- adr c )
-    including -filename abspath place  abspath append  abspath count ;
