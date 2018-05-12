@@ -21,8 +21,7 @@ decimal \ important
 #define ALLEGRO_VERSION          5
 #define ALLEGRO_SUB_VERSION      2
 
-
-cd kit
+cd kit/dep
 [defined] linux [if]
     #define ALLEGRO_WIP_VERSION      4
 
@@ -45,13 +44,15 @@ cd kit
 [else]
     #define ALLEGRO_WIP_VERSION      3
     : linux-library  0 parse 2drop ;
-    [defined] allegro-debug [if]
-      library dep/allegro5/5.2.3/allegro_monolith-debug-5.2.dll
-    [else]
-      library dep/allegro5/5.2.3/allegro_monolith-5.2.dll
-    [then]
+    cd allegro5/5.2.3
+        [defined] allegro-debug [if]
+            library allegro_monolith-debug-5.2.dll
+        [else]
+            library allegro_monolith-5.2.dll
+        [then]
+    cd ../..
 [then]
-cd ..
+cd ../..
 
 : void ;
 
