@@ -6,5 +6,12 @@ cd kit/dep/zlib
 [then]
 cd ../../..
 
-function: compress ( dest-adr &destlen-double src-adr srclen-lo srclen-high -- result )
-function: uncompress ( dest-adr &destlen-double src-adr srclen-lo srclen-high -- result )
+function: compress ( dest-adr &destlen src-adr srclen -- result )
+function: uncompress ( dest-adr &destlen src-adr srclen -- result )
+
+variable destlen
+: decompress  ( src #len dest #len -- #outputlen )
+    destlen !
+    destlen 2swap uncompress ?dup if  h.  -1 abort" Zlib error"  then
+    destlen @ ;
+
