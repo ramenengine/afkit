@@ -93,8 +93,8 @@ wordlist constant fixpointing
 ?: f>p  FPGRAN f* f>s ;
 ?: p*  1f s>f f* f>s ;
 ?: p/  swap s>f 1f f/ f>s ;
-?: i.  . ;
-?: i?  ? ;
+?: i.  base @ >r decimal . r> base ! ;
+?: i?  @ i. ;
 ?: p.  1f f. ;
 
 fixpointing +order definitions
