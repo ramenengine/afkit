@@ -91,12 +91,17 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 [defined] initial-scale [if] initial-scale [else] 1 [then] value #globalscale
 [undefined] initial-res [if]  : initial-res  640 480 ;  [then]
 
-: +display  display valid? ?exit  initial-res initDisplay ;
+create desired-res  initial-res swap , ,
+
+: +display  display valid? ?exit  desired-res 2@ initDisplay ;
 : -display  display valid? -exit
     display al_destroy_display  0 to display
     eventq al_destroy_event_queue  0 to eventq ;
 : -allegro  -display  false to allegro?  al_uninstall_system ;
 : empty  -display empty ;
+
+: ?same  desired-res 2@ 2over d= -exit  r> drop ;
+: resolution  ?same  -display  desired-res 2!  +display ;
 
 \ ----------------------------------- words for switching windows ----------------------------------
 [defined] linux [if]
