@@ -1,6 +1,8 @@
 include kit/ans/version.f
 $000909 [version] kit-ver
 
+[defined] page [if] page [then] 
+
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
     s" kitconfig.f" file-exists [if]

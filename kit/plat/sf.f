@@ -1,3 +1,5 @@
+\ None of this needs to be ported to other systems.  All non-essential.
+
 : l locate ;
 : e edit ;
 variable newquit
@@ -48,5 +50,5 @@ create backup 11 cells allot
 
 ' newprompt is prompt
 
-: /s  s0 sp! ;
+: /s  s0 @ sp! ;
 
