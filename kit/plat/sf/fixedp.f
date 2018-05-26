@@ -152,13 +152,13 @@ variable sign
   then  0  ;
 
 fixpointing +order definitions
-    : .S ( ? -- ? )
-      CR DEPTH 0> IF DEPTH 0 ?DO S0 @ I 1+ CELLS - @ . LOOP THEN
-      DEPTH 0< ABORT" Underflow"
-      FDEPTH ?DUP IF
-        ."  FSTACK: "
-        0  DO  I' I - 1- FPICK N.  LOOP
-      THEN ;
+\    : .S ( ? -- ? )
+\      CR DEPTH 0> IF DEPTH 0 ?DO S0 @ I 1+ CELLS - @ . LOOP THEN
+\      DEPTH 0< ABORT" Underflow"
+\      FDEPTH ?DUP IF
+\        ."  FSTACK: "
+\        0  DO  I' I - 1- FPICK N.  LOOP
+\      THEN ;
 
 \ -------- Add fixed-point interpreter to SwiftForth -------
 only forth definitions fixpointing +order
