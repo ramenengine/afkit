@@ -38,9 +38,17 @@
         </ul>
         {% endif %}
 
-        <p>Pages</p>
+        <h3>Pages</h3>
 
-        {{ site.pages }}
+        <ul>
+          {% for page in site.pages %}
+            {% if page.path contains '.md' %}
+              {% unless page.path contains '-content' %}
+                <li><a href="{{site.github.url}}{{ page.url }}">{{ page.title }}</a></li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}  <!-- page -->
+        </ul>
 
       </header>
       <section>
@@ -48,12 +56,12 @@
       {{ content }}
 
       </section>
-      <footer>
-        {% if site.github.is_project_page %}
-        <p>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-        {% endif %}
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+      <!--<footer>-->
+        <!--{% if site.github.is_project_page %}-->
+        <!--<p>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>-->
+        <!--{% endif %}-->
+        <!--<p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>-->
+      <!--</footer>-->
     </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     {% if site.google_analytics %}
