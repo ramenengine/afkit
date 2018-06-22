@@ -55,7 +55,8 @@
 
         <h1>{{ page.title }}</h1>
         {% include toc.html html=content h_min=2 %}
-        {{ page.content }}
+        {% assign contents = content split: '</h1>' %}
+        {{ contents[1] }}
 
       </section>
       <!--<footer>-->
