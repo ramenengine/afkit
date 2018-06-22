@@ -45,7 +45,7 @@
             {% if page.path contains '.md' %}
               {% unless page.path contains '-content' %}
                 <li><a href="{{site.github.url}}{{ page.url }}">{{ page.title }}</a></li>
-              {% endif %}
+              {% endunless %}
             {% endif %}
           {% endfor %}  <!-- page -->
         </ul>
@@ -53,7 +53,9 @@
       </header>
       <section>
 
-      {{ content }}
+        <h1>{{ page.title }}</h1>
+        {% include toc.html html=content h_min=2 %}
+        {{ page.content }}
 
       </section>
       <!--<footer>-->
