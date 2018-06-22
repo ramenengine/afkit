@@ -1,8 +1,8 @@
 # ANS Modules
 
-These are modules that have no dependencies.  They are all loaded as part of the kit, which depends on them.
+These are modules located in `ans/`  that have no dependencies.  They are all loaded as part of the kit, which depends on them.
 
-## Files
+## files.f
 
 ```
 : file!  ( addr count filename c -- )  \ file store
@@ -17,7 +17,7 @@ These are modules that have no dependencies.  They are all loaded as part of the
 ```
 
 
-## Roger
+## roger.f
 
 Selected words are explained here.  The rest should be self-explanatory from the source. (roger.f)
 
@@ -42,7 +42,7 @@ Declare and define a vocabulary at once.
 ```
 Conditional include.  If the file is already loaded, nothing happens.
 
-## Section
+## section.f
 
 This facility is for loading sections of files.  First define sections in your code like this:
 
@@ -65,7 +65,7 @@ One nifty use for this is if you want to reload part of a module you are testing
 
 *All of the sections of your code* should be labeled with `[section]`, including the top of the file.  Otherwise `just` will load the top of the file every time.
 
-## Strops
+## strops.f
 
 Tools for concatenating strings and working with zero-terminated strings.
 
@@ -76,7 +76,7 @@ s" First part" s[ s", second part" +s ]s type
 s" This is" s" the same" strjoin type
 ```
 
-#### Other string words
+### Other string words
 
 ```
 : input  ( adr c -- )
