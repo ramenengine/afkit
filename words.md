@@ -4,6 +4,7 @@
 
 These files can be loaded on any ANS Forth system and are used to help build the rest of the kit.
 
+| [version.f](ans.md#versionf | Versioning
 | [files.f](ans.md#filesf) | File utilities
 | [roger.f](ans.md#rogerf) | Roger Levy's toolbelt
 | [section.f](ans.md#sectionf) | Load a specific section of a source file

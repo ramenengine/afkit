@@ -23,7 +23,11 @@ Resize the display. If the desired size is unchanged nothing happens.
 ```
 Words for getting the display's dimensions.
 
-## Input (basic)
+## Input
+
+The core has some basic joystick input words.
+
+A keyboard input wordset is provided in the optional library  [kb.f](kb.md).
 
 | joy | ( joy# stick# - vector ) | get stick position
 | #joys | ( -- n ) | number of connected joysticks
@@ -33,13 +37,13 @@ Words for getting the display's dimensions.
 
 Generally you should not need to use the following words since the Piston calls them, but here is a brief explanation of a few of them.
 
-| polljoys | ( -- ) | poll the keyboard
+| polljoys | ( -- ) | poll the joystick
 | pollkb | ( -- ) | poll the keyboard
 | kbstate | ( -- adr ) | current state read via `pollkb`
 | kblast | ( -- adr ) | a snapshot from the previous call to `pollkb`.
 
 
-## Graphics (basic)
+## Graphics
 
 Some useful graphics words are provided.
 

@@ -2,6 +2,27 @@
 
 These are modules located in `ans/`  that have no dependencies.  They are all loaded as part of the kit, which depends on them.
 
+## version.f
+
+AFKIT comes with a simple versioning system to assist with installing library dependencies and resolving version conflicts.
+
+It's implemented using a single definition.
+
+```
+: [version]  ( n n -- <versionname> )
+```
+Declare the version of the current file.
+
+Put [version] at the top of each library file.
+
+When a file with versioning is included, you need to pass in a version code.  (You can circumvent this if needed by passing in 0.)
+
+Versions are expressed in source as BCD values MMmmrr M = major, m = minor, r = revision.  Example: $012003 = 1.20.3
+
+A discrepancy in the Major version will prevent your project from compiling.
+
+A minor version or revision # discrepency will just issue a warning.  This can help you identify culprits when debugging.
+
 ## files.f
 
 ```
