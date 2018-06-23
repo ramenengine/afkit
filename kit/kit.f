@@ -155,7 +155,7 @@ _AL_MAX_JOYSTICK_STICKS constant MAX_STICKS
 create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 : joystick[]  /ALLEGRO_JOYSTICK_STATE *  joysticks + ;
 : >joyhandle  al_get_joystick ;
-: joy ( joy# stick# - vector )  \ get stick position (fixed point)
+: joy ( joy# stick# - vector )  \ get stick position
   /ALLEGRO_JOYSTICK_STATE_STICK *  swap joystick[]
   ALLEGRO_JOYSTICK_STATE.sticks + ;
 : #joys  al_get_num_joysticks ;

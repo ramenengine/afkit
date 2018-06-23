@@ -1,5 +1,5 @@
 [undefined] [version] [if]
-: [version]  ( n n -- <ver> )
+: [version]  ( n n -- <versionname> )
     depth 2 < abort" Version number is required!"
     over 0 = if 2drop bl word drop exit then
     dup >r constant

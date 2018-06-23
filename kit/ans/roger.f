@@ -23,7 +23,7 @@
 : ++  1 swap +! ;
 : --  -1 swap +! ;
 
-: ifill  ( c-addr count val - )  -rot  0 do  over !+  loop  2drop ;
+: ifill  ( addr count val - )  -rot  0 do  over !+  loop  2drop ;
 : ierase   0 ifill ;
 : imove  ( from to count - )  cells move ;
 : time?  ( xt -- ) ucounter 2>r  execute  ucounter 2r> d-  d>s  . ;
@@ -68,6 +68,6 @@
 : exists ( -- flag )   defined 0<> nip ;
 
 \ Conditional INCLUDE
-: require  ( filepath -- )
+: require  ( -- <path> )
     >in @  exists if  >in !  exit then
     dup >in !  create   >in !  include ;

@@ -19,8 +19,7 @@ decimal
 
 \ intent: fetch file contents into memory
 \ usage: <filename> file@
-: file@  ( filename c -- allocated-mem size )  \ file fetch
-  r/o open-file throw >r
+   r/o open-file throw >r
   r@ file-size throw d>s dup dup allocate throw dup rot
   r@ read-file throw drop
   r> close-file throw
@@ -30,7 +29,7 @@ decimal
 
 \ intent: fetch file contents into dictionary
 \ usage: <filename> file>
-: file  ( filename c -- addr size )  \ file from
+: file  ( filename c -- addr size )
   file@  2dup here dup >r  swap  dup /allot  move  swap free throw  r> swap ;
 
 \ intent: comma a file into the dictionary (same as file> except drops off returned values)
