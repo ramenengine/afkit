@@ -80,6 +80,7 @@ pre {
   border-radius:5px;
   border:1px solid #e5e5e5;
   overflow-x: auto;
+  margin-bottom: 0;
 }
 
 table {
@@ -205,4 +206,21 @@ footer {
     font-size:12pt;
     color:#444;
   }
+}
+
+.highlighter-rouge {
+  background: #fcc;
+  border: 1px solid #f88;
+}
+
+div.highlighter-rouge {
+  margin-bottom: 20px;
+}
+
+code.highlighter-rouge {
+    padding: 3px 3px 1px 3px;
+    margin-left: 2px;
+    margin-right: 2px;
+    bottom: 1px;
+    position: relative;
 }
