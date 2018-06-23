@@ -14,11 +14,24 @@ AllegroForthKit is available on [Github](https://github.com/RogerLevy/AllegroFor
 
 ## Documentation
 
-- [Basic Usage](basic-usage.md)
-- [The Piston (the standard main loop)](piston.md)
-- [Word Reference](words.md)
-- [Dependency Reference](dependencies.md)
+### [Basic Usage](basic-usage.md)
+
+Describes how to get started writing programs.
+
+### [The Piston (the standard main oop)](piston.md)
+
+The standard game loop.
+
+### [Module Reference](words.md)
+
+Explains various modules and words. (Not a comprehensive glossary.)
+
+### [Dependency Reference](dependencies.md)
+
+Explains the kit's dependencies.
 
 ## TODO
 
-- [Porting AFKIT](porting.md)
+### [Porting AFKIT](porting.md)
+### [Audio](audio.md)
+### [IDE](ide.md)

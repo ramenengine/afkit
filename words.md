@@ -1,4 +1,4 @@
-# Word Reference
+# Module Reference
 
 ## [ANS-Compliant Modules](ans.md)
 
@@ -14,9 +14,8 @@ These files can be loaded on any ANS Forth system and are used to help build the
 The core of AFKIT consists of:
 
 - Creating the display
-- Keyboard input
-- Joystick input
-- Essential graphics words
+- Basic input words
+- Basic graphics words
 - The [Piston](piston.md)
 
 ## [Libraries](lib.md)
