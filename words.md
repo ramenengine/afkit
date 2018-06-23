@@ -4,10 +4,10 @@
 
 These files can be loaded on any ANS Forth system and are used to help build the rest of the kit.
 
-- [files.f](ans.md#filesf) - File utilities
-- [roger.f](ans.md#rogerf) - Roger Levy's toolbelt
-- [section.f](ans.md#sectionf) - Load a specific section of a source file
-- [strops.f](ans.md#stropsf) - Concatenate strings and work with zero-terminated strings.
+| [files.f](ans.md#filesf) | File utilities
+| [roger.f](ans.md#rogerf) | Roger Levy's toolbelt
+| [section.f](ans.md#sectionf) | Load a specific section of a source file
+| [strops.f](ans.md#stropsf) | Concatenate strings and work with zero-terminated strings.
 
 ## [Core Modules](core.md)
 
