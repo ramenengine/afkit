@@ -16,11 +16,9 @@ The parameters of it are defined in kitconfig.f.
 ```
 Resize the display. If the desired size is unchanged nothing happens.
 
-```
-: displayw  display al_get_display_width ;
-: displayh  display al_get_display_height ;
-: displaywh  displayw displayh ;
-```
+| displayw  | ( -- w )
+| displayh  | ( -- h )
+| displaywh | ( -- w h )
 Words for getting the display's dimensions.
 
 ## Input
@@ -76,11 +74,11 @@ Here are some premade constants you can pass to `blend>`:
 
 The pen represents an x,y position on the display.   It's a useful way to simplify drawing stuff.
 
-```
-: at   ( x y -- )
-: +at  ( x y -- )
-: at@  ( -- x y )
-```
+
+| at   | ( x y -- )
+| +at  | ( x y -- )
+| at@  | ( -- x y )
+
 
 
 ## The Piston
