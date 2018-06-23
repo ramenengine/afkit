@@ -13,6 +13,8 @@ It's implemented using a single definition.
 ```
 Declare the version of the current file.
 
+How to use:
+
 Put [version] at the top of each library file.
 
 When a file with versioning is included, you need to pass in a version code.  (You can circumvent this if needed by passing in 0.)
