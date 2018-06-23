@@ -6,8 +6,6 @@ A display window is automatically created when the kit loads.
 
 The parameters of it are defined in kitconfig.f.
 
-| word  | stack  |   |
-|---|---|---|
 | initial-scale | ( -- x y )  |Integer scaling, default is (1,1)
 | initial-res  | ( -- w h )  | In pixels
 
@@ -27,8 +25,6 @@ Words for getting the display's dimensions.
 
 ## Input (basic)
 
-| word  | stack  |   |
-|---|---|---|
 | joy | ( joy# stick# - vector ) | get stick position
 | #joys | ( -- n ) | number of connected joysticks
 | joystick[] | ( n -- adr )  | get ALLEGRO_JOYSTICK_STATE struct
@@ -37,8 +33,6 @@ Words for getting the display's dimensions.
 
 Generally you should not need to use the following words since the Piston calls them, but here is a brief explanation of a few of them.
 
-| word  | stack  |   |
-|---|---|---|
 | polljoys | ( -- ) | poll the keyboard
 | pollkb | ( -- ) | poll the keyboard
 | kbstate | ( -- adr ) | current state read via `pollkb`
@@ -53,8 +47,6 @@ Some useful graphics words are provided.
 
 These words are convenience words to go along with Allegro's bitmap functions.
 
-| word  | stack  |   |
-|---|---|---|
 |bmpw|( bmp -- n )|get Allegro bitmap width|
 |bmph|( bmp -- n )|get Allegro bitmap height|
 |bmpwh|( bmp -- w h )|get Allegro bitmap dimensions
@@ -88,4 +80,4 @@ The pen represents an x,y position on the display.   It's a useful way to simpli
 
 
 ## The Piston
-This is the included standard game loop.  See the page on the [Piston](piston.md).
+This is the included standard game loop.  See [Piston](piston.md).
