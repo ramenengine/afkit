@@ -1,5 +1,7 @@
 # AllegroForthKit
 
+## Introduction
+
 AllegroForthKit (AFKIT for short) provides a framework for making games and other things with Allegro 5 in standard Forth.
 
 It's written to the DPANS94 standard.
