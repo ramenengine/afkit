@@ -18,15 +18,15 @@ AllegroForthKit is available on [Github](https://github.com/RogerLevy/AllegroFor
 
 ### [Basic Usage](basic-usage.md)
 
-Describes how to get started writing programs.
+Describes how to get started.
 
-### [The Piston (the standard main oop)](piston.md)
+### [The Piston](piston.md) (the standard main loop)
 
 The standard game loop.
 
 ### [Module Reference](words.md)
 
-Explains various modules and words. (Not a comprehensive glossary.)
+Explains the various modules and all essential words.
 
 ### [Dependency Reference](dependencies.md)
 

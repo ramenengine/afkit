@@ -1,6 +1,6 @@
 # ANS Modules
 
-These are modules located in `ans/`  that have no dependencies.  They are all loaded as part of the kit, which depends on them.
+These are modules located in `ans/`  that have no dependencies.  They are all loaded as part of the kit, which also depends on them.
 
 ## version.f
 

@@ -2,9 +2,9 @@
 
 ## Creating the display
 
-A display window is automatically created when the kit loads.
+A display window is automatically created when the kit loads.  There is no need for you to write code to create a window.
 
-The parameters of it are defined in kitconfig.f.
+The parameters of the window are defined in kitconfig.f.  Here they are:
 
 | initial-scale | ( -- x y )  |Integer scaling, default is (1,1)
 | initial-res  | ( -- w h )  | In pixels
