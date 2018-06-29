@@ -1,25 +1,21 @@
 decimal
 
-\ intent: create file and write string to the file
-\ usage: <string> <filename>
 : file!  ( addr count filename c -- )  \ file store
   w/o create-file throw >r
   r@ write-file throw
   r> close-file throw ;
 
-\ intent: fetch file contents into destination buffer
-\ usage: <filename> <destination> @file
-: @file  ( filename c dest -- size )  \ fetch file
-  -rot r/o open-file throw >r
-  r@ file-size drop throw r@ read-file throw
+: @file  ( filename c dest maxsize -- size )  \ fetch file into a mem range
+  locals| maxsize dest c filename |
+  filename c r/o open-file throw >r
+  r@ file-size throw drop maxsize min  r@ read-file throw
   r> close-file throw ;
 
 
 \ system heap version
 
-\ intent: fetch file contents into memory
-\ usage: <filename> file@
-   r/o open-file throw >r
+: file@ ( filename c -- mem size )
+  r/o open-file throw >r
   r@ file-size throw d>s dup dup allocate throw dup rot
   r@ read-file throw drop
   r> close-file throw
@@ -27,16 +23,11 @@ decimal
 
 \ dictionary version
 
-\ intent: fetch file contents into dictionary
-\ usage: <filename> file>
 : file  ( filename c -- addr size )
   file@  2dup here dup >r  swap  dup /allot  move  swap free throw  r> swap ;
 
-\ intent: comma a file into the dictionary (same as file> except drops off returned values)
-\ usage: <filename> file,
 : file,  ( filename c -- )  \ file comma
   file 2drop ;
-
 
 : ending ( addr len char -- addr len )
    >r begin  2dup r@ scan
