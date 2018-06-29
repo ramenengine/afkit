@@ -21,7 +21,7 @@ decimal \ important
 #define ALLEGRO_VERSION          5
 #define ALLEGRO_SUB_VERSION      2
 
-cd kit/dep
+cd afkit/dep
 [defined] linux [if]
     #define ALLEGRO_WIP_VERSION      4
 
@@ -71,13 +71,13 @@ constant ALLEGRO_VERSION_INT
 : [COMPATIBLE]   ( ver subver -- )
    16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and  > if 0 parse 2drop then ;
 
-include kit/dep/allegro5/allegro5_01_general.f
-include kit/dep/allegro5/allegro5_02_events.f
-include kit/dep/allegro5/allegro5_03_keys.f
-include kit/dep/allegro5/allegro5_04_audio.f
-include kit/dep/allegro5/allegro5_05_graphics.f
-include kit/dep/allegro5/allegro5_06_fs.f
-include kit/dep/allegro5/allegro5_07_misc.f
+include afkit/dep/allegro5/allegro5_01_general.f
+include afkit/dep/allegro5/allegro5_02_events.f
+include afkit/dep/allegro5/allegro5_03_keys.f
+include afkit/dep/allegro5/allegro5_04_audio.f
+include afkit/dep/allegro5/allegro5_05_graphics.f
+include afkit/dep/allegro5/allegro5_06_fs.f
+include afkit/dep/allegro5/allegro5_07_misc.f
 
 \ =============================== END ==================================
 

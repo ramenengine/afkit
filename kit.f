@@ -1,4 +1,4 @@
-include kit/ans/version.f
+include afkit/ans/version.f
 $000909 [version] kit-ver
 
 [defined] page [if] page [then] 
@@ -10,11 +10,11 @@ $000909 [version] kit-ver
     [else]
         .( Missing kitconfig.f!!!) QUIT
     [then]
-    include kit/platforms.f
+    include afkit/platforms.f
 
     true constant EXTERNALS_LOADED
 
-    cd kit/ans/ffl
+    cd afkit/ans/ffl
         ffling +order
             include ffl/dom.fs
             include ffl/b64.fs
@@ -26,17 +26,17 @@ $000909 [version] kit-ver
 [then]
 
 
-include kit/ans/section
+include afkit/ans/section
 
 [section] Libraries
 \ Load support libraries
-include kit/plat/win/fpext      \ depends on FPMATH
-include kit/ans/strops         \ ANS
-include kit/ans/files          \ ANS
-include kit/ans/roger          \ ANS
+include afkit/plat/win/fpext      \ depends on FPMATH
+include afkit/ans/strops         \ ANS
+include afkit/ans/files          \ ANS
+include afkit/ans/roger          \ ANS
 
 [section] Audio
-[defined] ALLEGRO_AUDIO [if]  include kit/audio-allegro  [then]
+[defined] ALLEGRO_AUDIO [if]  include afkit/audio-allegro  [then]
 
 \ --------------------------------------------------------------------------------------------------
 [section] Variables
@@ -53,7 +53,7 @@ include kit/ans/roger          \ ANS
 \   simplified to sidestep degenerative stalling bug
 \   derived from Bubble
 
-include kit/al.f
+include afkit/al.f
 
 : assertAllegro
     allegro? ?exit   true to allegro?  init-allegro-all
@@ -195,7 +195,7 @@ create penx  0 ,  here 0 ,  constant peny
 
 \ --------------------------------------------------------------------------------------------------
 [section] Piston
-include kit/piston.f
+include afkit/piston.f
 \ --------------------------------------------------------------------------------------------------
 [section] Init
 +display

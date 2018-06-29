@@ -1,5 +1,5 @@
-include kit/ans/ffl/sflinux/ffl.f   \ FFL: DOM; FFL loads FPMATH
-include kit/dep/allegro5/allegro-5.2.x.f
+include afkit/ans/ffl/sflinux/ffl.f   \ FFL: DOM; FFL loads FPMATH
+include afkit/dep/allegro5/allegro-5.2.x.f
 
 library libX11.so
 
@@ -13,4 +13,4 @@ function: XRaiseWindow ( display  window -- )
 function: XSetInputFocus ( display window revert time -- )
 function: XGetInputFocus ( display &window &revert -- )
 
-include kit/plat/sf
+include afkit/plat/sf

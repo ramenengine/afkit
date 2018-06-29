@@ -226,9 +226,9 @@ function: al_load_ttf_font  ( zfilename size flags -- font )
 ;
 : /cmdline
     /s
-    \ z" kit/dev/data/consolas16.png" al_load_bitmap_font  consolas !
+    \ z" afkit/dev/data/consolas16.png" al_load_bitmap_font  consolas !
     soft
-    z" kit/dev/data/consolab.ttf" #20 ALLEGRO_TTF_NO_KERNING al_load_ttf_font  consolas !
+    z" afkit/dev/data/consolab.ttf" #20 ALLEGRO_TTF_NO_KERNING al_load_ttf_font  consolas !
     /output
     1 1 1 1 cursor colour 4!
     /margins

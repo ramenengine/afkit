@@ -1,4 +1,4 @@
-cd kit/dep/zlib
+cd afkit/dep/zlib
 [defined] linux [if]
     library libz.so
 [else]

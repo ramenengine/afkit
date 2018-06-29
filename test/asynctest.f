@@ -7,7 +7,7 @@
 
 
 
-include kit/kit
+include afkit/kit
 
 : CALLBACK ( xt -- res )  execute ;
 

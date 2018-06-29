@@ -20,8 +20,8 @@
 \ SwiftForth
 [in-platform] sf [if]
     true constant swiftforth
-    [defined] win32 [if] include kit/plat/sfwin32.f [then]
-    [defined] linux [if] include kit/plat/sflinux.f [then]
+    [defined] win32 [if] include afkit/plat/sfwin32.f [then]
+    [defined] linux [if] include afkit/plat/sflinux.f [then]
 [then]
 
 

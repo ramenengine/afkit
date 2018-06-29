@@ -1,7 +1,7 @@
 \ SwiftForth, Windows, X86
 \ Test Allegro threads.
 
-include kit/kit
+include afkit/kit
 
 : CALLBACK ( xt -- res )  execute ;
 
