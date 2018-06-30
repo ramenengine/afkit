@@ -1,5 +1,5 @@
 include afkit/ans/version.f
-$000909 [version] kit-ver
+0 10 0 [version]
 
 [defined] page [if] page [then] 
 

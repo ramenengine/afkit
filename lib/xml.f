@@ -1,4 +1,3 @@
-$000100 [version] xml-ver
 
 \ XML reading tools
 
