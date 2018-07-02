@@ -69,5 +69,5 @@
 
 \ Conditional INCLUDE
 : require  ( -- <path> )
-    >in @  exists if  >in !  exit then
+    >in @  exists if  drop  exit then
     dup >in !  create   >in !  include ;

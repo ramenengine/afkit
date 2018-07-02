@@ -37,13 +37,15 @@ define xmling
 
     : attr?  dom.attribute findchild 0<> ;
 
-    : val  ( dom-nnn adr c -- adr c )       \ get value of an attribute as a string
-        dom.attribute findchild dup 0= abort" XML attribute not found"
+    : val  ( dom-nnn name c -- val c )       \ get value of an attribute as a string
+        locals| c name |
+        name c dom.attribute findchild dup 0=
+            if  name c type  true abort" XML attribute not found"  then
         value@ ;
 
-    : pval  ( dom-nnn adr c -- n )  val evaluate ;
+    : pval  ( dom-nnn name c -- n )  val evaluate ;
 
-    : text  ( dom-nnn -- adr c | 0 )  " " dom.text findchild value@ ;
+    : text  ( dom-nnn -- text c | 0 )  " " dom.text findchild value@ ;
 
     : eachelement>  ( dom-nnn -- <code> )  ( dom-nnn -- )
         r> swap >first
