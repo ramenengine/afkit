@@ -1,5 +1,5 @@
 include afkit/ans/version.f
-0 10 0 [version]
+0 10 1 [version]
 
 [defined] page [if] page [then] 
 
