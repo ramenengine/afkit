@@ -26,17 +26,17 @@ include afkit/ans/version.f
 [then]
 
 
-include afkit/ans/section
+include afkit/ans/section.f
 
 [section] Libraries
 \ Load support libraries
-include afkit/plat/win/fpext      \ depends on FPMATH
-include afkit/ans/strops         \ ANS
-include afkit/ans/files          \ ANS
-include afkit/ans/roger          \ ANS
+include afkit/plat/win/fpext.f      \ depends on FPMATH
+include afkit/ans/strops.f         \ ANS
+include afkit/ans/files.f          \ ANS
+include afkit/ans/roger.f          \ ANS
 
 [section] Audio
-[defined] ALLEGRO_AUDIO [if]  include afkit/audio-allegro  [then]
+[defined] ALLEGRO_AUDIO [if]  include afkit/audio-allegro.f  [then]
 
 \ --------------------------------------------------------------------------------------------------
 [section] Variables

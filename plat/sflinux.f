@@ -13,4 +13,4 @@ function: XRaiseWindow ( display  window -- )
 function: XSetInputFocus ( display window revert time -- )
 function: XGetInputFocus ( display &window &revert -- )
 
-include afkit/plat/sf
+include afkit/plat/sf.f
