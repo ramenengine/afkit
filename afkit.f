@@ -1,8 +1,6 @@
 include afkit/ans/version.f
 #1 0 0 [version]
 
-[defined] page [if] page [then] 
-
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
     s" kitconfig.f" file-exists [if]
@@ -36,7 +34,7 @@ include afkit/ans/files.f          \ ANS
 include afkit/ans/roger.f          \ ANS
 
 [section] Audio
-[defined] ALLEGRO_AUDIO [if]  include afkit/audio-allegro.f  [then]
+[defined] allegro-audio [if]  include afkit/audio-allegro.f  [then]
 
 \ --------------------------------------------------------------------------------------------------
 [section] Variables

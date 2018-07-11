@@ -1,4 +1,5 @@
 \ None of this needs to be ported to other systems.  All non-essential.
+page
 
 : l locate ;
 : e edit ;

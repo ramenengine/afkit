@@ -10,19 +10,7 @@
     cr .( they should load.  You can still load the Allegro DLL without doing this; you just won't )
     cr .( be able to play anything but WAV files.)
 [then]
-
+\ " \ <--- this is to heal Komodo Edit's string highlighting bug 
 
 [in-platform] win32 [if] true constant win32 [then]
 [in-platform] linux [if] true constant linux [then]
-
-\ Platforms ------------------------------------------------------------------------------------------
-
-\ SwiftForth
-[in-platform] sf [if]
-    true constant swiftforth
-    [defined] win32 [if] include afkit/plat/sfwin32.f [then]
-    [defined] linux [if] include afkit/plat/sflinux.f [then]
-[then]
-
-
-\ End platforms -------------------------------------------------------------------------------------

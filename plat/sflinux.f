@@ -1,3 +1,5 @@
+: platform  s" sflinux" ;
+
 include afkit/ans/ffl/sflinux/ffl.f   \ FFL: DOM; FFL loads FPMATH
 include afkit/dep/allegro5/allegro-5.2.x.f
 

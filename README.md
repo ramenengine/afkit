@@ -60,7 +60,7 @@ A fancier demonstration is forthcoming.
 
 ## Audio
 
-When ALLEGRO_AUDIO is defined, audio-allegro.f will be loaded, which reserves 32 samples for playing samples with play_sample, and a default mixer and voice.  
+When allegro-audio is defined, audio-allegro.f will be loaded, which reserves 32 samples for playing samples with play_sample, and a default mixer and voice.  
 
 ## Graphics
 
