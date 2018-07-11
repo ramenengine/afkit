@@ -20,9 +20,9 @@
 
 : initaudio
     0 to mixer  0 to voice
-    al_init_acodec_addon not if  " Allegro: Couldn't initialize audio codec addon." alert -1 abort  then
-    al_install_audio not if  " Allegro: Couldn't initialize audio." alert -1 abort  then
-    #32 al_reserve_samples not if  " Allegro: Error reserving samples." alert -1 abort  then
+    al_init_acodec_addon not if  s" Allegro: Couldn't initialize audio codec addon." alert -1 abort  then
+    al_install_audio not if  s" Allegro: Couldn't initialize audio." alert -1 abort  then
+    #32 al_reserve_samples not if  s" Allegro: Error reserving samples." alert -1 abort  then
     +audio
 ;
 

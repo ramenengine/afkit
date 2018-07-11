@@ -82,7 +82,7 @@ variable (catch)
 
 
 : fsflag  fs @ allowwin @ not or ;
-: ?fserr  0= if fs off  " Fullscreen is not supported by your driver." alert  then ;
+: ?fserr  0= if fs off  s" Fullscreen is not supported by your driver." alert  then ;
 variable winx  variable winy
 : ?poswin   \ save/restore window position when toggling in and out of fullscreen
     display al_get_display_flags ALLEGRO_FULLSCREEN_WINDOW and if

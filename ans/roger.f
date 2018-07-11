@@ -1,4 +1,3 @@
-: "  postpone s" ; immediate
 : zcount ( zaddr -- addr n )   dup dup if  65535 0 scan drop over - then ;
 : zlength ( zaddr -- n )   zcount nip ;
 : zplace ( from n to -- )   tuck over + >r  cmove  0 r> c! ;
@@ -10,14 +9,14 @@
 : u+  rot + swap ;  \ "under plus"
 : ?lit  state @ if postpone literal then ; 
 : do postpone ?do ; immediate
-: for  " 0 do" evaluate ; immediate
+: for  s" 0 do" evaluate ; immediate
 : allotment  here swap /allot ;
 : move,   here over allot swap move ;
 : h?  @ h. ;
 : reclaim  h ! ;
 : ]#  ] postpone literal ;
-: <<  " lshift" evaluate ; immediate
-: >>  " rshift" evaluate ; immediate
+: <<  s" lshift" evaluate ; immediate
+: >>  s" rshift" evaluate ; immediate
 : bit  dup constant  1 << ;
 : clamp  ( n low high -- n ) -rot max min ;
 : ++  1 swap +! ;
@@ -65,9 +64,12 @@
 
 \ Word tools
 : defined ( -- c-addr 0 | xt -1 | -- xt 1 )  bl word find ;
-: exists ( -- flag )   defined 0<> nip ;
+: exists ( -- flag )   defined 0 <> nip ;
 
 \ Conditional INCLUDE
 : require  ( -- <path> )
-    >in @  exists if  drop  exit then
+    >in @  exists if  drop  exit  then
     dup >in !  create   >in !  include ;
+
+: include  ( -- <path> )
+    >in @  create  >in !  bl parse included ;

@@ -45,7 +45,7 @@ define xmling
 
     : pval  ( dom-nnn name c -- n )  val evaluate ;
 
-    : text  ( dom-nnn -- text c | 0 )  " " dom.text findchild value@ ;
+    : text  ( dom-nnn -- text c | 0 )  s" " dom.text findchild value@ ;
 
     : eachelement>  ( dom-nnn -- <code> )  ( dom-nnn -- )
         r> swap >first
