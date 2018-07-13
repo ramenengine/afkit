@@ -20,7 +20,7 @@
 \   pfloor pceil
 \ additional words for conversion to other formats
 \   1i 2i 3i 4i
-\   f 1f 2f 3f 4f
+\   f 1f 2f
 \ stack diagrams
 \   n = fixed-point
 \   i = integer
@@ -61,31 +61,18 @@ variable ints  ints on  \ set/disable integer mode on both display and interpret
 wordlist constant fixpointing
 
 \ private
-    \ SwiftForth/X86 only - arithmetic shift
-    ICODE ARSHIFT ( x1 n -- x2 )
-       EBX ECX MOV                      \ shift count in ecx
-       POP(EBX)                         \ get new tos
-       EBX CL SAR                       \ and shift bits right
-       RET   END-CODE
-    ICODE ALSHIFT ( x1 n -- x2 )
-       EBX ECX MOV                      \ shift count in ecx
-       POP(EBX)                         \ get new tos
-       EBX CL SHL                       \ and shift bits right
-       RET   END-CODE
 
 : ?:  >in @  exists if  0 parse 2drop  drop exit  else  >in !  :  then ;
 
-\ NTS: keep these as one-liners, I might make them macros...
-?: 1p  s" /FRAC alshift" evaluate ; immediate
+?: 1p  state @ if /frac postpone literal postpone lshift else /frac lshift then ; immediate
+?: 1i  state @ if 1.0 postpone literal postpone / else 1.0 / then ; immediate
+
 ?: 2p  1p swap 1p swap ;
-?: 1i  s" /frac arshift" evaluate ; immediate
 ?: 2i  swap 1i swap 1i ;
 ?: 3i  rot 1i rot 1i rot 1i ;
 ?: 4i  2i 2swap 2i 2swap ;
 ?: 1f  s>f FPGRAN f/ ;
 ?: 2f  swap 1f 1f ;
-?: 3f  rot 1f 2f ;
-?: 4f  2swap 2f 2f ;
 ?: pfloor  INT_MASK and ;
 ?: pceil   pfloor 1.0 + ;
 ?: 2pfloor  pfloor swap pfloor swap ;
