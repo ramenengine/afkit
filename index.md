@@ -20,7 +20,7 @@ AllegroForthKit is available on [Github](https://github.com/RogerLevy/AllegroFor
 
 - [Basic Usage](basic-usage.md)
 - [The Piston](piston.md) (the standard main loop)
-- [Module Reference](words.md)
+- [Module Reference](modules.md)
 - [Dependency Reference](dependencies.md)
 
 Explains the kit's dependencies.
