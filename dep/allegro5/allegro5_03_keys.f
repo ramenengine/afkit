@@ -73,6 +73,7 @@ decimal \ important
 <equals> constant <=>
 <equals> constant <+>
 #define <BACKSPACE>  63
+<backspace> constant <bksp>
 #define <TAB>  64
 #define <OPENBRACE>  65
 <openbrace> constant <[>
@@ -95,7 +96,9 @@ decimal \ important
 #define <SPACE>  75
 
 #define <INSERT>  76
+<insert> constant <ins>
 #define <DELETE>  77
+<delete> constant <del>
 #define <HOME>  78
 #define <END>  79
 #define <PGUP>  80
