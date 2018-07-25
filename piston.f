@@ -82,7 +82,7 @@ variable (catch)
 
 
 : fsflag  fs @ allowwin @ not or ;
-: ?fserr  0= if fs off  s" Fullscreen is not supported by your driver." alert  then ;
+
 variable winx  variable winy
 : ?poswin   \ save/restore window position when toggling in and out of fullscreen
     display al_get_display_flags ALLEGRO_FULLSCREEN_WINDOW and if
@@ -93,11 +93,12 @@ variable winx  variable winy
 
 variable newfs
 : ?fs
-    ?poswin  display ALLEGRO_FULLSCREEN_WINDOW fsflag al_toggle_display_flag ?fserr
+    ?poswin  display ALLEGRO_FULLSCREEN_WINDOW fsflag al_toggle_display_flag drop
     \ fs @  newfs @  <> if  fse EVENT_FULLSCREEN emit-user-event  then
     fs @ newfs ! ;
 
-: show  unmount  'show try to renderr  unmount  ?overlay  al_flip_display ;
+: ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
+: show  unmount  'show try ?renderr  unmount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
 : /ok  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : ok/  eventq al_flush_event_queue  >ide  false to breaking?  ;

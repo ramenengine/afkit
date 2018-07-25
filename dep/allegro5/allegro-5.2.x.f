@@ -64,12 +64,13 @@ ALLEGRO_VERSION 24 lshift
 ALLEGRO_SUB_VERSION 16 lshift or
 ALLEGRO_WIP_VERSION 8 lshift or
 ALLEGRO_RELEASE_NUMBER or
-constant ALLEGRO_VERSION_INT
+    constant ALLEGRO_VERSION_INT
+    
+: [COMPATIBLE]   ( ver subver -- )
+   16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and  > if 0 parse 2drop then ;
 
 
 \ ----------------------------- load files --------------------------------
-: [COMPATIBLE]   ( ver subver -- )
-   16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and  > if 0 parse 2drop then ;
 
 include afkit/dep/allegro5/allegro5_01_general.f
 include afkit/dep/allegro5/allegro5_02_events.f
