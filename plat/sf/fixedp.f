@@ -197,10 +197,8 @@ only forth fixpointing +order definitions
     : bytes  1i ;
     : hwords 1i #1 lshift ;
     : loop  s" 1.0 +loop" evaluate ; immediate
-    : lshift  1i lshift ;
-    : rshift  1i rshift ;
-    : <<      lshift ;
-    : >>      rshift ;
+    : <<      1i lshift ;
+    : >>      1i rshift ;
     : .0 ; immediate
     : ifill  swap 1i swap ifill ;
     : ierase  0 ifill ;
@@ -221,5 +219,6 @@ only forth definitions fixpointing +order
 : definitions
     get-order over fixpointing = if  fixpointing -order  definitions  fixpointing +order
     else  definitions  then  set-order ;
+
 
 fixed

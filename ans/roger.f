@@ -17,10 +17,13 @@
 : ]#  ] postpone literal ;
 : <<  s" lshift" evaluate ; immediate
 : >>  s" rshift" evaluate ; immediate
-: bit  dup constant  1 << ;
+: bit  dup constant  1 lshift ;
 : clamp  ( n low high -- n ) -rot max min ;
 : ++  1 swap +! ;
 : --  -1 swap +! ;
+: and!  dup >r @ and r> ! ;
+: or!   dup >r @ or r> ! ;
+: xor!   dup >r @ xor r> ! ;
 
 : ifill  ( addr count val - )  -rot  0 do  over !+  loop  2drop ;
 : ierase   0 ifill ;
@@ -73,3 +76,4 @@
 
 : include  ( -- <path> )
     >in @  create  >in !  bl parse included ;
+
