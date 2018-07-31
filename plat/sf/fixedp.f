@@ -1,4 +1,4 @@
-\ this version simplifies game dev by making fixed point numbers THE DEFAULT.
+\ this module simplifies game dev by making fixed point numbers THE DEFAULT.
 \ the new format will be 20:12.
 \   (that provides a range of roughly -0.5m~0.5m with a granularity of 1/4096)
 \ NOTE TO SELF: this number system isn't meant to replace floats.  floats should
@@ -20,7 +20,7 @@
 \   pfloor pceil
 \ additional words for conversion to other formats
 \   1i 2i 3i 4i
-\   f 1f 2f
+\   1pf 2pf
 \ stack diagrams
 \   n = fixed-point
 \   i = integer
@@ -71,18 +71,18 @@ wordlist constant fixpointing
 ?: 2i  swap 1i swap 1i ;
 ?: 3i  rot 1i rot 1i rot 1i ;
 ?: 4i  2i 2swap 2i 2swap ;
-?: 1f  s>f FPGRAN f/ ;
-?: 2f  swap 1f 1f ;
+?: 1pf  s>f FPGRAN f/ ;
+?: 2pf  swap 1pf 1f ;
 ?: pfloor  INT_MASK and ;
 ?: pceil   pfloor 1.0 + ;
 ?: 2pfloor  pfloor swap pfloor swap ;
 ?: 2pceil   pceil swap pceil swap ;
 ?: f>p  FPGRAN f* f>s ;
-?: p*  1f s>f f* f>s ;
-?: p/  swap s>f 1f f/ f>s ;
+?: p*  1pf s>f f* f>s ;
+?: p/  swap s>f 1pf f/ f>s ;
 ?: i.  base @ >r decimal . r> base ! ;
 ?: i?  @ i. ;
-?: p.  1f f. ;
+?: p.  1pf f. ;
 
 fixpointing +order definitions
     : *  ( n n -- n )  p* ;
@@ -169,7 +169,7 @@ PACKAGE STATUS-TOOLS
               DEPTH 0 ?DO
                 S0 @ I 1 + CELLS - @
                 dup 0 < if s"  " +s then
-                1f 3 (f.) +s
+                1pf 3 (f.) +s
               LOOP
             ELSE
               s" Underflow" +s

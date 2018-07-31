@@ -42,7 +42,7 @@ create fse  256 /allot  \ fullscreen event
 : poll  pollKB  pollJoys  [defined] dev [if] pause [then] ;
 : break  true to breaking? ;
 transformation m1
-: unmount  ( -- )
+: (unmount)  ( -- )
     0 0 at
     m1 al_identity_transform  m1 #globalscale s>f 1sf dup al_scale_transform  m1 al_use_transform
     0 0 displayw displayh al_set_clipping_rectangle
@@ -98,7 +98,7 @@ variable newfs
     fs @ newfs ! ;
 
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: show  unmount  'show try ?renderr  unmount  ?overlay  al_flip_display ;
+: show  (unmount)  'show try ?renderr  (unmount)  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
 : /ok  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : ok/  eventq al_flush_event_queue  >ide  false to breaking?  ;
