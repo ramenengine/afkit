@@ -1,10 +1,12 @@
 \ Allegro stuff
-[undefined] allegro-display-flags [if]
-ALLEGRO_WINDOWED
-ALLEGRO_RESIZABLE or
-\ ALLEGRO_PROGRAMMABLE_PIPELINE or
-  constant allegro-display-flags
+[defined] initial-display-flags [if]
+    initial-display-flags
+[else]
+    ALLEGRO_WINDOWED
+    ALLEGRO_RESIZABLE or
+    \ ALLEGRO_PROGRAMMABLE_PIPELINE or
 [then]
+      value allegro-display-flags
 
 : init-allegro-all
   al_init

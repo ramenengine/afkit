@@ -36,17 +36,45 @@ defer onDisplayClose
 create evt  256 /allot
 : etype  evt ALLEGRO_EVENT.TYPE @ ;
 
-create fse  256 /allot  \ fullscreen event
-999 constant EVENT_FULLSCREEN
-
 : poll  pollKB  pollJoys  [defined] dev [if] pause [then] ;
 : break  true to breaking? ;
+
 transformation m1
-: (unmount)  ( -- )
+variable clipx
+variable clipy
+variable clipw
+variable cliph
+
+: clip ( x y w h -- ) 
+    #globalscale * s>f cliph sf!
+    #globalscale * s>f clipw sf!
+    s>f  clipy sf!
+    s>f  clipx sf!
+    m1   clipx clipy   al_transform_coordinates
+    clipx sf@ f>s
+    clipy sf@ f>s
+    clipw sf@ f>s
+    cliph sf@ f>s al_set_clipping_rectangle
+;
+
+: mount  ( -- )
     0 0 at
-    m1 al_identity_transform  m1 #globalscale s>f 1sf dup al_scale_transform  m1 al_use_transform
-    0 0 displayw displayh al_set_clipping_rectangle
-    ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA  ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ONE al_set_separate_blender
+    
+    m1 al_identity_transform
+    m1 #globalscale s>f 1sf dup al_scale_transform
+    fs @ if
+        m1
+            native x@ 2 / desired-res x@ #globalscale * 2 / -  s>f 1sf 
+            native y@ 2 / desired-res y@ #globalscale * 2 / -  s>f 1sf  al_translate_transform
+    then
+    m1 al_use_transform
+
+    0 0 displaywh clip
+    
+    ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA
+    ALLEGRO_ADD ALLEGRO_ONE   ALLEGRO_ONE
+        al_set_separate_blender
+    
     display al_set_target_backbuffer ;
 
 variable (catch)
@@ -91,14 +119,29 @@ variable winx  variable winy
         fs @ if     display winx winy al_get_window_position  then
     then ;
 
+0 value #lastscale
 variable newfs
+: 2s>f  swap s>f s>f ;
 : ?fs
     ?poswin  display ALLEGRO_FULLSCREEN_WINDOW fsflag al_toggle_display_flag drop
-    \ fs @  newfs @  <> if  fse EVENT_FULLSCREEN emit-user-event  then
-    fs @ newfs ! ;
+    fs @ newfs @ = ?exit
+    fs @ newfs !
+    fs @ if
+        #globalscale to #lastscale
+        native xy@ 2s>f f/ 
+        desired-res xy@ 2s>f f/ f> if
+            native y@ desired-res y@ /
+        else
+            native x@ desired-res x@ /
+        then
+            to #globalscale
+    else
+        #lastscale to #globalscale
+    then
+;
 
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: show  (unmount)  'show try ?renderr  (unmount)  ?overlay  al_flip_display ;
+: show  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
 : /ok  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : ok/  eventq al_flush_event_queue  >ide  false to breaking?  ;

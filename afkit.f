@@ -38,6 +38,7 @@ include afkit/ans/roger.f          \ ANS
 
 \ --------------------------------------------------------------------------------------------------
 [section] Variables
+true value dev
 0 value default-font
 0 value fps
 0 value allegro?
@@ -65,22 +66,43 @@ assertAllegro
 create native  /ALLEGRO_DISPLAY_MODE /allot
   al_get_num_display_modes 1 -  native  al_get_display_mode
 : xy@   dup @ swap cell+ @ ;
+: x@  xy@ drop ;
+: y@  xy@ nip ;
 : displayw  display al_get_display_width ;
 : displayh  display al_get_display_height ;
 : displaywh  displayw displayh ;
 
 \ ------------------------------------ initializing the display ------------------------------------
+
+
+[defined] initial-scale [if] initial-scale [else] 1 [then] value #globalscale
+[undefined] initial-res [if]  : initial-res  640 480 ;  [then]
+
 : initDisplay  ( w h -- )
+    locals| h w |
+    
     assertAllegro
-    al_create_event_queue  to eventq
+    
     ALLEGRO_VSYNC 1 ALLEGRO_SUGGEST  al_set_new_display_option
-    0 40 al_set_new_window_position
     allegro-display-flags al_set_new_display_flags
-    al_create_display  to display    \ Make that display!!!!
-    display 0 0 al_set_window_position
-    al_create_builtin_font to default-font
-    eventq  display       al_get_display_event_source  al_register_event_source
+
+    dev if
+        \ top left corner:
+        0 40 al_set_new_window_position
+            w h al_create_display  to display    
+        display 0 0 al_set_window_position
+    else
+        \ centered:
+        native x@ 2 / w 2 / - native y@ 2 / h 2 / - 40 - al_set_new_window_position
+            w h al_create_display  to display    
+    then
+    
     display al_get_display_refresh_rate ?dup 0= if 60 then to fps
+
+    al_create_builtin_font to default-font
+
+    al_create_event_queue  to eventq
+    eventq  display       al_get_display_event_source  al_register_event_source
     eventq                al_get_mouse_event_source    al_register_event_source
     eventq                al_get_keyboard_event_source al_register_event_source
 
@@ -88,19 +110,18 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 ;
 
 : valid?  ['] @ catch nip 0 = ;
-[defined] initial-scale [if] initial-scale [else] 1 [then] value #globalscale
-[undefined] initial-res [if]  : initial-res  640 480 ;  [then]
+
 
 create desired-res  initial-res swap , ,
 
-: +display  display valid? ?exit  desired-res 2@ initDisplay ;
+: +display  display valid? ?exit  desired-res xy@ #globalscale * swap #globalscale * swap initDisplay ;
 : -display  display valid? -exit
     display al_destroy_display  0 to display
     eventq al_destroy_event_queue  0 to eventq ;
 : -allegro  -display  false to allegro?  al_uninstall_system ;
 : empty  -display empty ;
 
-: ?same  desired-res 2@ 2over d= -exit  r> drop ;
+: ?same  desired-res xy@ 2over d= -exit  r> drop ;
 : resolution  ?same  -display  desired-res 2!  +display ;
 
 \ ----------------------------------- words for switching windows ----------------------------------
