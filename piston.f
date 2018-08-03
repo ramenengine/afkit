@@ -69,7 +69,7 @@ variable cliph
     then
     m1 al_use_transform
 
-    0 0 displaywh clip
+    0 0 desired-res xy@ clip
     
     ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA
     ALLEGRO_ADD ALLEGRO_ONE   ALLEGRO_ONE
@@ -140,8 +140,17 @@ variable newfs
     then
 ;
 
+: ?fsgrey
+    fs @ -exit
+    m1 al_identity_transform
+    m1 al_use_transform
+    0 0 native xy@ al_set_clipping_rectangle
+    0.1e fdup fdup 1e 4sf al_clear_to_color
+    
+;    
+
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: show  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
+: show  ?fsgrey  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
 : /ok  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : ok/  eventq al_flush_event_queue  >ide  false to breaking?  ;
