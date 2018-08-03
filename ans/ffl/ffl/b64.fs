@@ -57,7 +57,7 @@ include ffl/str.fs
   >r chars b64.codes drop + c@ r> str-append-char
 ;
 
-nil value b64.decodes
+create b64.decodes 256 allot
 
 
 : b64+decode-char  ( c-addr1 u1 u -- c-addr2 u2 ch = Read and decode char, throw exp-invalid-data if out of range )
@@ -116,16 +116,13 @@ nil value b64.decodes
   r@ str-clear
   dup 4 / 3 * r@ str-size!
 
-  b64.decodes nil= IF             \ Initialise the b64.decodes array once
-    256 chars allocate throw to b64.decodes
     b64.decodes 256 255 fill      \ Fill initial with error codes
     b64.codes 
-    0 DO
-      I over c@ chars b64.decodes + c!
-      char+
-    LOOP
+        0 DO
+          I over c@ chars b64.decodes + c!
+          char+
+        LOOP
     drop
-  THEN
   
   BEGIN                           \ Iterate the string
     dup
