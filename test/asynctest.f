@@ -80,7 +80,7 @@ variable mbmp
 0 value #frames
 variable x  variable vx  1 vx !
 variable y  variable vy  1 vy !
-: go
+: test
     show>
         1 +to #frames
         #frames 100 = if  test here al_run_detached_thread  then
@@ -100,4 +100,5 @@ variable y  variable vy  1 vy !
         vy @ 0> if  y @ displayh bmp @ bmph - >= if  vy @ negate vy !  then then
 ;
 
-go ok
+test
+go

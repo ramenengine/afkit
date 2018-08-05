@@ -16,7 +16,7 @@
 0 value alt?  \ part of fix for alt-enter bug when game doesn't have focus
 0 value ctrl?
 0 value breaking?
-0 value 'go
+0 value 'pump
 0 value 'step
 0 value 'show
 
@@ -152,17 +152,17 @@ variable newfs
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
 : show  ?fsgrey  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
-: /ok  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
-: ok/  eventq al_flush_event_queue  >ide  false to breaking?  ;
+: /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
+: go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
-: go>  r> to 'go   0 to 'step ;  ( -- <code> )  ( -- )
+: pump>  r> to 'pump   0 to 'step ;  ( -- <code> )  ( -- )
 : @event  ( -- flag )  eventq evt al_get_next_event  logevents @ if  etype h.  then ;
 : attend
     begin  @event  breaking? not and while
-        'go try to goerr  standard-events  ?system
+        'pump try to goerr  standard-events  ?system
     repeat ;
-: ok    /ok   begin  show  attend  poll  step  ?fs  breaking?  until  ok/ ;
+: go  /go   begin  show  attend  poll  step  ?fs  breaking?  until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square
 variable x  variable vx  1 vx !
