@@ -19,6 +19,8 @@
 0 value 'pump
 0 value 'step
 0 value 'show
+0 value me    \ for Ramen
+0 value (me)  \ save/restore
 
 \ Flags
 variable info  \ enables debugging mode display
@@ -152,8 +154,8 @@ variable newfs
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
 : show  ?fsgrey  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
-: /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
-: go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
+: /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl?  me to (me) ;
+: go/  eventq al_flush_event_queue  >ide  false to breaking?  (me) to me ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
 : pump>  r> to 'pump   0 to 'step ;  ( -- <code> )  ( -- )
