@@ -77,6 +77,7 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 
 [defined] initial-scale [if] initial-scale [else] 1 [then] value #globalscale
 [undefined] initial-res [if]  : initial-res  640 480 ;  [then]
+[undefined] initial-pos [if]  : initial-pos  0 0 ;  [then]
 
 : initDisplay  ( w h -- )
     locals| h w |
@@ -88,9 +89,9 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 
     dev if
         \ top left corner:
-        0 40 al_set_new_window_position
+        initial-pos 40 + al_set_new_window_position
             w h al_create_display  to display    
-        display 0 0 al_set_window_position
+        display initial-pos al_set_window_position
     else
         \ centered:
         native x@ 2 / w 2 / - native y@ 2 / h 2 / - 40 - al_set_new_window_position
