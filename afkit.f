@@ -135,7 +135,7 @@ create desired-res  initial-res swap , ,
 
     : HWND  _hwnd @ ;
 
-    : focus
+    : btf
         0 XOpenDisplay _disp !
         _disp @ over 0 0 XSetInputFocus
         _disp @ swap XRaiseWindow
@@ -143,13 +143,13 @@ create desired-res  initial-res swap , ,
 
     : >display  display al_get_x_window_id focus ;
 [else]
-    : focus  ( winapi-window - )
+    : btf  ( winapi-window - )
       dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
-    : >display  ( -- )  display al_get_win_window_handle focus ;
+    : >display  ( -- )  display al_get_win_window_handle btf ;
 [then]
 
 defer >ide
-:noname [ is >ide ]  ( -- )  HWND focus ;
+:noname [ is >ide ]  ( -- )  HWND btf ;
 >ide
 
 [section] Input
