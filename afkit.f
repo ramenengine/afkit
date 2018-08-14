@@ -39,7 +39,7 @@ include afkit/ans/roger.f          \ ANS
 \ --------------------------------------------------------------------------------------------------
 [section] Variables
 true value dev
-0 value default-font
+0 value al-default-font
 0 value fps
 0 value allegro?
 0 value eventq
@@ -100,7 +100,7 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
     
     display al_get_display_refresh_rate ?dup 0= if 60 then to fps
 
-    al_create_builtin_font to default-font
+    al_create_builtin_font to al-default-font
 
     al_create_event_queue  to eventq
     eventq  display       al_get_display_event_source  al_register_event_source
