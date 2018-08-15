@@ -17,14 +17,17 @@ decimal \ important
   [char] ; parse string,
   does> count evaluate ;
 
+[undefined] ALLEGRO_VERSION_INT [if]
+    [defined] linux [if] $5020401 [else] $5020300 [then]
+    constant ALLEGRO_VERSION_INT
+[then]
 
-#define ALLEGRO_VERSION          5
-#define ALLEGRO_SUB_VERSION      2
+ALLEGRO_VERSION_INT $ffffff00 and $5020300 = [if] cd afkit/dep/allegro5/5.2.3 [then]
+ALLEGRO_VERSION_INT $ffffff00 and $5020400 = [if] cd afkit/dep/allegro5/5.2.4 [then]
 
-cd afkit/dep
+cr .( Loading Allegro ) ALLEGRO_VERSION_INT h. .( ... )
+
 [defined] linux [if]
-    #define ALLEGRO_WIP_VERSION      4
-
     create libcmd 256 allot
     : linux-library
         s" library " libcmd place
@@ -42,29 +45,19 @@ cd afkit/dep
     linux-library liballegro_image
     linux-library liballegro_font
 [else]
-    #define ALLEGRO_WIP_VERSION      3
     : linux-library  0 parse 2drop ;
-    cd allegro5/5.2.3
         [defined] allegro-debug [if]
             library allegro_monolith-debug-5.2.dll
         [else]
             library allegro_monolith-5.2.dll
         [then]
-    cd ../..
+    cd ../../../..
 [then]
-cd ../..
 
 : void ;
 
 : /* postpone \ ; immediate
 
-#define ALLEGRO_RELEASE_NUMBER   0
-
-ALLEGRO_VERSION 24 lshift
-ALLEGRO_SUB_VERSION 16 lshift or
-ALLEGRO_WIP_VERSION 8 lshift or
-ALLEGRO_RELEASE_NUMBER or
-    constant ALLEGRO_VERSION_INT
     
 : [COMPATIBLE]   ( ver subver -- )
    16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and  > if 0 parse 2drop then ;
@@ -82,4 +75,4 @@ include afkit/dep/allegro5/allegro5_07_misc.f
 
 \ =============================== END ==================================
 
-cr .( Allegro 5.2 )
+.( Done )

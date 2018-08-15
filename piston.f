@@ -3,10 +3,11 @@
 \  The previous version tried to have frameskipping and framepacing, but it became choppy after
 \    an hour or two running and I couldn't figure out the cause.
 \  The loop has some common controls:
-\    CTRL-F12 - break the loop
+\    F12 - break the loop
 \    ALT-F4 - quit the process
 \    ALT-ENTER - toggle fullscreen
 \    TILDE - toggles a flag called INFO
+
 
 \ Values
 0 value #frames \ frame counter.
@@ -29,14 +30,16 @@ variable fs    \ is fullscreen enabled?
 variable interact   \ if on, cmdline will receive keys.  check if false before doing game input, if needed.
 variable logevents  \ enables spitting out of event codes
 
-\ Other variables
-defer ?overlay  ' noop is ?overlay  \ render ide
-defer ?system   ' noop is ?system   \ system events
-defer onDisplayClose
-:is onDisplayClose  bye ;
+\ Defers
+defer ?overlay  ' noop is ?overlay  \ render ide  ( -- )
+defer ?system   ' noop is ?system   \ system events ( -- )
+defer onDisplayClose  :is onDisplayClose  bye ;  ( -- )
 
+\ Event stuff
 create evt  256 /allot
 : etype  evt ALLEGRO_EVENT.TYPE @ ;
+z" AKFS" @ constant FULLSCREEN_EVENT
+
 
 : poll  pollKB  pollJoys  [defined] dev [if] pause [then] ;
 : break  true to breaking? ;
@@ -84,10 +87,7 @@ variable (catch)
 
 \ : alt?  evt ALLEGRO_KEYBOARD_EVENT.modifiers @ ALLEGRO_KEYMOD_ALT and ;
 : standard-events
-  etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize   then
-\  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  -timer  -audio  then
-\  etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if  clearkb  +timer   +audio  false to alt?
-\    [defined] dev [if] interact on [then] then
+  etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize   123 . then
   etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
   etype ALLEGRO_EVENT_KEY_DOWN = if
     evt ALLEGRO_KEYBOARD_EVENT.keycode @ case
@@ -121,6 +121,9 @@ variable winx  variable winy
         fs @ if     display winx winy al_get_window_position  then
     then ;
 
+: al-emit-user-event  ( type -- )  \ EVT is expected to be filled, except for the type
+    evt ALLEGRO_EVENT.type !  uesrc evt al_emit_user_event ;
+
 0 value #lastscale
 variable newfs
 : 2s>f  swap s>f s>f ;
@@ -140,6 +143,7 @@ variable newfs
     else
         #lastscale to #globalscale
     then
+    FULLSCREEN_EVENT al-emit-user-event
 ;
 
 : ?fsgrey

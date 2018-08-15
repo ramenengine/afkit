@@ -1,5 +1,5 @@
 create clp 256 allot
-: @clipb  ( -- adr c )
+: clipb@  ( -- adr c )
     GetForegroundWindow OpenClipboard -exit
     CF_TEXT GetClipboardData ?dup -exit GlobalLock
         dup zcount clp place
@@ -7,7 +7,7 @@ create clp 256 allot
     CloseClipboard drop
     clp count ;
 0 value gh  0 value gm
-: !clipb  ( adr c -- )
+: clipb!  ( adr c -- )
     GetForegroundWindow OpenClipboard -exit
     EmptyClipboard DROP
     GMEM_MOVEABLE over #1 + GlobalAlloc to gh

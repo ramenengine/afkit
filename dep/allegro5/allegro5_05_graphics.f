@@ -245,6 +245,10 @@ linux-library liballegro_ttf
 function: al_init_ttf_addon ( -- bool )
 
 linux-library liballegro_font
+#define ALLEGRO_TTF_NO_KERNING  $1
+#define ALLEGRO_TTF_MONOCHROME  $2
+#define ALLEGRO_TTF_NO_AUTOHINT $4
+
 function: al_init_font_addon ( -- bool )
 function: al_shutdown_font_addon ( -- )
 \ function: al_get_allegro_font_version ( -- int )

@@ -44,6 +44,7 @@ true value dev
 0 value allegro?
 0 value eventq
 0 value display
+create uesrc 32 cells /allot
 
 \ --------------------------------------------------------------------------------------------------
 [section] Display
@@ -56,7 +57,7 @@ include afkit/al.f
 
 : assertAllegro
     allegro? ?exit   true to allegro?  init-allegro-all
-    \    usere al_init_user_event_source
+    uesrc al_init_user_event_source
     initaudio
 ;
 
