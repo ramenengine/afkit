@@ -131,7 +131,7 @@ function: al_init_user_event_source ( ALLEGRO_EVENT_SOURCE* -- )
 \ /* The second argument is ALLEGRO_EVENT instead of ALLEGRO_USER_EVENT
 \ * to prevent users passing a pointer to a too-short structure.
 \ */
-function: al_emit_user_event ( ALLEGRO_EVENT_SOURCE* ALLEGRO_EVENT* dtor -- flag )
+function: al_emit_user_event ( ALLEGRO_EVENT_SOURCE* ALLEGRO_EVENT* dtor -- )
 \ function: al_unref_user_event ( ALLEGRO_USER_EVENT* -- )
 \ function: al_set_event_source_data ( ALLEGRO_EVENT_SOURCE* intptr_t data -- )
 \ AL_FUNC( intptr_t al_get_event_source_data ( const ALLEGRO_EVENT_SOURCE* -- )

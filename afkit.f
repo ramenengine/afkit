@@ -57,7 +57,6 @@ include afkit/al.f
 
 : assertAllegro
     allegro? ?exit   true to allegro?  init-allegro-all
-    uesrc al_init_user_event_source
     initaudio
 ;
 
@@ -107,6 +106,8 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
     eventq  display       al_get_display_event_source  al_register_event_source
     eventq                al_get_mouse_event_source    al_register_event_source
     eventq                al_get_keyboard_event_source al_register_event_source
+    uesrc al_init_user_event_source
+    eventq                uesrc                        al_register_event_source
 
     ALLEGRO_DEPTH_TEST 0 al_set_render_state
 ;
@@ -187,7 +188,7 @@ create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 [section] Graphics
 \ Graphics essentials; no-fixed-point version
 16 cells constant /transform
-: transformation  create  here  /transform allot  al_identity_transform ;
+: transform  create  here  /transform allot  al_identity_transform ;
 
 \ integer stuff
 : bmpw   ( bmp -- n )  al_get_bitmap_width  ;

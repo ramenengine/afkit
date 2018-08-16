@@ -43,7 +43,7 @@ z" AKFS" @ constant FULLSCREEN_EVENT
 : poll  pollKB  pollJoys  [defined] dev [if] pause [then] ;
 : break  true to breaking? ;
 
-transformation m1
+transform m1
 variable clipx
 variable clipy
 variable clipw
@@ -79,7 +79,20 @@ variable cliph
     ALLEGRO_ADD ALLEGRO_ONE   ALLEGRO_ONE
         al_set_separate_blender
     
-    display al_set_target_backbuffer ;
+    display al_set_target_backbuffer
+;
+
+: unmount
+    m1 al_identity_transform
+    m1 al_use_transform
+    0 0 displaywh clip
+    ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA
+    ALLEGRO_ADD ALLEGRO_ONE   ALLEGRO_ONE
+        al_set_separate_blender
+    
+    display al_set_target_backbuffer
+;
+
 
 variable (catch)
 : try  dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
@@ -144,7 +157,7 @@ variable newfs
 ;
 
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: show  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
+: show  mount  'show try ?renderr  unmount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl?  me to (me) ;
 : go/  eventq al_flush_event_queue  >ide  false to breaking?  (me) to me ;
