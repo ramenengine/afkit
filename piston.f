@@ -71,6 +71,7 @@ variable cliph
             native x@ 2 / desired-res x@ #globalscale * 2 / -  s>f 1sf 
             native y@ 2 / desired-res y@ #globalscale * 2 / -  s>f 1sf  al_translate_transform
     then
+    m1 0.5e 0.5e 2sf al_translate_transform
     m1 al_use_transform
 
     0 0 desired-res xy@ clip
@@ -79,18 +80,15 @@ variable cliph
     ALLEGRO_ADD ALLEGRO_ONE   ALLEGRO_ONE
         al_set_separate_blender
     
-    display al_set_target_backbuffer
 ;
-
 : unmount
     m1 al_identity_transform
+    m1 0.5e 0.5e 2sf al_translate_transform
     m1 al_use_transform
     0 0 displaywh clip
     ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA
     ALLEGRO_ADD ALLEGRO_ONE   ALLEGRO_ONE
         al_set_separate_blender
-    
-    display al_set_target_backbuffer
 ;
 
 
@@ -156,9 +154,11 @@ variable newfs
     FULLSCREEN_EVENT al-emit-user-event
 ;
 
+: onto  ( bmp -- )  dup display = if al_set_target_backbuffer else al_set_target_bitmap then ;
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: ?greybg  fs @ -exit  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
-: show  ?greybg  mount  me >r  'show try ?renderr  r> to me  unmount  ?overlay  al_flip_display ;
+: ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
+: (show)  me >r  'show try ?renderr  r> to me ;
+: show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  al_flip_display ;
 : ?clearkb  interact @ if clearkb then ;
 : step  me >r  ?clearkb  'step try to steperr  1 +to #frames  r> to me  ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
