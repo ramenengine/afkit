@@ -25,7 +25,6 @@
 
 \ Flags
 variable info  \ enables debugging mode display
-variable allowwin  allowwin on
 variable fs    \ is fullscreen enabled?
 variable interact   \ if on, cmdline will receive keys.  check if false before doing game input, if needed.
 variable logevents  \ enables spitting out of event codes
@@ -111,8 +110,6 @@ variable (catch)
   then ;
 
 
-: fsflag  fs @ allowwin @ not or ;
-
 variable winx  variable winy
 : ?poswin   \ save/restore window position when toggling in and out of fullscreen
     display al_get_display_flags ALLEGRO_FULLSCREEN_WINDOW and if
@@ -122,13 +119,13 @@ variable winx  variable winy
     then ;
 
 : al-emit-user-event  ( type -- )  \ EVT is expected to be filled, except for the type
-    evt ALLEGRO_EVENT.type !  uesrc evt al_emit_user_event ;
+    evt ALLEGRO_EVENT.type !  uesrc evt 0 al_emit_user_event ;
 
 0 value #lastscale
 variable newfs
 : 2s>f  swap s>f s>f ;
 : ?fs
-    ?poswin  display ALLEGRO_FULLSCREEN_WINDOW fsflag al_toggle_display_flag drop
+    ?poswin  display ALLEGRO_FULLSCREEN_WINDOW fs @ $1 and al_toggle_display_flag drop
     fs @ newfs @ = ?exit
     fs @ newfs !
     fs @ if
@@ -146,17 +143,8 @@ variable newfs
     FULLSCREEN_EVENT al-emit-user-event
 ;
 
-: ?fsgrey
-    fs @ -exit
-    m1 al_identity_transform
-    m1 al_use_transform
-    0 0 native xy@ al_set_clipping_rectangle
-    0.1e fdup fdup 1e 4sf al_clear_to_color
-    
-;    
-
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: show  ?fsgrey  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
+: show  mount  'show try ?renderr  mount  ?overlay  al_flip_display ;
 : step  'step try to steperr  1 +to #frames ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl?  me to (me) ;
 : go/  eventq al_flush_event_queue  >ide  false to breaking?  (me) to me ;
