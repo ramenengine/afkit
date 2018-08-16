@@ -157,17 +157,17 @@ variable newfs
 ;
 
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: show  mount  'show try ?renderr  unmount  ?overlay  al_flip_display ;
-: step  'step try to steperr  1 +to #frames ;
-: /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl?  me to (me) ;
-: go/  eventq al_flush_event_queue  >ide  false to breaking?  (me) to me ;
+: show  mount  me >r  'show try ?renderr  r> to me  unmount  ?overlay  al_flip_display ;
+: step  me >r  'step try to steperr  1 +to #frames  r> to me  ;
+: /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
+: go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
 : pump>  r> to 'pump   0 to 'step ;  ( -- <code> )  ( -- )
 : @event  ( -- flag )  eventq evt al_get_next_event  logevents @ if  etype h.  then ;
 : attend
     begin  @event  breaking? not and while
-        'pump try to goerr  standard-events  ?system
+        me >r  'pump try to goerr  standard-events  r> to me  ?system 
     repeat ;
 : go  /go   begin  show  attend  poll  step  ?fs  breaking?  until  go/ ;
 
