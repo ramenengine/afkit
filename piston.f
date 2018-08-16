@@ -158,7 +158,8 @@ variable newfs
 
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
 : show  mount  me >r  'show try ?renderr  r> to me  unmount  ?overlay  al_flip_display ;
-: step  me >r  'step try to steperr  1 +to #frames  r> to me  ;
+: ?clearkb  interact @ if clearkb then ;
+: step  me >r  ?clearkb  'step try to steperr  1 +to #frames  r> to me  ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
