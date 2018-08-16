@@ -157,7 +157,8 @@ variable newfs
 ;
 
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
-: show  mount  me >r  'show try ?renderr  r> to me  unmount  ?overlay  al_flip_display ;
+: ?greybg  fs @ -exit  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
+: show  ?greybg  mount  me >r  'show try ?renderr  r> to me  unmount  ?overlay  al_flip_display ;
 : ?clearkb  interact @ if clearkb then ;
 : step  me >r  ?clearkb  'step try to steperr  1 +to #frames  r> to me  ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
