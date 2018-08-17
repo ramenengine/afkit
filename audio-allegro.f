@@ -5,12 +5,11 @@
 
 : -audio
     mixer -exit
-    mixer al_destroy_mixer
-    voice al_destroy_voice
+    mixer 0 al_set_mixer_playing drop 
 ;
 
 : +audio
-    mixer ?exit
+    mixer if  mixer #1 al_set_mixer_playing drop  exit then 
     #44100 ALLEGRO_AUDIO_DEPTH_INT16 ALLEGRO_CHANNEL_CONF_2 al_create_voice to voice
     #44100 ALLEGRO_AUDIO_DEPTH_FLOAT32 ALLEGRO_CHANNEL_CONF_2 al_create_mixer to mixer
     mixer voice al_attach_mixer_to_voice 0= abort" Couldn't initialize audio"
