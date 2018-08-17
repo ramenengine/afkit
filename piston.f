@@ -10,7 +10,7 @@
 
 
 \ Values
-0 value #frames \ frame counter.
+0 value frmctr
 0 value renderr
 0 value steperr
 0 value goerr
@@ -28,6 +28,7 @@ variable info  \ enables debugging mode display
 variable fs    \ is fullscreen enabled?
 variable interact   \ if on, cmdline will receive keys.  check if false before doing game input, if needed.
 variable logevents  \ enables spitting out of event codes
+variable eco   \ enable to save CPU (for repl/editors etc)
 
 \ Defers
 defer ?overlay  ' noop is ?overlay  \ render ide  ( -- )
@@ -71,7 +72,7 @@ variable cliph
             native x@ 2 / desired-res x@ #globalscale * 2 / -  s>f 1sf 
             native y@ 2 / desired-res y@ #globalscale * 2 / -  s>f 1sf  al_translate_transform
     then
-    m1 0.625e 0.625e 2sf al_translate_transform
+    \ m1 0.625e 0.625e 2sf al_translate_transform
     m1 al_use_transform
 
     0 0 desired-res xy@ clip
@@ -83,7 +84,7 @@ variable cliph
 ;
 : unmount
     m1 al_identity_transform
-    m1 0.625e 0.625e 2sf al_translate_transform
+    \ m1 0.625e 0.625e 2sf al_translate_transform
     m1 al_use_transform
     0 0 displaywh clip
     ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA
@@ -91,37 +92,49 @@ variable cliph
         al_set_separate_blender
 ;
 
-
 variable (catch)
 : try  dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
 
-\ : alt?  evt ALLEGRO_KEYBOARD_EVENT.modifiers @ ALLEGRO_KEYMOD_ALT and ;
-: standard-events
-  etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize   123 . then
-  etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
-\  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  -timer  -audio  then
-  etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if  clearkb  ( +timer   +audio )  false to alt?  then
-  etype ALLEGRO_EVENT_KEY_DOWN = if
-    evt ALLEGRO_KEYBOARD_EVENT.keycode @ case
-      <alt>    of  true to alt?  endof
-      <altgr>  of  true to alt?  endof
-      <lctrl>  of  true to ctrl?  endof
-      <rctrl>  of  true to ctrl?  endof
-      <enter>  of  alt? -exit  fs @ not fs ! endof
-      <f4>     of  alt? -exit  bye  endof
-      <f12>    of  break  endof
-      <tilde>  of  alt? -exit  info @ not info !  endof
-    endcase
-  then
-  etype ALLEGRO_EVENT_KEY_UP = if
-    evt ALLEGRO_KEYBOARD_EVENT.keycode @ case
-      <alt>    of  false to alt?  endof
-      <altgr>  of  false to alt?  endof
-      <lctrl>  of  false to ctrl?  endof
-      <rctrl>  of  false to ctrl?  endof
-    endcase
-  then ;
+: ?suspend
+    interact @ -exit
+    -audio
+    begin
+        eventq evt al_wait_for_event
+        etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if
+            clearkb  false to alt?  +audio
+            exit 
+        then
+    again    
+;
 
+: standard-events
+    etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize  then
+    etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
+    etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  ?suspend  then
+\    etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if
+\        clearkb  false to alt?
+\    then
+
+    etype ALLEGRO_EVENT_KEY_DOWN = if
+        evt ALLEGRO_KEYBOARD_EVENT.keycode @ case
+            <alt>    of  true to alt?  endof
+            <altgr>  of  true to alt?  endof
+            <lctrl>  of  true to ctrl?  endof
+            <rctrl>  of  true to ctrl?  endof
+            <enter>  of  alt? -exit  fs @ not fs ! endof
+            <f4>     of  alt? -exit  bye  endof
+            <f12>    of  break  endof
+            <tilde>  of  alt? -exit  info @ not info !  endof
+        endcase
+    then
+    etype ALLEGRO_EVENT_KEY_UP = if
+        evt ALLEGRO_KEYBOARD_EVENT.keycode @ case
+            <alt>    of  false to alt?  endof
+            <altgr>  of  false to alt?  endof
+            <lctrl>  of  false to ctrl?  endof
+            <rctrl>  of  false to ctrl?  endof
+        endcase
+    then ;
 
 variable winx  variable winy
 : ?poswin   \ save/restore window position when toggling in and out of fullscreen
@@ -161,18 +174,22 @@ variable newfs
 : ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
 : (show)  me >r  'show try ?renderr  r> to me ;
 : show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  al_flip_display ;
-: ?clearkb  interact @ if clearkb then ;
-: step  me >r  ?clearkb  'step try to steperr  1 +to #frames  r> to me  ;
+: ?suppress  interact @ if clearkb then ;
+: step  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
 : pump>  r> to 'pump   0 to 'step ;  ( -- <code> )  ( -- )
-: @event  ( -- flag )  eventq evt al_get_next_event  logevents @ if  etype h.  then ;
+: ?log  logevents @ -exit  etype h.  ;
+: ?pause  interact @ -exit  pause ;
+: get-next-event  eco @ if al_wait_for_event #1 else al_get_next_event ?pause then ;
+: @event  ( -- flag )  eventq evt get-next-event ?log ;
 : pump  interact @ ?exit  'pump try to goerr ;
 : attend
-    begin  @event  breaking? not and while
-        me >r  pump  standard-events  r> to me  ?system 
+    begin  @event  breaking? not and  while
+        me >r  pump  standard-events  r> to me  ?system
+        eco @ ?exit
     repeat ;
 : go  /go   begin  show  attend  poll  step  ?fs  breaking?  until  go/ ;
 
