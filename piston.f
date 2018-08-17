@@ -71,7 +71,7 @@ variable cliph
             native x@ 2 / desired-res x@ #globalscale * 2 / -  s>f 1sf 
             native y@ 2 / desired-res y@ #globalscale * 2 / -  s>f 1sf  al_translate_transform
     then
-    m1 0.5e 0.5e 2sf al_translate_transform
+    m1 0.625e 0.625e 2sf al_translate_transform
     m1 al_use_transform
 
     0 0 desired-res xy@ clip
@@ -83,7 +83,7 @@ variable cliph
 ;
 : unmount
     m1 al_identity_transform
-    m1 0.5e 0.5e 2sf al_translate_transform
+    m1 0.625e 0.625e 2sf al_translate_transform
     m1 al_use_transform
     0 0 displaywh clip
     ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA
@@ -99,6 +99,8 @@ variable (catch)
 : standard-events
   etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize   123 . then
   etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
+\  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  -timer  -audio  then
+  etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if  clearkb  ( +timer   +audio )  false to alt?  then
   etype ALLEGRO_EVENT_KEY_DOWN = if
     evt ALLEGRO_KEYBOARD_EVENT.keycode @ case
       <alt>    of  true to alt?  endof
@@ -167,9 +169,10 @@ variable newfs
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
 : pump>  r> to 'pump   0 to 'step ;  ( -- <code> )  ( -- )
 : @event  ( -- flag )  eventq evt al_get_next_event  logevents @ if  etype h.  then ;
+: pump  interact @ ?exit  'pump try to goerr ;
 : attend
     begin  @event  breaking? not and while
-        me >r  'pump try to goerr  standard-events  r> to me  ?system 
+        me >r  pump  standard-events  r> to me  ?system 
     repeat ;
 : go  /go   begin  show  attend  poll  step  ?fs  breaking?  until  go/ ;
 
