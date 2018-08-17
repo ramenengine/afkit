@@ -117,7 +117,8 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 
 create desired-res  initial-res swap , ,
 
-: +display  display valid? ?exit  desired-res xy@ #globalscale * swap #globalscale * swap initDisplay ;
+: scaled-res  desired-res xy@ #globalscale * swap #globalscale * swap ;
+: +display  display valid? ?exit  scaled-res initDisplay ;
 : -display  display valid? -exit
     display al_destroy_display  0 to display
     eventq al_destroy_event_queue  0 to eventq ;
@@ -199,15 +200,18 @@ create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 : savebmp  ( bmp adr c -- ) zstring swap al_save_bitmap 0= abort" Allegro: Error saving bitmap." ;
 : -bmp  ?dup -exit al_destroy_bitmap ;
 
-create oldblender  6 cells allot
-: blend>  ( op src dest aop asrc adest -- )
-    oldblender dup cell+ dup cell+ dup cell+ dup cell+ dup cell+ al_get_separate_blender
-    al_set_separate_blender  r> call
-    oldblender @+ swap @+ swap @+ swap @+ swap @+ swap @ al_set_separate_blender ;
-: write-rgba  ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ZERO ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ZERO ;
-: add-rgba    ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_ONE  ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ONE  ;
-: blend-rgba  ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA  ALLEGRO_ADD ALLEGRO_ONE ALLEGRO_ONE ;
-blend-rgba al_set_separate_blender
+create write-src  ALLEGRO_ADD , ALLEGRO_ONE   , ALLEGRO_ZERO          , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ZERO , 
+create add-src    ALLEGRO_ADD , ALLEGRO_ALPHA , ALLEGRO_ONE           , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ONE  , 
+create interp-src ALLEGRO_ADD , ALLEGRO_ALPHA , ALLEGRO_INVERSE_ALPHA , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ONE  , 
+
+0 value oldblender
+0 value currentblender
+: blend  ( blender -- ) 
+    dup to currentblender
+    @+ swap @+ swap @+ swap @+ swap @+ swap @ al_set_separate_blender ;
+: blend>  ( blender -- ) 
+    currentblender to oldblender  blend  r> call  oldblender blend ;
+interp-src blend
 
 \ Pen
 create penx  0 ,  here 0 ,  constant peny

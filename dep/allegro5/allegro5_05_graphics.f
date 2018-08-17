@@ -7,6 +7,7 @@ function: al_set_target_backbuffer ( ALLEGRO_DISPLAY-*display -- )
 function: al_clear_to_color ( float-r float-g float-b float-a -- )
 function: al_draw_pixel ( float-x float-y float-r float-g float-b float-a -- )
 function: al_put_pixel ( int-x int-y float-r float-g float-b float-a -- )
+function: al_put_blended_pixel ( int-x int-y float-r float-g float-b float-a -- )
 function: al_get_pixel ( dest-color bitmap int-x int-y -- )
 
 
@@ -156,6 +157,7 @@ function: al_set_blender ( int-op int-source int-dest -- )
 function: al_set_separate_blender ( int-op int-source int-dest int-alpha_op int-alpha_source int-alpha_dest -- )
 function: al_get_blender ( int-op int-source int-dest -- )
 function: al_get_separate_blender ( int-op int-source int-dest int-alpha_op int-alpha_source int-alpha_dest -- )
+function: al_set_blend_color  ( float-r float-g float-b float-a -- )
 
 \ addon: opengl
 function: al_get_opengl_proc_address     ( const-char-*name -- addr )
