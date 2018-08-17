@@ -2,17 +2,15 @@
 
 A portable framework for programming games and other applications with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
 
-**Note:  AF-Kit now has a versioning system!  You must either provide a version when INCLUDEing afkit/kit.f, or bypass it by pushing 0.**
-
 ## Overview
 
-This package brings up a hardware-accelerated graphics window so you can write games or other graphical programs in Forth.
+The most basic point of package is to bring up a hardware-accelerated graphics window.
 
-Allegro is a portable low-level game development library. http://liballeg.org/
+Allegro powers it.  It is a portable low-level game development library: http://liballeg.org/ 
 
 [Forth Foundation Library](http://soton.mpeforth.com/flag/ffl/index.html) is included for capabilities often required when working with modern libaries and file formats- features such as XML, Base64, MD5 etc.  XML DOM access and Base64 are automatically loaded to support some higher level features I plan on including in a framework based on this package, but this may change.
 
-This is not a comprehensive game development library; it is a cleaned-up version of [Bubble](http://github.com/rogerlevy/bubble/) with fixed-point, Komodo-specific, and game-development-framework files removed and provisions for portability added.  
+AFKit is not a comprehensive game development library; it is a cleaned-up version of [Bubble](http://github.com/rogerlevy/bubble/) with fixed-point, Komodo-specific, and game-development-framework files removed and provisions for portability added.  
 
 ## Cross-platform Support
 
@@ -62,36 +60,17 @@ A fancier demonstration is forthcoming.
 
 When allegro-audio is defined, audio-allegro.f will be loaded, which reserves 32 samples for playing samples with play_sample, and a default mixer and voice.  
 
-## Graphics
-
-Some essential tools are included in afkit/gfx.f
-
-## Other utilities
-
-These files are included as part of the foundation:
-
-- afkit/ans/files.f - tools for more conveniently working with files
-- afkit/ans/strops.f - tools for constructing strings and working with zero-terminated strings
-- afkit/ans/roger.f - miscellaneous useful primitives
-
 ## The Piston (main loop) - afkit/piston.f
 
-This is a standard main loop which you're encouraged to use.
+This is a standard main loop with many features.
 
-To enter the main loop type OK.  A default program defined in display.f will run.  Stop the loop by pressing CTRL+F12.
+To enter the main loop type GO or just press enter without entering anything.  A default program defined in display.f will run.  Stop the loop by pressing F12.
 
-The piston has 3 phases.  The event handling phase, the "step" phase, and the display phase.  3 words are used to tell the loop what to do during these phases.  These words have a syntax similar to DOES>.  SHOW> owes its lineage to ColorForth.
+The piston has 3 phases.  The event handling phase, the step phase, and the display phase.  3 words are used to tell the loop what to do during these phases.  These words have a syntax similar to DOES>.  SHOW> owes its lineage to ColorForth.
 
 - SHOW> changes the display.
 - STEP> changes the logic.
-- GO> changes your event handler and clears the step assignment.  use the words ETYPE and EVT to process Allegro events here.
-
-## Roadmap
-
-- [ ] In-game terminal
-- [x] Add SwiftForth/Linux support
-- [ ] Add portable directory walker utility
-- [ ] Add or create official AF-Kit public domain 32-bit Intel ANS Forth and add support for it to bindings etc
+- PUMP> changes your event handler and clears the step assignment.
 
 ## Links and Resources
 
