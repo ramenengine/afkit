@@ -29,6 +29,7 @@ variable fs    \ is fullscreen enabled?
 variable interact   \ if on, cmdline will receive keys.  check if false before doing game input, if needed.
 variable logevents  \ enables spitting out of event codes
 variable eco   \ enable to save CPU (for repl/editors etc)
+variable oscursor   \ turn off to hide the OS's mouse cursor
 
 \ Defers
 defer ?overlay  ' noop is ?overlay  \ render ide  ( -- )
@@ -169,6 +170,8 @@ variable newfs
     FULLSCREEN_EVENT al-emit-user-event
 ;
 
+: ?hidemouse  display oscursor @ if al_show_mouse_cursor else al_hide_mouse_cursor then ; 
+
 : onto  ( bmp -- )  dup display = if al_set_target_backbuffer else al_set_target_bitmap then ;
 : ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
 : ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
@@ -191,7 +194,7 @@ variable newfs
         me >r  pump  standard-events  r> to me  ?system
         eco @ ?exit
     repeat ;
-: go  /go   begin  show  attend  poll  step  ?fs  breaking?  until  go/ ;
+: go  /go   begin  show  attend  poll  step  ?fs  ?hidemouse  breaking?  until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square
 variable x  variable vx  1 vx !
@@ -206,3 +209,5 @@ variable y  variable vy  1 vy !
     vx @ 0> if  x @ displayw 50 - >= if  vx @ negate vx !  then then
     vy @ 0> if  y @ displayh 50 - >= if  vy @ negate vy !  then then
     ;  execute
+
+oscursor on
