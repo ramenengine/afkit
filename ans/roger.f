@@ -25,6 +25,7 @@
 : or!   dup >r @ or r> ! ;
 : xor!   dup >r @ xor r> ! ;
 : @!  dup @ >r ! r> ;
+: bounds  over + swap ;
 
 : ifill  ( addr count val - )  -rot  0 do  over !+  loop  2drop ;
 : ierase   0 ifill ;
@@ -74,7 +75,6 @@
 : require  ( -- <path> )
     >in @  exists if  drop  exit  then
     dup >in !  create   >in !  include ;
-
 : include  ( -- <path> )
     >in @  create  >in !  bl parse included ;
 
