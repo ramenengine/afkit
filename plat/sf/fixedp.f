@@ -203,6 +203,8 @@ only forth fixpointing +order definitions
     : ifill  swap 1i swap ifill ;
     : ierase  0 ifill ;
     : imove  1i imove ;
+    : kbytes  1i #1024 i* ;
+    : megs    1i #1024 i* #1024 i* ;
 
 only forth definitions fixpointing +order
 : fixed   fixpointing +order  ints off #10 base ! ;
