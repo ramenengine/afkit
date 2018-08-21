@@ -26,7 +26,6 @@
 \ Flags
 variable info  \ enables debugging mode display
 variable fs    \ is fullscreen enabled?
-variable interact   \ if on, cmdline will receive keys.  check if false before doing game input, if needed.
 variable logevents  \ enables spitting out of event codes
 variable eco   \ enable to save CPU (for repl/editors etc)
 variable oscursor   \ turn off to hide the OS's mouse cursor
@@ -35,6 +34,7 @@ variable oscursor   \ turn off to hide the OS's mouse cursor
 defer ?overlay  ' noop is ?overlay  \ render ide  ( -- )
 defer ?system   ' noop is ?system   \ system events ( -- )
 defer onDisplayClose  :is onDisplayClose  bye ;  ( -- )
+defer repl?     :noname  0 ; is repl?
 
 \ Event stuff
 create evt  256 /allot
@@ -97,7 +97,7 @@ variable (catch)
 : try  dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
 
 : ?suspend
-    interact @ -exit
+    repl? -exit
     -audio
     begin
         eventq evt al_wait_for_event
@@ -177,18 +177,18 @@ variable newfs
 : ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
 : (show)  me >r  'show try ?renderr  r> to me ;
 : show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  al_flip_display ;
-: ?suppress  interact @ if clearkb then ;
+: ?suppress  repl? if clearkb then ;
 : step  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
-: pump>  r> to 'pump   0 to 'step ;  ( -- <code> )  ( -- )
+: pump>  r> to 'pump ;  ( -- <code> )  ( -- )
 : ?log  logevents @ -exit  etype h.  ;
-: ?pause  interact @ -exit  pause ;
+: ?pause  repl? -exit  pause ;
 : get-next-event  eco @ if al_wait_for_event #1 else al_get_next_event ?pause then ;
 : @event  ( -- flag )  eventq evt get-next-event ?log ;
-: pump  interact @ ?exit  'pump try to goerr ;
+: pump  repl? ?exit  'pump try to goerr ;
 : attend
     begin  @event  breaking? not and  while
         me >r  pump  standard-events  r> to me  ?system

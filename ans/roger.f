@@ -27,6 +27,9 @@
 : @!  dup @ >r ! r> ;
 : bounds  over + swap ;
 
+\ WITHIN? - lo and hi are inclusive
+: within? ( n lo hi -- flag )  over - >r - r> #1 + u< ;
+
 : ifill  ( addr count val - )  -rot  0 do  over !+  loop  2drop ;
 : ierase   0 ifill ;
 : imove  ( from to count - )  cells move ;
