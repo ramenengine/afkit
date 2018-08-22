@@ -41,7 +41,6 @@ create evt  256 /allot
 : etype  evt ALLEGRO_EVENT.TYPE @ ;
 z" AKFS" @ constant FULLSCREEN_EVENT
 
-
 : poll  pollKB  pollJoys  [defined] dev [if] pause [then] ;
 : break  true to breaking? ;
 
@@ -185,8 +184,7 @@ variable newfs
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
 : pump>  r> to 'pump ;  ( -- <code> )  ( -- )
 : ?log  logevents @ -exit  etype h.  ;
-: ?pause  repl? -exit  pause ;
-: get-next-event  eco @ if al_wait_for_event #1 else al_get_next_event ?pause then ;
+: get-next-event  eco @ if al_wait_for_event #1 else al_get_next_event then ;
 : @event  ( -- flag )  eventq evt get-next-event ?log ;
 : pump  repl? ?exit  'pump try to goerr ;
 : attend
