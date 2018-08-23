@@ -29,6 +29,7 @@ variable fs    \ is fullscreen enabled?
 variable logevents  \ enables spitting out of event codes
 variable eco   \ enable to save CPU (for repl/editors etc)
 variable oscursor   \ turn off to hide the OS's mouse cursor
+variable ide-loaded
 
 \ Defers
 defer ?overlay  ' noop is ?overlay  \ render ide  ( -- )
@@ -96,7 +97,6 @@ variable (catch)
 : try  dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
 
 : ?suspend
-    repl? -exit
     -audio
     begin
         eventq evt al_wait_for_event
@@ -110,10 +110,12 @@ variable (catch)
 : standard-events
     etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize  then
     etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
-    etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  ?suspend  then
-\    etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if
-\        clearkb  false to alt?
-\    then
+    ide-loaded @ if  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  ?suspend  then  then
+    
+    \ still needed in published games, don't remove
+    etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if
+        clearkb  false to alt?
+    then
 
     etype ALLEGRO_EVENT_KEY_DOWN = if
         evt ALLEGRO_KEYBOARD_EVENT.keycode @ case
