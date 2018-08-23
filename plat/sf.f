@@ -54,3 +54,5 @@ create backup 11 cells allot
 : /s  s0 @ sp! ;
 
 : .s  base @ >r hex .s r> base ! ;
+
+: ld  include ;
