@@ -6,7 +6,7 @@ include afkit/ans/version.f
     s" kitconfig.f" file-exists [if]
         include kitconfig.f
     [else]
-        .( Missing kitconfig.f!!!) QUIT
+        s" Missing kitconfig.f!!! " type QUIT
     [then]
     include afkit/platforms.f
 
@@ -115,18 +115,16 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 : valid?  ['] @ catch nip 0 = ;
 
 
-create desired-res  initial-res swap , ,
+create res  initial-res swap , ,
 
-: scaled-res  desired-res xy@ #globalscale * swap #globalscale * swap ;
+: scaled-res  res xy@ #globalscale * swap #globalscale * swap ;
 : +display  display valid? ?exit  scaled-res initDisplay ;
 : -display  display valid? -exit
     display al_destroy_display  0 to display
     eventq al_destroy_event_queue  0 to eventq ;
 : -allegro  -display  false to allegro?  al_uninstall_system ;
-: empty  -display empty ;
 
-: ?same  desired-res xy@ 2over d= -exit  r> drop ;
-: resolution  ?same  -display  desired-res 2!  +display ;
+: resolution  -display  res 2!  +display ;
 
 \ ----------------------------------- words for switching windows ----------------------------------
 [defined] linux [if]
@@ -226,3 +224,4 @@ include afkit/piston.f
 [section] Init
 +display
 >ide
+

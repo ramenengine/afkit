@@ -70,13 +70,13 @@ variable cliph
     m1 #globalscale s>f 1sf dup al_scale_transform
     fs @ if
         m1
-            native x@ 2 / desired-res x@ #globalscale * 2 / -  s>f 1sf 
-            native y@ 2 / desired-res y@ #globalscale * 2 / -  s>f 1sf  al_translate_transform
+            native x@ 2 / res x@ #globalscale * 2 / -  s>f 1sf 
+            native y@ 2 / res y@ #globalscale * 2 / -  s>f 1sf  al_translate_transform
     then
     \ m1 0.625e 0.625e 2sf al_translate_transform
     m1 al_use_transform
 
-    0 0 desired-res xy@ clip
+    0 0 res xy@ clip
     
     ALLEGRO_ADD ALLEGRO_ALPHA ALLEGRO_INVERSE_ALPHA
     ALLEGRO_ADD ALLEGRO_ONE   ALLEGRO_ONE
@@ -159,10 +159,10 @@ variable newfs
     fs @ if
         #globalscale to #lastscale
         native xy@ 2s>f f/ 
-        desired-res xy@ 2s>f f/ f> if
-            native y@ desired-res y@ /
+        res xy@ 2s>f f/ f> if
+            native y@ res y@ /
         else
-            native x@ desired-res x@ /
+            native x@ res x@ /
         then
             to #globalscale
     else
@@ -206,8 +206,8 @@ variable y  variable vy  1 vy !
     vx @ x +!  vy @ y +!
     vx @ 0< if  x @ 0 < if  vx @ negate vx !  then then
     vy @ 0< if  y @ 0 < if  vy @ negate vy !  then then
-    vx @ 0> if  x @ displayw 50 - >= if  vx @ negate vx !  then then
-    vy @ 0> if  y @ displayh 50 - >= if  vy @ negate vy !  then then
+    vx @ 0> if  x @ res x@ 50 - >= if  vx @ negate vx !  then then
+    vy @ 0> if  y @ res y@ 50 - >= if  vy @ negate vy !  then then
     ;  execute
 
 oscursor on
