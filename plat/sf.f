@@ -55,4 +55,7 @@ create backup 11 cells allot
 
 : .s  base @ >r hex .s r> base ! ;
 
-: ld  include ;
+
+create ldr 64 allot
+: rld  ldr count included ;
+: ld   bl parse ldr place  s" .f" ldr append  rld ;

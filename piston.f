@@ -11,9 +11,9 @@
 
 \ Values
 0 value frmctr
-0 value renderr
+0 value showerr
 0 value steperr
-0 value goerr
+0 value pumperr
 0 value alt?  \ part of fix for alt-enter bug when game doesn't have focus
 0 value ctrl?
 0 value breaking?
@@ -26,7 +26,6 @@
 \ Flags
 variable info  \ enables debugging mode display
 variable fs    \ is fullscreen enabled?
-variable logevents  \ enables spitting out of event codes
 variable eco   \ enable to save CPU (for repl/editors etc)
 variable oscursor   \ turn off to hide the OS's mouse cursor
 variable ide-loaded
@@ -96,7 +95,7 @@ variable cliph
 variable (catch)
 : try  dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
 
-: ?suspend
+: suspend
     -audio
     begin
         eventq evt al_wait_for_event
@@ -110,7 +109,7 @@ variable (catch)
 : standard-events
     etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize  then
     etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
-    ide-loaded @ if  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  ?suspend  then  then
+    ide-loaded @ if  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  suspend  then  then
     
     \ still needed in published games, don't remove
     etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if
@@ -173,10 +172,10 @@ variable newfs
 
 : ?hidemouse  display oscursor @ if al_show_mouse_cursor else al_hide_mouse_cursor then ; 
 
-: onto  ( bmp -- )  dup display = if al_set_target_backbuffer else al_set_target_bitmap then ;
-: ?renderr  dup to renderr  if  cr ." Render Error "  renderr .  then ;
+: onto  ( bmp -- )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
+: ?showerr  dup to showerr  if  cr ." Render Error "  showerr .  then ;
 : ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
-: (show)  me >r  'show try ?renderr  r> to me ;
+: (show)  me >r  'show try ?showerr  r> to me ;
 : show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  al_flip_display ;
 : ?suppress  repl? if clearkb then ;
 : step  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
@@ -185,13 +184,12 @@ variable newfs
 : show>  r>  to 'show ;  ( -- <code> )  ( -- )
 : step>  r>  to 'step ;  ( -- <code> )  ( -- )
 : pump>  r> to 'pump ;  ( -- <code> )  ( -- )
-: ?log  logevents @ -exit  etype h.  ;
 : get-next-event  eco @ if al_wait_for_event #1 else al_get_next_event then ;
-: @event  ( -- flag )  eventq evt get-next-event ?log ;
-: pump  repl? ?exit  'pump try to goerr ;
+: @event  ( -- flag )  eventq evt get-next-event ;
+: pump  repl? ?exit  'pump try to pumperr ;
 : attend
     begin  @event  breaking? not and  while
-        me >r  pump  standard-events  r> to me  ?system
+        me >r  pump  standard-events  r> to me  ['] ?system catch throw
         eco @ ?exit
     repeat ;
 : go  /go   begin  show  attend  poll  step  ?fs  ?hidemouse  breaking?  until  go/ ;
