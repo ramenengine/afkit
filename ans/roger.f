@@ -81,3 +81,6 @@
 : include  ( -- <path> )
     >in @  create  >in !  bl parse included ;
 
+\ compile and exec
+: :now  :noname  [char] ; parse evaluate  postpone ;  execute ;
+

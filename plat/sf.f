@@ -68,3 +68,4 @@ create ldr 64 allot
    ['] INTERPRET CATCH ( * )
    ( * ) DUP IF  POSTPONE [   THEN
    NR> RESTORE-INPUT DROP ( * ) THROW ;
+

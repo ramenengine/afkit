@@ -173,9 +173,8 @@ variable newfs
 : ?hidemouse  display oscursor @ if al_show_mouse_cursor else al_hide_mouse_cursor then ; 
 
 : onto  ( bmp -- )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
-: ?showerr  dup to showerr  if  cr ." Render Error "  showerr .  then ;
 : ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
-: (show)  me >r  'show try ?showerr  r> to me ;
+: (show)  me >r  'show try to showerr  r> to me ;
 : show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  al_flip_display ;
 : ?suppress  repl? if clearkb then ;
 : step  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
