@@ -59,3 +59,12 @@ create backup 11 cells allot
 create ldr 64 allot
 : rld  ldr count included ;
 : ld   bl parse ldr place  s" .f" ldr append  rld ;
+
+
+\ don't move this
+: (EVALUATE)
+   SAVE-INPUT N>R
+   ( c-addr u ) #TIB 2!  >IN OFF  LINE OFF  BLK OFF  -1 'SOURCE-ID !
+   ['] INTERPRET CATCH ( * )
+   ( * ) DUP IF  POSTPONE [   THEN
+   NR> RESTORE-INPUT DROP ( * ) THROW ;

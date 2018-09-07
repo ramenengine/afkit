@@ -59,8 +59,8 @@ cr .( Loading Allegro ) ALLEGRO_VERSION_INT h. .( ... )
 : /* postpone \ ; immediate
 
     
-: [COMPATIBLE]   ( ver subver -- )
-   16 lshift swap 24 lshift or  ALLEGRO_VERSION_INT $ffff0000 and  > if 0 parse 2drop then ;
+: [COMPATIBLE]   ( ver subver rev -- )
+   8 lshift swap 16 lshift rot 24 lshift or or  ALLEGRO_VERSION_INT $ffffff00 and  > if 0 parse 2drop then ;
 
 
 \ ----------------------------- load files --------------------------------

@@ -80,7 +80,7 @@ function: al_destroy_bitmap ( ALLEGRO_BITMAP-*bitmap -- )
 
 function: al_convert_mask_to_alpha ( ALLEGRO_BITMAP-*bitmap, float-r float-g float-b float-a -- )
 
-5 2 [COMPATIBLE] function: al_convert_bitmap ( ALLEGRO_BITMAP -- )
+5 1 0 [COMPATIBLE] function: al_convert_bitmap ( ALLEGRO_BITMAP -- )
 
 \ bitmaps
 0
@@ -217,8 +217,8 @@ constant /ALLEGRO_VERTEX_ELEMENT
 constant /ALLEGRO_VERTEX
 
 function: al_init_primitives_addon ( -- bool )
-function: al_draw_prim ( const-void*-vtxs const-ALLEGRO_VERTEX_DECL*-decl ALLEGRO_BITMAP*-texture int-start int-end int-type -- int )
-function: al_draw_indexed_prim ( const-void*-vtxs const-ALLEGRO_VERTEX_DECL*-decl ALLEGRO_BITMAP*-texture-const int*-indices int-num_vtx int-type -- int )
+function: al_draw_prim ( const-void*-vtxs const-ALLEGRO_VERTEX_DECL*-decl ALLEGRO_BITMAP*-texture int-start int-end int-type -- )
+function: al_draw_indexed_prim ( const-void*-vtxs const-ALLEGRO_VERTEX_DECL*-decl ALLEGRO_BITMAP*-texture-const int*-indices int-num_vtx int-type -- )
 function: al_create_vertex_decl ( const-ALLEGRO_VERTEX_ELEMENT*-elements int-stride -- addr )
 function: al_draw_line ( float-x1 float-y1 float-x2 float-y2 float-r float-g float-b float-a float-thickness -- )
 function: al_draw_triangle ( float-x1 float-y1 float-x2 float-y2 float-x3 float-y3 float-r float-g float-b float-a float-thickness -- )
@@ -318,9 +318,9 @@ function: al_unmap_rgba ( ALLEGRO_COLOR-color unsigned-char-*r, unsigned-char-*g
 \ problem with DLL: (7/30, 5.1.11)
 \  the primitives addon functions seem to require 16 byte alignment.
 \  here's the workaround:
-variable (rp)
-macro: [rp16   rp@ dup (rp) !  $10 - $fffffff0 and 4 + rp! ;                    \ add 4 because the call itself subtracts 4.
-macro: rp16]   (rp) @ rp! ;
+\ variable (rp)
+\ macro: [rp16   rp@ dup (rp) !  $10 - $fffffff0 and 4 + rp! ;                    \ add 4 because the call itself subtracts 4.
+\ macro: rp16]   (rp) @ rp! ;
 
 \ i am not even sure which ones have the problem.  so i am just doing
 \ a bunch of them.
@@ -342,8 +342,8 @@ macro: rp16]   (rp) @ rp! ;
 
 linux-library liballegro_primitives
 
-5 2 [compatible] function: al_draw_polygon  ( vertices count joinstyle r g b a thickness miterlimit -- )
-5 2 [compatible] function: al_draw_filled_polygon  ( vertices count r g b a -- )
+5 1 0 [compatible] function: al_draw_polygon  ( vertices count joinstyle r g b a thickness miterlimit -- )
+5 1 0 [compatible] function: al_draw_filled_polygon  ( vertices count r g b a -- )
 
 0
 enum ALLEGRO_LINE_JOIN_NONE
@@ -371,22 +371,22 @@ drop
 #define ALLEGRO_SHADER_VAR_USE_TEX           z" al_use_tex"
 #define ALLEGRO_SHADER_VAR_USE_TEX_MATRIX    z" al_use_tex_matrix"
 
-5 2 [compatible] function: al_create_shader ( ALLEGRO_SHADER_PLATFORM-platform -- shader )
-5 2 [compatible] function: al_attach_shader_source   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type  const-char-*source -- bool )
-5 2 [compatible] function: al_attach_shader_source_file   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type   const-char-*filename -- bool )
-5 2 [compatible] function: al_build_shader   ( ALLEGRO_SHADER-*shader -- bool   )
-5 2 [compatible] function: al_get_shader_log   ( ALLEGRO_SHADER-shader -- zstr )
-5 2 [compatible] function: al_get_shader_platform   ( ALLEGRO_SHADER-shader -- ALLEGRO_SHADER_PLATFORM )
-5 2 [compatible] function: al_use_shader   ( ALLEGRO_SHADER-shader -- bool   )
-5 2 [compatible] function: al_destroy_shader   ( ALLEGRO_SHADER-shader -- )
-5 2 [compatible] function: al_set_shader_sampler   ( const-char-name   ALLEGRO_BITMAP-bitmap  int-unit -- bool )
-5 2 [compatible] function: al_set_shader_matrix   ( const-char-name  const-ALLEGRO_TRANSFORM-matrix -- bool  )
-5 2 [compatible] function: al_set_shader_int   ( const-char-name   int-i -- bool )
-5 2 [compatible] function: al_set_shader_float   ( const-char-name   float-f -- bool )
-5 2 [compatible] function: al_set_shader_int_vector   ( const-char-name   int-num_components  const-int-i   int-num_elems -- bool )
-5 2 [compatible] function: al_set_shader_float_vector   ( const-char-name   int-num_components     const-float-f   int-num_elems -- bool )
-5 2 [compatible] function: al_set_shader_bool   ( const-char-name   bool-b -- bool )
-5 2 [compatible] function: al_get_default_shader_source   ( ALLEGRO_SHADER_PLATFORM-platform  ALLEGRO_SHADER_TYPE-type -- zstr )
+5 1 0 [compatible] function: al_create_shader ( ALLEGRO_SHADER_PLATFORM-platform -- shader )
+5 1 0 [compatible] function: al_attach_shader_source   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type  const-char-*source -- bool )
+5 1 0 [compatible] function: al_attach_shader_source_file   ( ALLEGRO_SHADER-*shader  ALLEGRO_SHADER_TYPE-type   const-char-*filename -- bool )
+5 1 0 [compatible] function: al_build_shader   ( ALLEGRO_SHADER-*shader -- bool   )
+5 1 0 [compatible] function: al_get_shader_log   ( ALLEGRO_SHADER-shader -- zstr )
+5 1 0 [compatible] function: al_get_shader_platform   ( ALLEGRO_SHADER-shader -- ALLEGRO_SHADER_PLATFORM )
+5 1 0 [compatible] function: al_use_shader   ( ALLEGRO_SHADER-shader -- bool   )
+5 1 0 [compatible] function: al_destroy_shader   ( ALLEGRO_SHADER-shader -- )
+5 1 0 [compatible] function: al_set_shader_sampler   ( const-char-name   ALLEGRO_BITMAP-bitmap  int-unit -- bool )
+5 1 0 [compatible] function: al_set_shader_matrix   ( const-char-name  const-ALLEGRO_TRANSFORM-matrix -- bool  )
+5 1 0 [compatible] function: al_set_shader_int   ( const-char-name   int-i -- bool )
+5 1 0 [compatible] function: al_set_shader_float   ( const-char-name   float-f -- bool )
+5 1 0 [compatible] function: al_set_shader_int_vector   ( const-char-name   int-num_components  const-int-i   int-num_elems -- bool )
+5 1 0 [compatible] function: al_set_shader_float_vector   ( const-char-name   int-num_components     const-float-f   int-num_elems -- bool )
+5 1 0 [compatible] function: al_set_shader_bool   ( const-char-name   bool-b -- bool )
+5 1 0 [compatible] function: al_get_default_shader_source   ( ALLEGRO_SHADER_PLATFORM-platform  ALLEGRO_SHADER_TYPE-type -- zstr )
 
 #1
 enum ALLEGRO_VERTEX_SHADER
@@ -413,4 +413,11 @@ enum ALLEGRO_RENDER_NOT_EQUAL
 enum ALLEGRO_RENDER_GREATER_EQUAL
 drop
 
-5 1 [compatible] function: al_set_render_state ( state val -- )
+5 1 2 [compatible] function: al_set_render_state ( state val -- )
+
+5 2 3 [compatible] function: al_color_lch_to_rgb ( float-l, float-c, float-h, float-*red, float-*green, float-*blue -- )
+5 2 3 [compatible] function: al_color_hsv_to_rgb ( float-h, float-s, float-v, float-*red, float-*green, float-*blue -- )
+5 2 3 [compatible] function: al_color_hsl_to_rgb ( float-h, float-s, float-l, float-*red, float-*green, float-*blue -- )
+5 2 3 [compatible] function: al_color_rgb_to_lch ( float-red, float-green, float-blue, float-*l, float-*c, float-*h -- )
+5 2 3 [compatible] function: al_color_rgb_to_hsv ( float-red, float-green, float-blue, float-*h, float-*s, float-*v -- )
+5 2 3 [compatible] function: al_color_rgb_to_hsl ( float-red, float-green, float-blue, float-*h, float-*s, float-*l -- )
