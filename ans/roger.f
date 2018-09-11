@@ -26,6 +26,7 @@
 : xor!   dup >r @ xor r> ! ;
 : @!  dup @ >r ! r> ;
 : bounds  over + swap ;
+: lastbody  last @ name> >body ;
 
 \ WITHIN? - lo and hi are inclusive
 : within? ( n lo hi -- flag )  over - >r - r> #1 + u< ;
