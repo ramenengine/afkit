@@ -135,7 +135,7 @@ decimal \ important
 #define <UNKNOWN>  107
 
 \ /* All codes up to before #define <MODIFIERS can be freely
-\  * assignedas additional unknown keys like various multimedia
+\  * assignedas additional unknown keys like cvarious multimedia
 \  * and application keys keyboards may have.
 \  */
 

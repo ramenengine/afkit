@@ -23,18 +23,18 @@ function: al_unlock_bitmap ( ALLEGRO_BITMAP-*bitmap -- )
 drop
 
 0
-  var ALLEGRO_LOCKED_REGION.data
-  var ALLEGRO_LOCKED_REGION.format
-  var ALLEGRO_LOCKED_REGION.pitch
-  var ALLEGRO_LOCKED_REGION.pixel_size
+  cvar ALLEGRO_LOCKED_REGION.data
+  cvar ALLEGRO_LOCKED_REGION.format
+  cvar ALLEGRO_LOCKED_REGION.pitch
+  cvar ALLEGRO_LOCKED_REGION.pixel_size
 constant /ALLEGRO_LOCKED_REGION
 
 \ shorthand
 0
-  var ALLEGRO_LOCK.data
-  var ALLEGRO_LOCK.format
-  var ALLEGRO_LOCK.pitch
-  var ALLEGRO_LOCK.pixel_size
+  cvar ALLEGRO_LOCK.data
+  cvar ALLEGRO_LOCK.format
+  cvar ALLEGRO_LOCK.pitch
+  cvar ALLEGRO_LOCK.pixel_size
 constant /ALLEGRO_LOCK
 
 
@@ -199,21 +199,21 @@ enum ALLEGRO_PRIM_SHORT_2
 drop
 
 0
-  var ALLEGRO_VERTEX_ELEMENT.attribute
-  var ALLEGRO_VERTEX_ELEMENT.storage
-  var ALLEGRO_VERTEX_ELEMENT.offset
+  cvar ALLEGRO_VERTEX_ELEMENT.attribute
+  cvar ALLEGRO_VERTEX_ELEMENT.storage
+  cvar ALLEGRO_VERTEX_ELEMENT.offset
 constant /ALLEGRO_VERTEX_ELEMENT
 
 0
-  var ALLEGRO_VERTEX.x
-  var ALLEGRO_VERTEX.y
-  var ALLEGRO_VERTEX.z
-  var ALLEGRO_VERTEX.u
-  var ALLEGRO_VERTEX.v
-  var ALLEGRO_VERTEX.r
-  var ALLEGRO_VERTEX.g
-  var ALLEGRO_VERTEX.b
-  var ALLEGRO_VERTEX.a
+  cvar ALLEGRO_VERTEX.x
+  cvar ALLEGRO_VERTEX.y
+  cvar ALLEGRO_VERTEX.z
+  cvar ALLEGRO_VERTEX.u
+  cvar ALLEGRO_VERTEX.v
+  cvar ALLEGRO_VERTEX.r
+  cvar ALLEGRO_VERTEX.g
+  cvar ALLEGRO_VERTEX.b
+  cvar ALLEGRO_VERTEX.a
 constant /ALLEGRO_VERTEX
 
 function: al_init_primitives_addon ( -- bool )
@@ -293,7 +293,7 @@ function: al_get_bitmap_height ( ALLEGRO_BITMAP-*bitmap -- n )
 \ AL_FUNC(void,            al_get_opengl_texture_position,  (ALLEGRO_BITMAP *bitmap,
 \                                             int *u, int *v));
 \ AL_FUNC(void,            al_set_current_opengl_context,   (ALLEGRO_DISPLAY *display));
-\ AL_FUNC(int,             al_get_opengl_variant,        (void));
+\ AL_FUNC(int,             al_get_opengl_cvariant,        (void));
 
 function: al_map_rgba ( r g b a -- allegro-color )
 function: al_unmap_rgba ( ALLEGRO_COLOR-color unsigned-char-*r, unsigned-char-*g, unsigned-char-*b, unsigned-char-*a -- )

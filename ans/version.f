@@ -3,7 +3,7 @@
 : [version]  ( M m R M m R -- )
     depth 6 < abort" Version number is required!"
     packver >r packver r>
-    over 0 = if 2drop bl word drop exit then
+    over 0 = if 2drop exit then
     >r
     dup $FF000000 and r@ $FF000000 and <> abort" Incompatible major version!"
     $FFFF00 and r> $FFFF00 and <> if

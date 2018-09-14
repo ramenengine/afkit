@@ -33,13 +33,13 @@ decimal \ important
 \ /*
 \ * Event structures
 \ *
-\ * All event types have the following fields in common.
+\ * All event types have the following cfields in common.
 \ *
 \ *  type      -- the type of event this is
 \ *  timestamp -- when this event was generated
 \ *  source    -- which event source generated this event
 \ *
-\ * For people writing event sources: The common fields must be at the
+\ * For people writing event sources: The common cfields must be at the
 \ * very start of each event structure, i.e. put _AL_EVENT_HEADER at the
 \ * front.
 \ */
@@ -47,62 +47,62 @@ decimal \ important
 \ #define _AL_EVENT_HEADER( srctype)
 
 0
-   var ALLEGRO_EVENT.type
-   var ALLEGRO_EVENT.source
-   2 cells field ALLEGRO_EVENT.timestamp
+   cvar ALLEGRO_EVENT.type
+   cvar ALLEGRO_EVENT.source
+   2 cells cfield ALLEGRO_EVENT.timestamp
 constant /ALLEGRO_ANY_EVENT
 
 /ALLEGRO_ANY_EVENT
-   var ALLEGRO_DISPLAY_EVENT.x
-   var ALLEGRO_DISPLAY_EVENT.y
-   var ALLEGRO_DISPLAY_EVENT.width
-   var ALLEGRO_DISPLAY_EVENT.height
-   var ALLEGRO_DISPLAY_EVENT.orientation
+   cvar ALLEGRO_DISPLAY_EVENT.x
+   cvar ALLEGRO_DISPLAY_EVENT.y
+   cvar ALLEGRO_DISPLAY_EVENT.width
+   cvar ALLEGRO_DISPLAY_EVENT.height
+   cvar ALLEGRO_DISPLAY_EVENT.orientation
 constant /ALLEGRO_DISPLAY_EVENT
 
 
 /ALLEGRO_ANY_EVENT
-   var ALLEGRO_JOYSTICK_EVENT.*id
-   var ALLEGRO_JOYSTICK_EVENT.stick
-   var ALLEGRO_JOYSTICK_EVENT.axis
-   var ALLEGRO_JOYSTICK_EVENT.pos (  float )
-   var ALLEGRO_JOYSTICK_EVENT.button
+   cvar ALLEGRO_JOYSTICK_EVENT.*id
+   cvar ALLEGRO_JOYSTICK_EVENT.stick
+   cvar ALLEGRO_JOYSTICK_EVENT.axis
+   cvar ALLEGRO_JOYSTICK_EVENT.pos (  float )
+   cvar ALLEGRO_JOYSTICK_EVENT.button
 constant /ALLEGRO_JOYSTICK_EVENT
 
 /ALLEGRO_ANY_EVENT
-   var ALLEGRO_KEYBOARD_EVENT.display
-   var ALLEGRO_KEYBOARD_EVENT.keycode                 /* the physical key pressed*/
-   var ALLEGRO_KEYBOARD_EVENT.unichar                 /* unicode character or negative*/
-   var ALLEGRO_KEYBOARD_EVENT.modifiers               /* bitfield*/
-   var ALLEGRO_KEYBOARD_EVENT.repeat                  /* auto-repeated or not*/
+   cvar ALLEGRO_KEYBOARD_EVENT.display
+   cvar ALLEGRO_KEYBOARD_EVENT.keycode                 /* the physical key pressed*/
+   cvar ALLEGRO_KEYBOARD_EVENT.unichar                 /* unicode character or negative*/
+   cvar ALLEGRO_KEYBOARD_EVENT.modifiers               /* bitcfield*/
+   cvar ALLEGRO_KEYBOARD_EVENT.repeat                  /* auto-repeated or not*/
 constant /ALLEGRO_KEYBOARD_EVENT
 
 
 /ALLEGRO_ANY_EVENT
-   var ALLEGRO_MOUSE_EVENT.display
+   cvar ALLEGRO_MOUSE_EVENT.display
    \ /* ( display) Window the event originate from
    \ * ( x, y) Primary mouse position
    \ * ( z) Mouse wheel position ( 1D 'wheel'), or,
    \ * ( w, z) Mouse wheel position ( 2D 'ball')
    \ * ( pressure) The pressure applied, for stylus ( 0 or 1 for normal mouse)
    \ */
-   var ALLEGRO_MOUSE_EVENT.x
-   var ALLEGRO_MOUSE_EVENT.y
-   var ALLEGRO_MOUSE_EVENT.z
-   var ALLEGRO_MOUSE_EVENT.w
-   var ALLEGRO_MOUSE_EVENT.dx
-   var ALLEGRO_MOUSE_EVENT.dy
-   var ALLEGRO_MOUSE_EVENT.dz
-   var ALLEGRO_MOUSE_EVENT.dw
-   var ALLEGRO_MOUSE_EVENT.button
-   var ALLEGRO_MOUSE_EVENT.pressure (  float )
+   cvar ALLEGRO_MOUSE_EVENT.x
+   cvar ALLEGRO_MOUSE_EVENT.y
+   cvar ALLEGRO_MOUSE_EVENT.z
+   cvar ALLEGRO_MOUSE_EVENT.w
+   cvar ALLEGRO_MOUSE_EVENT.dx
+   cvar ALLEGRO_MOUSE_EVENT.dy
+   cvar ALLEGRO_MOUSE_EVENT.dz
+   cvar ALLEGRO_MOUSE_EVENT.dw
+   cvar ALLEGRO_MOUSE_EVENT.button
+   cvar ALLEGRO_MOUSE_EVENT.pressure (  float )
 constant /ALLEGRO_MOUSE_EVENT
 
 
 
 /ALLEGRO_ANY_EVENT
-   2 cells field ALLEGRO_TIMER_EVENT.count
-   2 cells field ALLEGRO_TIMER_EVENT.error  \ double-float
+   2 cells cfield ALLEGRO_TIMER_EVENT.count
+   2 cells cfield ALLEGRO_TIMER_EVENT.error  \ double-float
 constant /ALLEGRO_TIMER_EVENT
 
 

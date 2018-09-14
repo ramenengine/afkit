@@ -5,8 +5,8 @@ decimal \ important
 : #fdefine  create  0 parse bl skip evaluate sf,  does> sf@ ;
 [then]
 
-: field  create over , + does> @ + ;
-: var  cell field ;
+: cfield  create over , + does> @ + ;
+: cvar  cell cfield ;
 : fload   include ;
 : ?constant  constant ;
 

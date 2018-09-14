@@ -13,10 +13,10 @@ function: al_get_monitor_info ( adapter-id ALLEGRO_MONITOR_INFO_*info -- )
 function: al_get_new_display_adapter ( -- adapter-id )
 
 0
-var x1
-var y1
-var x2
-var y2
+cvar x1
+cvar y1
+cvar x2
+cvar y2
 constant /ALLEGRO_MONITOR_INFO
 
 function: al_install_system ( ver atexit -- bool ) \ (int version int (*atexit_ptr)((*)(void))));
@@ -39,11 +39,11 @@ drop
 function: al_get_standard_path ( id -- ALLEGRO_PATH )
 
 0
-var drive
-var filename
-4 cells + \ var segments
-var basename
-var full_string
+cvar drive
+cvar filename
+4 cells + \ cvar segments
+cvar basename
+cvar full_string
 constant /ALLEGRO_PATH
 
 : ucount  dup @ swap 2 cells + @ ;
@@ -54,17 +54,17 @@ constant /ALLEGRO_PATH
 
 \ mouse state
 0
-var ALLEGRO_MOUSE_STATE.x
-var ALLEGRO_MOUSE_STATE.y
-var ALLEGRO_MOUSE_STATE.z
-var ALLEGRO_MOUSE_STATE.w
-var ALLEGRO_MOUSE_STATE.more_axis1
-var ALLEGRO_MOUSE_STATE.more_axis2
-var ALLEGRO_MOUSE_STATE.more_axis3
-var ALLEGRO_MOUSE_STATE.more_axis4
-var ALLEGRO_MOUSE_STATE.buttons
-var ALLEGRO_MOUSE_STATE.pressure  \ float
-var ALLEGRO_MOUSE_STATE.display
+cvar ALLEGRO_MOUSE_STATE.x
+cvar ALLEGRO_MOUSE_STATE.y
+cvar ALLEGRO_MOUSE_STATE.z
+cvar ALLEGRO_MOUSE_STATE.w
+cvar ALLEGRO_MOUSE_STATE.more_axis1
+cvar ALLEGRO_MOUSE_STATE.more_axis2
+cvar ALLEGRO_MOUSE_STATE.more_axis3
+cvar ALLEGRO_MOUSE_STATE.more_axis4
+cvar ALLEGRO_MOUSE_STATE.buttons
+cvar ALLEGRO_MOUSE_STATE.pressure  \ float
+cvar ALLEGRO_MOUSE_STATE.display
 constant /ALLEGRO_MOUSE_STATE
 
 function: al_install_mouse ( -- bool )
@@ -101,8 +101,8 @@ function: al_get_joystick_event_source ( -- source )
 _AL_MAX_JOYSTICK_AXES cells constant /ALLEGRO_JOYSTICK_STATE_STICK  \ float
 
 0
-  /ALLEGRO_JOYSTICK_STATE_STICK _AL_MAX_JOYSTICK_STICKS * field ALLEGRO_JOYSTICK_STATE.sticks
-  _AL_MAX_JOYSTICK_BUTTONS cells field ALLEGRO_JOYSTICK_STATE.buttons
+  /ALLEGRO_JOYSTICK_STATE_STICK _AL_MAX_JOYSTICK_STICKS * cfield ALLEGRO_JOYSTICK_STATE.sticks
+  _AL_MAX_JOYSTICK_BUTTONS cells cfield ALLEGRO_JOYSTICK_STATE.buttons
 constant /ALLEGRO_JOYSTICK_STATE
 
 function:        al_get_num_joysticks  ( -- n )
@@ -220,10 +220,10 @@ function: al_get_num_display_modes ( -- n )
 function: al_get_display_mode ( n data -- )
 
 0
-var width          \ Screen width
-var height         \ Screen height
-var format         \ The pixel format of the mode
-var refresh_rate   \ The refresh rate of the mode
+cvar width          \ Screen width
+cvar height         \ Screen height
+cvar format         \ The pixel format of the mode
+cvar refresh_rate   \ The refresh rate of the mode
 constant /ALLEGRO_DISPLAY_MODE
 
 
