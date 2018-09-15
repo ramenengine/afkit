@@ -35,7 +35,7 @@ define xmling
         n 1 + for  adr c dom.element (find) dup 0= abort" XML element not found"
             i n <> if >next then  loop ;
 
-    : attr?  dom.attribute findchild 0<> ;
+    : attr?  ( dom-nnn name c -- flag )  dom.attribute findchild 0<> ;
 
     : val  ( dom-nnn name c -- val c )       \ get value of an attribute as a string
         locals| c name |
@@ -44,6 +44,7 @@ define xmling
         value@ ;
 
     : pval  ( dom-nnn name c -- n )  val evaluate ;
+    : ival  decimal pval fixed ;
 
     : text  ( dom-nnn -- text c | 0 )  s" " dom.text findchild value@ ;
 

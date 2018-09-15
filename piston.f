@@ -25,7 +25,6 @@
 
 \ Flags
 variable info  \ enables debugging mode display
-variable fs    \ is fullscreen enabled?
 variable eco   \ enable to save CPU (for repl/editors etc)
 variable oscursor   \ turn off to hide the OS's mouse cursor
 variable ide-loaded

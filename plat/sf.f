@@ -52,6 +52,7 @@ create backup 11 cells allot
 ' newprompt is prompt
 
 : /s  s0 @ sp! ;
+: empty  /s empty ;
 
 : .s  base @ >r hex .s r> base ! ;
 

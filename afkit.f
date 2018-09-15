@@ -45,6 +45,7 @@ true value dev
 0 value eventq
 0 value display
 create uesrc 32 cells /allot
+variable fs    \  enables fullscreen when on
 
 \ --------------------------------------------------------------------------------------------------
 [section] Display
@@ -124,7 +125,7 @@ create res  initial-res swap , ,
     eventq al_destroy_event_queue  0 to eventq ;
 : -allegro  -display  false to allegro?  al_uninstall_system ;
 
-: resolution  -display  res 2!  +display ;
+: resolution  res 2!  fs @ 0= if  -display  +display  then ;
 
 \ ----------------------------------- words for switching windows ----------------------------------
 [defined] linux [if]
