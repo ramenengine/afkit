@@ -24,9 +24,3 @@ AllegroForthKit is available on [Github](https://github.com/RogerLevy/AllegroFor
 - [Dependency Reference](dependencies.md)
 
 Explains the kit's dependencies.
-
-## TODO
-
-### [Porting AFKIT](porting.md)
-### [Audio](audio.md)
-### [IDE](ide.md)
