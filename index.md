@@ -6,11 +6,11 @@ AllegroForthKit (AFKIT for short) provides a framework for making games and othe
 
 It's written to the DPANS94 standard.
 
+It contains ANS-compatible libraries, bindings for external libraries, core modules, and optional libraries.  (The words "module" and "library" are used interchangeably, but only in the sense that a library is a kind of module.)
+
 Since no version of the Forth standard supports 100% of what's required to use Allegro, platform adapters are required to support each Forth system and the platforms they run on.  In most cases these adapters should be minimal apart from the external library bindings which could need substantial work to get running.
 
-In any case, these docs assume you're using it on SwiftForth on Windows or Linux since that's what it was developed on.
-
-AFKIT is a package containing ANS-compatible libraries, bindings for external libraries, core modules, and optional libraries.  (The words "module" and "library" are used interchangeably, but only in the sense that a library is a kind of module.)
+In any case, these docs assume you're using it on SwiftForth on Windows or Linux since that's what it was developed on and as of this writing the only system supported.
 
 ## Downloads
 

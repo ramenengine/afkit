@@ -9,17 +9,17 @@ AFKIT comes with a simple versioning system to assist with installing library de
 It's implemented using a single definition.
 
 ```
-: [version]  ( n n -- <versionname> )
+: [version]  ( M m r M m r -- <versionname> )
 ```
 Declare the version of the current file.
 
 How to use:
 
-Put [version] at the top of each library file.
+Put [version] at the top of the main file of the package.  A package is a portable body of code.
 
 When a file with versioning is included, you need to pass in a version code.  (You can circumvent this if needed by passing in 0.)
 
-Versions are expressed in source as BCD values MMmmrr M = major, m = minor, r = revision.  Example: $012003 = 1.20.3
+Versions are expressed as triplets MMmmrr M = major, m = minor, r = revision.  Example: $012003 = 1.20.3
 
 A discrepancy in the Major version will prevent your project from compiling.
 
@@ -42,7 +42,7 @@ A minor version or revision # discrepency will just issue a warning.  This can h
 
 ## roger.f
 
-Selected words are explained here.  The rest should be self-explanatory from the source. (roger.f)
+Selected words are explained here.  The rest should be self-explanatory from the source.
 
 ```
 : @+  ( a -- a+4 n )  fetch and increment
@@ -51,42 +51,20 @@ Selected words are explained here.  The rest should be self-explanatory from the
 : ierase   ( addr count -- ) erase cells
 : imove    ( from to count -- ) move cells
 : time?  ( xt -- )  time a word and display in microsecs
-:is  ( -- <name> <code> )  define a DEFER
+: :is  ( -- <name> <code> )  define a DEFER
 ```
 
 ```
 : define  ( -- <name> )
 ```
 
-Declare and define a vocabulary at once.
+Declare a vocabulary and set the current one to it.
 
 ```
 : require ( filepath -- )
 ```
 Conditional include.  If the file is already loaded, nothing happens.
 
-## section.f
-
-This facility is for loading sections of files.  First define sections in your code like this:
-
-```
-[section] a
-...
-[section] b
-...
-[section] c
-...
-```
-
-Then, you can (re-)load individual sections from the Forth prompt:
-
-```
-just <file> <section>
-```
-
-One nifty use for this is if you want to reload part of a module you are testing, but maintain the state of the module's variables.
-
-*All of the sections of your code* should be labeled with `[section]`, including the top of the file.  Otherwise `just` will load the top of the file every time.
 
 ## strops.f
 

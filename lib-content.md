@@ -4,8 +4,9 @@ These are optional libraries you can INCLUDE in your projects:
 | --- |
 | [kb.f](kb.md) | Keyboard
 | [xml.f](xml.md) | XML reading
+| stride.f | spacial scanning and partitioning tools
 
-These files are (currently) platform-specific so they are kept in `plat/` not `lib/`:
+These files are platform-specific so they are kept in `plat/` rather than `lib/`:
 
 | File | Description |
 | --- |
