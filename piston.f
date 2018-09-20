@@ -151,8 +151,9 @@ variable winx  variable winy
 variable newfs
 : 2s>f  swap s>f s>f ;
 : ?fs
-    ?poswin  display ALLEGRO_FULLSCREEN_WINDOW fs @ $1 and al_toggle_display_flag drop
+    ?poswin
     fs @ newfs @ = ?exit
+    display ALLEGRO_FULLSCREEN_WINDOW fs @ $1 and al_toggle_display_flag drop
     fs @ newfs !
     fs @ if
         #globalscale to #lastscale
