@@ -12,12 +12,14 @@ include afkit/ans/version.f
 
     true constant EXTERNALS_LOADED
 
-    cd afkit/ans/ffl
-        ffling +order
-            include ffl/dom.fs
-            include ffl/b64.fs
-        ffling -order
-    cd ../../..
+    [undefined] LIGHTWEIGHT [if]
+        cd afkit/ans/ffl
+            ffling +order
+                include ffl/dom.fs
+                include ffl/b64.fs
+            ffling -order
+        cd ../../..
+    [then]
 
     : empty  only forth s" (empty) marker (empty)" evaluate ;
     marker (empty)
