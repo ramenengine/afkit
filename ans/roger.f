@@ -78,7 +78,7 @@
 \ Conditional INCLUDE
 : require  ( -- <path> )
     >in @  exists if  drop  exit  then
-    dup >in !  create   >in !  include ;
+    dup >r  >in !  include  r> >in !  create ;
 : include  ( -- <path> )
     >in @  create  >in !  bl parse included ;
 
