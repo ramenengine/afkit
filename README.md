@@ -29,6 +29,8 @@ The platform config file creates other compile-time constants and loading platfo
 
 ## Getting Started
 
+If you downloaded a release, put it in your project folder and rename the folder to just `afkit`.
+
 Make copies of kitconfig.f_ and allegro5.cfg_, removing the underscores.
 
 Set platform to the appropriate string.  See the Cross-platform Support section.
