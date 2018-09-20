@@ -4,7 +4,10 @@
     depth 6 < abort" Version number is required!"
     packver >r packver r>
     over 0 = if 2drop exit then
-    swap #8 rshift swap #8 rshift > abort" Incompatible version!"
+    2dup
+    swap $ff000000 and swap $ff000000 and <> abort" Incompatible major version!"
+    swap $00ffff00 and swap $00ffff00 and 2dup > abort" Incompatible minor version!"
+    < if  cr #2 attribute ." Warning: Potentially incompatible minor version."  #0 attribute  then
 ;
 [then]
 
