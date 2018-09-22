@@ -54,7 +54,6 @@ define xmling
             2dup 2>r  swap call  2r>
         then   >next  repeat  2drop ;
 
-
     : (that's)  named? ?exit  drop r> drop exit ;
 
     : that's  bl parse postpone sliteral  ['] (that's) compile, ; immediate

@@ -1,5 +1,5 @@
 include afkit/ans/version.f
-#1 #1 #2 [version]
+#1 #2 #0 [version] [afkit]
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
