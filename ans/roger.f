@@ -53,8 +53,9 @@
 : rnd ( n -- 0..n-1 ) random um* nip ;
 
 \ vocabulary helper
-: define  >in @  vocabulary  >in !  also ' execute definitions ;
-
+: define
+    >in @  vocabulary
+    >in !  also ' execute definitions ;
 
 \ on-stack vector stuff (roger)
 : 2!  swap over cell+ ! ! ;

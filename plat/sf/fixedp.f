@@ -209,9 +209,7 @@ only forth fixpointing +order definitions
 only forth definitions fixpointing +order
 : fixed   fixpointing +order  ints off #10 base ! ;
 : decimal fixpointing -order  ints on  #10 base ! ;
-: binary  fixpointing -order  ints on  binary ;
 : hex     fixpointing -order  ints on  hex ;
-: octal   fixpointing -order  ints on  octal ;
 : include   ints @ >r  fixed include  r> ?exit fixed  ;
 : included  ints @ >r  fixed included  r> ?exit fixed  ;
 : (only)  only  execute   ints @ ?exit  fixpointing +order ;
