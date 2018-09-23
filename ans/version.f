@@ -13,7 +13,7 @@
     packver >r packver r> dup constant
     (checkver)
 ;
-: checkver  ( M m R packver -- )
+: [checkver]  ( M m R packver -- )
     >r packver r> (checkver) ;
 
 [then]
