@@ -1,5 +1,5 @@
 include afkit/ans/version.f
-#1 #3 #0 [version] [afkit]
+#1 #3 #1 [version] [afkit]
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
@@ -40,7 +40,6 @@ include afkit/ans/roger.f          \ ANS
 
 \ --------------------------------------------------------------------------------------------------
 [section] Variables
-true value dev
 0 value al-default-font
 0 value fps
 0 value allegro?
@@ -90,16 +89,16 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
     ALLEGRO_VSYNC 1 ALLEGRO_SUGGEST  al_set_new_display_option
     allegro-display-flags al_set_new_display_flags
 
-    dev if
+    [defined] dev [if]
         \ top left corner:
         initial-pos 40 + al_set_new_window_position
             w h al_create_display  to display    
         display initial-pos al_set_window_position
-    else
+    [else]
         \ centered:
         native x@ 2 / w 2 / - native y@ 2 / h 2 / - 40 - al_set_new_window_position
             w h al_create_display  to display    
-    then
+    [then]
     
     display al_get_display_refresh_rate ?dup 0= if 60 then to fps
 
