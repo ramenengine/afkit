@@ -4,8 +4,8 @@
     over 0 = if 2drop exit then
     2dup
     swap $ff000000 and swap $ff000000 and <> abort" Incompatible major version!"
-    swap $00ffff00 and swap $00ffff00 and 2dup > abort" Incompatible minor version!"
-    < if  cr  #2 attribute ." Warning: Potentially incompatible minor version."
+    swap $00ffffff and swap $00ffffff and 2dup > abort" Incompatible minor version and/or revision!"
+    < if  cr  #2 attribute ." Warning: Potentially incompatible minor version and/or revision."
           #0 attribute  space tib #tib @ type   then
 ;
 : [version]  ( M m R M m R -- <name> )
