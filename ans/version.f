@@ -8,12 +8,10 @@
     < if  cr  #2 attribute ." Warning: Potentially incompatible minor version and/or revision."
           #0 attribute  space tib #tib @ type   then
 ;
-: [version]  ( M m R M m R -- <name> )
-    depth 6 < abort" Version number is required!"
-    packver >r packver r> dup constant
-    (checkver)
-;
+: .line  cr tib #tib @ type ;
+: [version]  ( M m R -- <name> )  .line packver constant ;
 : [checkver]  ( M m R packver -- )
+    depth 4 < abort" Missing version spec!"
     >r packver r> (checkver) ;
 
 [then]

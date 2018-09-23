@@ -1,1 +1,1 @@
-0 0 0  include afkit/afkit.f
+include afkit/afkit.f
