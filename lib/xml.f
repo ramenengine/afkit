@@ -7,11 +7,10 @@
 : loadxml  ( adr c -- dom nnn-root )
     file@  2dup parsexml -rot  drop free throw  dup  dom>tree nnt-root@ ;
 
-
 define xmling
     : value@  ( dom-nnn -- adr c )  dom>node>value str-get ;
     : istype  ( dom-nnn type -- dom-nnn flag )  over dom>node>type @ = ;
-    : named?  ( dom-nnn adr c -- dom-nnn flag ) third dom>node>name str-get compare 0= ;
+    : named?  ( dom-nnn adr c -- dom-nnn flag ) third dom>node>name str-get $= ;
     : >first  nnn>children dnl>first @ ;
     : >next  ( dom-nnn -- dom-nnn|0 )  nnn>dnn dnn-next@ ;
 
@@ -48,11 +47,14 @@ define xmling
 
     : text  ( dom-nnn -- text c | 0 )  s" " dom.text findchild value@ ;
 
-    : eachelement>  ( dom-nnn -- <code> )  ( dom-nnn -- )
-        r> swap >first
+    : eachel  ( dom-nnn xt -- ) ( dom-nnn -- )
+        swap >first
         begin dup while  dom.element istype if
-            2dup 2>r  swap call  2r>
+            2dup 2>r  swap execute    2r>
         then   >next  repeat  2drop ;
+
+    : eachel>  ( dom-nnn -- <code> )  ( dom-nnn -- )
+        r> code> eachel ;
 
     : (that's)  named? ?exit  drop  r> drop ;
 

@@ -71,6 +71,7 @@
 : 2-  rot swap - >r - r> ;
 : 2negate  negate swap negate swap ;
 : 2clamp  ( x y lowx lowy highx highy -- x y ) 2>r 2max 2r> 2min ;
+: $=  compare 0= ;
 
 \ Word tools
 : defined ( -- c-addr 0 | xt -1 | -- xt 1 )  bl word find ;
