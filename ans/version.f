@@ -5,7 +5,7 @@
     2dup
     swap $ff000000 and swap $ff000000 and <> abort" Incompatible major version!"
     swap $00ffffff and swap $00ffffff and 2dup > abort" Incompatible minor version and/or revision!"
-    < if  cr  #2 attribute ." Warning: Potentially incompatible minor version and/or revision."
+    < if  cr  #2 attribute ." Minor version/Revision risk warning: "
           #0 attribute  space tib #tib @ type   then
 ;
 : .line  cr tib #tib @ type ;
