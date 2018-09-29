@@ -6,7 +6,7 @@
 \    F12 - break the loop
 \    ALT-F4 - quit the process
 \    ALT-ENTER - toggle fullscreen
-\    TILDE - toggles a flag called INFO
+\    ALT-I - toggles a flag called INFO
 
 
 \ Values
@@ -124,7 +124,7 @@ variable (catch)
             <enter>  of  alt? -exit  fs @ not fs ! endof
             <f4>     of  alt? -exit  bye  endof
             <f12>    of  break  endof
-            <tilde>  of  alt? -exit  info @ not info !  endof
+            <i>      of  alt? -exit  info @ not info !  endof
         endcase
     then
     etype ALLEGRO_EVENT_KEY_UP = if
