@@ -40,7 +40,7 @@ create evt  256 /allot
 : etype  evt ALLEGRO_EVENT.TYPE @ ;
 z" AKFS" @ constant FULLSCREEN_EVENT
 
-: poll  pollKB  pollJoys  [defined] dev [if] pause [then] ;
+: poll  pollKB  pollJoys ;
 : break  true to breaking? ;
 
 transform m1
@@ -175,7 +175,8 @@ variable newfs
 : onto  ( bmp -- )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
 : ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
 : (show)  me >r  'show try to showerr  r> to me ;
-: show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  al_flip_display ;
+: show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  ;
+: present  al_flip_display ;
 : ?suppress  repl? if clearkb then ;
 : step  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
@@ -191,7 +192,8 @@ variable newfs
         me >r  pump  standard-events  r> to me  ['] ?system catch throw
         eco @ ?exit
     repeat ;
-: go  /go   begin  show  attend  poll  step  ?fs  ?hidemouse  breaking?  until  go/ ;
+: go  /go
+    begin  show present attend poll step ?fs ?hidemouse  breaking? until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square
 variable x  variable vx  1 vx !
