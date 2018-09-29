@@ -6,7 +6,7 @@
     swap $ff000000 and swap $ff000000 and <> abort" Incompatible major version!"
     2dup
     swap $00ffffff and swap $00ffffff and > abort" Incompatible minor version and/or revision!"
-    swap $00ffff00 and swap $00ffff00 and < if  cr  #2 attribute ." Minor version/Revision risk warning: "
+    swap $00ffff00 and swap $00ffff00 and < if  cr  #2 attribute ." Version mismatch warning: "
           #3 attribute
             space including -path type ." : "
             space tib #tib @ type   then
