@@ -2,8 +2,6 @@
 : zlength ( zaddr -- n )   zcount nip ;
 : zplace ( from n to -- )   tuck over + >r  cmove  0 r> c! ;
 : zappend ( from n to -- )   zcount + zplace ;
-\ defer alert  ( a c -- )
-: alert  type true abort ;
 [undefined] third [if] : third  >r over r> swap ; [then]
 [undefined] @+ [if] : @+  dup @ swap cell+ swap ; [then]
 : u+  rot + swap ;  \ "under plus"
@@ -77,13 +75,10 @@
 : defined ( -- c-addr 0 | xt -1 | -- xt 1 )  bl word find ;
 : exists ( -- flag )   defined 0 <> nip ;
 
-\ Conditional INCLUDE
-: require  ( -- <path> )
-    >in @  exists if  drop  exit  then
-    dup >r  >in !  include  r> >in !  create ;
-: include  ( -- <path> )
-    >in @  create  >in !  bl parse included ;
-
 \ compile and exec
 : :now  :noname  [char] ; parse evaluate  postpone ;  execute ;
 
+include afkit/ans/require.f
+
+defer alert  ( a c -- )
+:is alert  type true abort ;
