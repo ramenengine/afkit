@@ -25,7 +25,7 @@
 \   n = fixed-point
 \   i = integer
 
-[undefined] f+ [if]
+[in-platform] sf [if]
     requires fpmath
 [then]
 
