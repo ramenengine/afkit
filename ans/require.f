@@ -1,14 +1,15 @@
-[undefined] require [if] 
+[undefined] afkit-require [if] 
+true constant afkit-require
 
-[undefined] exists [if]
-: exists ( -- flag )   defined 0 <> nip ;
-[then]
+: defined  ( -- <word> flag ) bl word find ;
+: exists ( -- <word> flag )   defined 0 <> nip ;
+
 
 \ Conditional INCLUDE
-: require  ( -- <path> )
-    >in @  exists if  drop  exit  then
-    dup >r  >in !  include  r> >in !  create ;
 : include  ( -- <path> )
-    >in @  create  >in !  bl parse included ;
+    >in @ >r  bl parse included  r> >in !  create ;
+: require  ( -- <path> )
+    >in @  exists if drop exit then  >in !
+    include ;
 
 [then]

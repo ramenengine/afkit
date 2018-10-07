@@ -1,13 +1,25 @@
-include afkit/ans/version.f
+[defined] gforth [if]
+    include ~+/afkit/ans/version.f
+[else]
+    include afkit/ans/version.f
+[then]
 #1 #4 #3 [version] [afkit]
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
-    s" kitconfig.f" file-exists [if]
-        include kitconfig.f
+    [defined] gforth [if]
+        : kitconfig.f  s" ../kitconfig.f" ;
+        : file-exists  r/o open-file dup if swap close-file drop then ;
+    [else]
+        : kitconfig.f  s" kitconfig.f" ;
+    [then]
+
+    kitconfig.f file-exists [if]
+        kitconfig.f included
     [else]
         s" Missing kitconfig.f!!! " type QUIT
     [then]
+    
     include afkit/platforms.f
 
     true constant EXTERNALS_LOADED
@@ -30,7 +42,7 @@ include afkit/ans/section.f
 
 [section] Libraries
 \ Load support libraries
-include afkit/plat/win/fpext.f      \ depends on FPMATH
+include afkit/plat/win/fpext.f     \ depends on FPMATH
 include afkit/ans/strops.f         \ ANS
 include afkit/ans/files.f          \ ANS
 include afkit/ans/roger.f          \ ANS

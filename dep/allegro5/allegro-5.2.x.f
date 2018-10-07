@@ -2,7 +2,7 @@ decimal \ important
 
 [undefined] #defined [if]
 : #define  create  0 parse bl skip evaluate ,  does> @ ;
-: #fdefine  create  0 parse bl skip evaluate sf,  does> sf@ ;
+\ : #fdefine  create  0 parse bl skip evaluate sf,  does> sf@ ;
 [then]
 
 : cfield  create over , + does> @ + ;

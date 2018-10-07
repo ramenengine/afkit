@@ -1,4 +1,11 @@
 [undefined] [version] [if]
+
+[defined] gforth [if]
+: attribute drop ;
+: including sourcefilename ;
+: -path  ;
+[then]
+
 : packver  swap 8 lshift or swap 24 lshift or ;
 : (checkver)  ( ver ver -- )
     over 0 = if 2drop exit then
