@@ -10,7 +10,7 @@ create path 256 allot
 : included  s" ~+/" path combined included ;
 : include  ( -- <path> )
     >in @ >r  bl parse included  r> >in !  create ;
-: require  ( -- <path> )
+: depend  ( -- <path> )
     >in @  exists if drop exit then  >in !
     include ;
     
@@ -20,6 +20,7 @@ create cmd 256 allot
 : h.  hex . decimal ;
 
 
+quit
 \ include afkit/ans/ffl/sfwin32/ffl.f   \ FFL: DOM; FFL loads FPMATH
 include afkit/dep/allegro5/allegro-5.2.x.f
 
