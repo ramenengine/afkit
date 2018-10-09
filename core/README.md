@@ -69,7 +69,7 @@ Here are some premade constants you can pass to `blend>`:
 
 ### Pen
 
-The pen represents an x,y position on the display. It's a useful way to simplify drawing stuff.
+The pen represents the current x,y position for drawing.
 
 `at`\( x y -- \)   
 `+at` \( x y -- \)   
