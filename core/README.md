@@ -53,19 +53,23 @@ These words are convenience words to go along with Allegro's bitmap functions.
 `bmpwh`\( bmp -- w h \) get Allegro bitmap dimensions   
 `hold>` \( -- &lt;code&gt; \) Enable bitmap holding for rest of colon definition   
 `loadbmp` \( adr c -- bmp \) Load a bitmap from a file   
-`savebmp` \( bmp adr c -- \) Save a bitmap to a file
+`savebmp` \( bmp adr c -- \) Save a bitmap to a file  
+`-bmp` \( bmp -- \) Destroy a bitmap
 
 ### Blending
 
 ```text
-: blend>  ( op src dest aop asrc adest -- )
+: blend  ( op src dest aop asrc adest -- )
+: blend>  ( op src dest aop asrc adest -- <code> )
 ```
 
-Enable blending for the rest of a colon definition.
+These words enable a given blending mode.  `blend>` restores the previous blending mode after the code body.
 
-Here are some premade constants you can pass to `blend>`:
+Here are some pre-made constants you can pass to `blend>`:
 
-\|write-rgba\|Copy pixel values, no alpha transparency\| \|add-rgba\|Additive blending, good for glowy stuff\| \|blend-rgba\|Default alpha-transparency mode\|
+`interp-src` Standard alpha blending.  
+`add-src` Additive blending.  
+`write-src` Writes red, green, blue, AND alpha. \(I.e. no blending.\)
 
 ### Pen
 
@@ -76,6 +80,13 @@ The pen represents the current x,y position for drawing.
 `at@` \( -- x y \)  
 `penx` \( -- adr \)   
 `peny` \( -- adr \)
+
+### Display
+
+`display` \( -- ALLEGRO\_DISPLAY\)   
+`displayw` \( -- w \)   
+`displayh` \( -- h \)  
+`displaywh` \( -- w h \)
 
 ## The Piston
 
