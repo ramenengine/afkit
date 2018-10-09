@@ -1,30 +1,45 @@
-# ANS Modules
+# Standard-Compliant Modules
 
-These are modules located in `ans/` that have no dependencies. They are all loaded as part of the kit, which also depends on them.
+The standard-compliant modules are located in `ans/` and have no dependencies.
+
+These files can be loaded on any ANS Forth system and are used to help build the rest of the kit.
+
+| File | Description |
+| :--- | :--- |
+| [depend.f](ans.md#depend-f) | Conditional include |
+| [version.f](ans.md#version-f) | Versioning |
+| [files.f](ans.md#files-f) | File utilities |
+| [roger.f](ans.md#roger-f) | Common toolbelt |
+| [strops.f](ans.md#strops-f) | Concatenate strings and work with zero-terminated strings. |
+
+## depend.f
+
+This file provides `depend` which will load a given source file only if it hasn't been already loaded.  It works the same as `include`.
+
+It also extends `include` to play well with `depend`.
 
 ## version.f
 
-AFKIT comes with a simple versioning system to assist with installing library dependencies and resolving version conflicts.
+AFKIT comes with a simple versioning system based on a semver-like version number.
 
-It's implemented using a single definition.
+### How to use the versioning system
+
+Put a version declaration at the top of the main file of the package.  The declaration looks something like this:
 
 ```text
-: [version]  ( M m r M m r -- <versionname> )
+#1 #0 #0 [version] [packagename]
 ```
 
-Declare the version of the current file.
+And here is how to load the package and check the version:
 
-How to use:
+```text
+depend package.f
+#1 #0 #0 [packagename] [checkver]
+```
 
-Put \[version\] at the top of the main file of the package. A package is a portable body of code.
+`[checkver]` compares the given numbers to the numbers outputted by `[packagename]` . 
 
-When a file with versioning is included, you need to pass in a version code. \(You can circumvent this if needed by passing in 0.\)
-
-Versions are expressed as triplets MMmmrr M = major, m = minor, r = revision. Example: $012003 = 1.20.3
-
-A discrepancy in the Major version will prevent your project from compiling.
-
-A minor version or revision \# discrepency will just issue a warning. This can help you identify culprits when debugging.
+The first number is the Major version and must match the package's.  The second is the Minor version, and the last number is the Revision.  The Minor version represents  potentially code-breaking changes and the Revision represents bugfixes and additions.  If the Minor version or the Revision is greater than the package's, compilation will be aborted.  If the Minor version is less than the package's a warning will be printed.  No warning is printed if the Revision is less than the package's.
 
 ## files.f
 
@@ -35,9 +50,9 @@ A minor version or revision \# discrepency will just issue a warning. This can h
 : file  ( filename c -- addr size )
 : file,  ( filename c -- )  \ file comma
 : ending ( addr len char -- addr len )
-: -ext ( a n -- a n )  minus extension
-: -filename ( a n -- a n )  minus  filename
-: -path ( a n -- a n )  minus path
+: -ext ( a n -- a n )  remove file extension
+: -filename ( a n -- a n )  remove filename
+: -path ( a n -- a n )  remove path portion
 ```
 
 ## roger.f

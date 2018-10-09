@@ -3,7 +3,7 @@
 * [Introduction](README.md)
 * [Basic Usage](basic-usage.md)
 * [Dependencies](dependencies.md)
-* [ANS Modules](ans.md)
+* [Standard-Compliant Modules](ans.md)
 * [Core](core/README.md)
   * [Piston](core/piston.md)
 * [Libraries](lib/README.md)
