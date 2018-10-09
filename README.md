@@ -6,7 +6,7 @@ AllegroForthKit is a framework for programming games and other applications with
 
 ## Overview
 
-The most basic point of package is to bring up a hardware-accelerated graphics window.
+The main point of this framework is to bring up a hardware-accelerated graphics window.
 
 Allegro powers it. It is a portable low-level game development library: [http://liballeg.org/](http://liballeg.org/)
 
