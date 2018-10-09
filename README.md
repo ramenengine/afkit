@@ -1,6 +1,6 @@
 # README
 
-A portable framework for programming games and other applications with [Allegro 5](http://liballeg.org/) in standard ANS Forth.
+AllegroForthKit is a framework for programming games and other applications with [Allegro 5](http://liballeg.org/) in standard Forth.
 
 [Documentation on GitBook](https://rogerlevy.gitbook.io/afkit/v/docs/)
 
