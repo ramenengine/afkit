@@ -1,6 +1,6 @@
 # Piston
 
-The piston is a general-purpose main loop with many features. Its primary purpose is to drive games but it could be used for other kinds of applications.
+The piston is a general-purpose main loop with many features. Its primary purpose is to drive games.
 
 ## Phases
 
