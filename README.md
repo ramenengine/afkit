@@ -8,7 +8,7 @@ AllegroForthKit is a framework for programming games and other applications with
 
 The main point of this framework is to bring up a hardware-accelerated graphics window.
 
-Allegro powers it. It is a portable low-level game development library: [http://liballeg.org/](http://liballeg.org/)
+The portable low-level gaming library Allegro 5 powers it.  [http://liballeg.org/](http://liballeg.org/)
 
 [Forth Foundation Library](http://soton.mpeforth.com/flag/ffl/index.html) is included for capabilities often required when working with modern libaries and file formats- features such as XML, Base64, MD5 etc. XML DOM access and Base64 are automatically loaded.
 
@@ -64,7 +64,7 @@ This is a standard main loop with many features.
 
 To enter the main loop type GO or just press enter without entering anything. A default program defined in display.f will run. Stop the loop by pressing F12.
 
-The piston has 3 phases. The event handling phase, the step phase, and the display phase. 3 words are used to tell the loop what to do during these phases. These words have a syntax similar to DOES&gt;. SHOW&gt; owes its lineage to ColorForth.
+The piston has 3 phases. The event handling phase, the step phase, and the display phase. 3 words are used to tell the loop what to do during these phases. These words have a syntax similar to DOES&gt;.
 
 * SHOW&gt; changes the display.
 * STEP&gt; changes the logic.
