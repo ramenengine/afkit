@@ -1,6 +1,6 @@
 # ANS Modules
 
-These are modules located in `ans/`  that have no dependencies.  They are all loaded as part of the kit, which also depends on them.
+These are modules located in `ans/` that have no dependencies. They are all loaded as part of the kit, which also depends on them.
 
 ## version.f
 
@@ -8,26 +8,27 @@ AFKIT comes with a simple versioning system to assist with installing library de
 
 It's implemented using a single definition.
 
-```
+```text
 : [version]  ( M m r M m r -- <versionname> )
 ```
+
 Declare the version of the current file.
 
 How to use:
 
-Put [version] at the top of the main file of the package.  A package is a portable body of code.
+Put \[version\] at the top of the main file of the package. A package is a portable body of code.
 
-When a file with versioning is included, you need to pass in a version code.  (You can circumvent this if needed by passing in 0.)
+When a file with versioning is included, you need to pass in a version code. \(You can circumvent this if needed by passing in 0.\)
 
-Versions are expressed as triplets MMmmrr M = major, m = minor, r = revision.  Example: $012003 = 1.20.3
+Versions are expressed as triplets MMmmrr M = major, m = minor, r = revision. Example: $012003 = 1.20.3
 
 A discrepancy in the Major version will prevent your project from compiling.
 
-A minor version or revision # discrepency will just issue a warning.  This can help you identify culprits when debugging.
+A minor version or revision \# discrepency will just issue a warning. This can help you identify culprits when debugging.
 
 ## files.f
 
-```
+```text
 : file!  ( addr count filename c -- )  \ file store
 : @file  ( filename c dest -- size )  \ fetch file
 : file@  ( filename c -- allocated-mem size )  \ file fetch
@@ -39,12 +40,11 @@ A minor version or revision # discrepency will just issue a warning.  This can h
 : -path ( a n -- a n )  minus path
 ```
 
-
 ## roger.f
 
-Selected words are explained here.  The rest should be self-explanatory from the source.
+Selected words are explained here. The rest should be self-explanatory from the source.
 
-```
+```text
 : @+  ( a -- a+4 n )  fetch and increment
 : for  ( n -- )  same as `0 do`
 : ifill    ( addr count val - )  fill cells
@@ -54,17 +54,17 @@ Selected words are explained here.  The rest should be self-explanatory from the
 : :is  ( -- <name> <code> )  define a DEFER
 ```
 
-```
+```text
 : define  ( -- <name> )
 ```
 
 Declare a vocabulary and set the current one to it.
 
-```
+```text
 : require ( filepath -- )
 ```
-Conditional include.  If the file is already loaded, nothing happens.
 
+Conditional include. If the file is already loaded, nothing happens.
 
 ## strops.f
 
@@ -72,21 +72,22 @@ Tools for concatenating strings and working with zero-terminated strings.
 
 Here are examples of concatenation:
 
-```
+```text
 s" First part" s[ s", second part" +s ]s type
 s" This is" s" the same" strjoin type
 ```
 
 ### Other string words
 
-```
+```text
 : input  ( adr c -- )
 ```
 
-Get input from the input stream (keyboard) into a given address range.
+Get input from the input stream \(keyboard\) into a given address range.
 
-```
+```text
 : <filespec>  ( -- <rol> addr c )
 ```
 
 Utility word for parsing file paths used by declaring words in the kit.
+
