@@ -5,6 +5,7 @@
 * [Dependencies](dependencies.md)
 * [Standard-Compliant Modules](ans.md)
 * [Core](core/README.md)
+  * [LD and RLD](core/ld-and-rld.md)
   * [Piston](core/piston.md)
 * [Libraries](lib/README.md)
   * [Fixed-point Numbers](lib/fixedp.md)
