@@ -78,7 +78,7 @@
 \ compile and exec
 : :now  :noname  [char] ; parse evaluate  postpone ;  execute ;
 
-include afkit/ans/require.f
+include afkit/ans/depend.f
 
 defer alert  ( a c -- )
 :is alert  type true abort ;
