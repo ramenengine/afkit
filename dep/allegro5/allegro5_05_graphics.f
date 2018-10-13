@@ -315,31 +315,6 @@ function: al_unmap_rgba ( ALLEGRO_COLOR-color unsigned-char-*r, unsigned-char-*g
 #1 constant ALLEGRO_ALIGN_CENTER
 #2 constant ALLEGRO_ALIGN_RIGHT
 
-\ problem with DLL: (7/30, 5.1.11)
-\  the primitives addon functions seem to require 16 byte alignment.
-\  here's the workaround:
-\ variable (rp)
-\ macro: [rp16   rp@ dup (rp) !  $10 - $fffffff0 and 4 + rp! ;                    \ add 4 because the call itself subtracts 4.
-\ macro: rp16]   (rp) @ rp! ;
-
-\ i am not even sure which ones have the problem.  so i am just doing
-\ a bunch of them.
-\ : al_draw_rectangle               [rp16 al_draw_rectangle               rp16] ;
-\ : al_draw_rounded_rectangle       [rp16 al_draw_rounded_rectangle       rp16] ;
-\ : al_draw_ellipse                 [rp16 al_draw_ellipse                 rp16] ;
-\ : al_draw_triangle                [rp16 al_draw_triangle                rp16] ;
-\ : al_draw_filled_rectangle        [rp16 al_draw_filled_rectangle        rp16] ;
-\ : al_draw_filled_ellipse          [rp16 al_draw_filled_ellipse          rp16] ;
-\ : al_draw_filled_triangle         [rp16 al_draw_filled_triangle         rp16] ;
-\ : al_draw_filled_rounded_rectangle [rp16 al_draw_filled_rounded_rectangle rp16] ;
-\ : al_draw_prim                    [rp16 al_draw_prim rp16] ;
-\ : al_draw_indexed_prim            [rp16 al_draw_indexed_prim rp16] ;
-\ : al_draw_line                    [rp16 al_draw_line rp16] ;
-\ : al_draw_ribbon                  [rp16 al_draw_ribbon rp16] ;
-\ : al_draw_spline                  [rp16 al_draw_spline rp16] ;
-\ : al_calculate_ribbon             [rp16 al_calculate_ribbon rp16] ;
-\ : al_calculate_arc                [rp16 al_calculate_arc rp16] ;
-
 linux-library liballegro_primitives
 
 5 1 0 [compatible] function: al_draw_polygon  ( vertices count joinstyle r g b a thickness miterlimit -- )
@@ -421,3 +396,11 @@ drop
 5 2 3 [compatible] function: al_color_rgb_to_lch ( float-red, float-green, float-blue, float-*l, float-*c, float-*h -- )
 5 2 3 [compatible] function: al_color_rgb_to_hsv ( float-red, float-green, float-blue, float-*h, float-*s, float-*v -- )
 5 2 3 [compatible] function: al_color_rgb_to_hsl ( float-red, float-green, float-blue, float-*h, float-*s, float-*l -- )
+
+function: al_scale_transform_3d ( ALLEGRO_TRANSFORM-*trans, float-sx, float-sy, float-sz -- )
+function: al_translate_transform_3d ( ALLEGRO_TRANSFORM-*trans, float-x, float-y, float-z -- )
+function: al_rotate_transform_3d ( ALLEGRO_TRANSFORM-*trans, float-x, float-y, float-z float-ang -- )
+function: al_perspective_transform ( ALLEGRO_TRANSFORM-*trans, float-left, float-top, float-n, float-right, float-bottom, float-f -- )
+function: al_use_projection_transform ( ALLEGRO_TRANSFORM-*trans, -- )
+function: al_orthographic_transform ( ALLEGRO_TRANSFORM-*trans, float-left, float-top, float-n, float-right, float-bottom, float-f -- )
+function: al_clear_depth_buffer ( float-z -- )
