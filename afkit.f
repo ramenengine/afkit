@@ -86,6 +86,7 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
     
     assertAllegro
     
+    ALLEGRO_DEPTH_SIZE #24 ALLEGRO_SUGGEST  al_set_new_display_option
     ALLEGRO_VSYNC 1 ALLEGRO_SUGGEST  al_set_new_display_option
     allegro-display-flags al_set_new_display_flags
 
