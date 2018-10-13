@@ -72,7 +72,7 @@ wordlist constant fixpointing
 ?: 3i  rot 1i rot 1i rot 1i ;
 ?: 4i  2i 2swap 2i 2swap ;
 ?: 1pf  s>f FPGRAN f/ ;
-?: 2pf  swap 1pf 1f ;
+?: 2pf  swap 1pf 1pf ;
 ?: pfloor  INT_MASK and ;
 ?: pceil   pfloor 1.0 + ;
 ?: 2pfloor  pfloor swap pfloor swap ;
