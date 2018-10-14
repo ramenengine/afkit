@@ -1,5 +1,5 @@
 include afkit/ans/version.f
-#1 #5 #2 [version] [afkit]
+#1 #5 #3 [version] [afkit]
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
@@ -191,6 +191,9 @@ create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 \ Graphics essentials; no-fixed-point version
 16 cells constant /transform
 : transform  create  here  /transform allot  al_identity_transform ;
+transform (identity)
+: identity  (identity) swap /transform move ;
+
 
 \ integer stuff
 : bmpw   ( bmp -- n )  al_get_bitmap_width  ;
