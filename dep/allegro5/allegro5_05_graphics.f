@@ -404,3 +404,18 @@ function: al_perspective_transform ( ALLEGRO_TRANSFORM-*trans, float-left, float
 function: al_use_projection_transform ( ALLEGRO_TRANSFORM-*trans, -- )
 function: al_orthographic_transform ( ALLEGRO_TRANSFORM-*trans, float-left, float-top, float-n, float-right, float-bottom, float-f -- )
 function: al_clear_depth_buffer ( float-z -- )
+
+#define ALLEGRO_STATE_NEW_DISPLAY_PARAMETERS $0001
+#define ALLEGRO_STATE_NEW_BITMAP_PARAMETERS  $0002
+#define ALLEGRO_STATE_DISPLAY                $0004
+#define ALLEGRO_STATE_TARGET_BITMAP          $0008
+#define ALLEGRO_STATE_BLENDER                $0010
+#define ALLEGRO_STATE_NEW_FILE_INTERFACE     $0020
+#define ALLEGRO_STATE_TRANSFORM              $0040
+#define ALLEGRO_STATE_PROJECTION_TRANSFORM   $0100
+#define ALLEGRO_STATE_ALL                    $ffff
+ALLEGRO_STATE_TARGET_BITMAP ALLEGRO_STATE_NEW_BITMAP_PARAMETERS +  constant  ALLEGRO_STATE_BITMAP
+function: al_store_state ( ALLEGRO_STATE flags -- )
+function: al_restore_state ( ALLEGRO_STATE -- )
+
+#1024 constant /ALLEGRO_STATE
