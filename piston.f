@@ -62,8 +62,6 @@ variable cliph
 ;
 
 : mount  ( -- )
-    0 0 at
-    
     m1 al_identity_transform
     m1 #globalscale s>f 1sf dup al_scale_transform
     fs @ if
@@ -192,8 +190,8 @@ variable newfs
         me >r  pump  standard-events  r> to me  ['] ?system catch throw
         eco @ ?exit
     repeat ;
-: go  /go
-    begin  show present attend poll step ?fs ?hidemouse  breaking? until  go/ ;
+: frame  show present attend poll step ?fs ?hidemouse ;
+: go  /go    begin  frame  breaking? until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square
 variable x  variable vx  1 vx !
