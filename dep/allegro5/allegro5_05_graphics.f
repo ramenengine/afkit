@@ -404,6 +404,7 @@ function: al_perspective_transform ( ALLEGRO_TRANSFORM-*trans, float-left, float
 function: al_use_projection_transform ( ALLEGRO_TRANSFORM-*trans, -- )
 function: al_orthographic_transform ( ALLEGRO_TRANSFORM-*trans, float-left, float-top, float-n, float-right, float-bottom, float-f -- )
 function: al_clear_depth_buffer ( float-z -- )
+function: al_transform_coordinates_3d ( const-ALLEGRO_TRANSFORM*-trans float*-x float*-y float*-z -- )
 
 #define ALLEGRO_STATE_NEW_DISPLAY_PARAMETERS $0001
 #define ALLEGRO_STATE_NEW_BITMAP_PARAMETERS  $0002
