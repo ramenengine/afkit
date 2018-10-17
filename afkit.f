@@ -1,5 +1,5 @@
 include afkit/ans/version.f
-#1 #5 #5 [version] [afkit]
+#1 #5 #6 [version] [afkit]
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
@@ -159,12 +159,14 @@ defer >ide
 [section] Input
 \ keyboard and joystick support, integer/float version
 \ ----------------------------------------------- keyboard -----------------------------------------
-create kbstate  /ALLEGRO_KEYBOARD_STATE /allot \ current frame's state
-create kblast  /ALLEGRO_KEYBOARD_STATE /allot  \ last frame's state
+create kbstate  /ALLEGRO_KEYBOARD_STATE 17 * /allot \ current frame's state (* 17 inputs)
+create kblast  /ALLEGRO_KEYBOARD_STATE 17 * /allot  \ last frame's state
 : pollKB
   kbstate kblast /ALLEGRO_KEYBOARD_STATE move
   kbstate al_get_keyboard_state ;
-: clearkb  kblast /ALLEGRO_KEYBOARD_STATE erase  kbstate /ALLEGRO_KEYBOARD_STATE erase ;
+: clearkb
+  kblast /ALLEGRO_KEYBOARD_STATE 17 * erase
+  kbstate /ALLEGRO_KEYBOARD_STATE 17 * erase ;
 : resetkb
   clearkb
   al_uninstall_keyboard
@@ -179,9 +181,11 @@ _AL_MAX_JOYSTICK_STICKS constant MAX_STICKS
 create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 : joystick[]  /ALLEGRO_JOYSTICK_STATE *  joysticks + ;
 : >joyhandle  al_get_joystick ;
-: joy ( joy# stick# - vector )  \ get stick position
+: stick  ( joy# stick# - f: x y )  \ get stick position
   /ALLEGRO_JOYSTICK_STATE_STICK *  swap joystick[]
-  ALLEGRO_JOYSTICK_STATE.sticks + ;
+  ALLEGRO_JOYSTICK_STATE.sticks + dup sf@ cell+ sf@ ;
+: btn  ( joy# button# - n# )  \ get button state
+  cells swap joystick[] ALLEGRO_JOYSTICK_STATE.buttons + @ ;
 : #joys  al_get_num_joysticks ;
 : pollJoys ( -- )  #joys for  i >joyhandle i joystick[] al_get_joystick_state  loop ;
 \ ----------------------------------------- end joysticks ------------------------------------------

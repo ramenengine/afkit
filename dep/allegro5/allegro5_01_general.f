@@ -92,13 +92,12 @@ function: al_get_keyboard_event_source ( -- source )
 \ joystick
 /* internal values */
 #define _AL_MAX_JOYSTICK_AXES   3
-#define _AL_MAX_JOYSTICK_STICKS   8
+#define _AL_MAX_JOYSTICK_STICKS   16
 #define _AL_MAX_JOYSTICK_BUTTONS  32
 
 function: al_get_joystick_event_source ( -- source )
 
-
-_AL_MAX_JOYSTICK_AXES cells constant /ALLEGRO_JOYSTICK_STATE_STICK  \ float
+_AL_MAX_JOYSTICK_AXES cells constant /ALLEGRO_JOYSTICK_STATE_STICK  \ floats
 
 0
   /ALLEGRO_JOYSTICK_STATE_STICK _AL_MAX_JOYSTICK_STICKS * cfield ALLEGRO_JOYSTICK_STATE.sticks
