@@ -87,7 +87,7 @@ wordlist constant fixpointing
 fixpointing +order definitions
     : *  ( n n -- n )  p* ;
     : /  ( n n -- n )  p/ ;
-    : /mod  ( n n -- r q ) 2dup mod -rot p/ ;
+    : /mod  ( n n -- r q ) 2dup mod -rot p/ pfloor ;
     : ++  1.0 swap +! ;
     : --  -1.0 swap +! ;
     : 2*  rot p* >r p* r> ;
