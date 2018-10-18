@@ -11,7 +11,7 @@ depend afkit/afkit.f
 #1 #4 #3 [afkit] [checkver]
 ```
 
-_Note: If you are reading these docs in order to use Ramen, you don't need to explicitly load AllegroForthKit._
+_Note: If you are reading these docs in order to use Ramen, you don't need to explicitly load AllegroForthKit since Ramen loads it._
 
 To make an app, you need to program the piston. Here is an example:
 
