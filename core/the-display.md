@@ -1,5 +1,9 @@
 # The Display
 
+The primary function of AFKit is to provide a graphical display for making games.  
+
+The display created by AFKit has any size you specify in kitconfig.f \(default 640x480\) and is configured with a 24-bit depth buffer.  
+
 A display window is automatically created for you when the kit loads.
 
 You can get the ALLEGRO\_DISPLAY handle with the word `display`.

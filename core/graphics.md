@@ -29,6 +29,14 @@ Here are some pre-made constants you can pass to `blend>`:
 `add-src` Additive blending.  
 `write-src` Writes red, green, blue, AND alpha. \(I.e. no blending.\)
 
+### Transforms
+
+Standard 4x4 matrix supported by Allegro.
+
+`/transform` \( -- n\# \) Size of transform \(16 cells\)  
+`transform` \( -- &lt;name&gt; \) Create a named transform  
+`identity` \( transform -- \) Reset a transform
+
 ### Pen
 
 The pen represents the current x,y position for drawing.

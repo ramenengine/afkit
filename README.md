@@ -4,5 +4,7 @@ AllegroForthKit \(aka AFKit\) is a framework for making games \(and other apps\)
 
 It's written to the DPANS94 standard.
 
-It contains ANS-compatible libraries, bindings for external libraries, core modules, and optional libraries. \(The words "module" and "library" are used interchangeably, but only in the sense that a library is a kind of module.\)
+AFKit consists of a collection of ANS-compatible libraries, bindings for external libraries, core modules, and optional libraries.
+
+_Note: The words "module" and "library" are used interchangeably, in the sense that a library is a kind of module._
 
