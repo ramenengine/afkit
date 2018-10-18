@@ -14,7 +14,9 @@ These files can be loaded on any ANS Forth system and are used to help build the
 
 ## depend.f
 
-This file provides `depend` which will load a given source file only if it hasn't been already loaded.  It works the same as `include`.
+This file provides `depend` which will load a given source file only if it hasn't been already loaded.  
+
+The usage is `depend <filename.f>` . Note that the file's extension is required.
 
 It also extends `include` to play well with `depend`.
 
