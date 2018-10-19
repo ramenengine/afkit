@@ -29,7 +29,7 @@ The platform config file creates other compile-time constants and loading platfo
 
 ## Getting Started
 
-If you downloaded a release, put it in your project folder and rename the folder to just `afkit`.
+If you downloaded a release, put it in your project folder.
 
 Make copies of kitconfig.f _and allegro5.cfg_, removing the underscores.
 
@@ -66,9 +66,9 @@ To enter the main loop type GO or just press enter without entering anything. A 
 
 The piston has 3 phases. The event handling phase, the step phase, and the display phase. 3 words are used to tell the loop what to do during these phases. These words have a syntax similar to DOES&gt;.
 
-* SHOW&gt; changes the display.
-* STEP&gt; changes the logic.
-* PUMP&gt; changes your event handler and clears the step assignment.
+* SHOW&gt; sets the display.
+* STEP&gt; sets the logic.
+* PUMP&gt; sets the event handler.
 
 ## Links and Resources
 
