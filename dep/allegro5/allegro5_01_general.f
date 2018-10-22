@@ -112,18 +112,22 @@ function:        al_get_joystick_state  ( ALLEGRO_JOYSTICK-* ALLEGRO_JOYSTICK_ST
 
 \ display
 /* Possible bit combinations for the flags parameter of al_create_display. */
-#define  ALLEGRO_WINDOWED              1 0 lshift
+#define  ALLEGRO_WINDOWED               1 0 lshift
 #define  ALLEGRO_FULLSCREEN             1 1 lshift
-#define  ALLEGRO_OPENGL                1 2 lshift
-#define  ALLEGRO_DIRECT3D_INTERNAL        1 3 lshift
+#define  ALLEGRO_OPENGL                 1 2 lshift
+#define  ALLEGRO_DIRECT3D_INTERNAL      1 3 lshift
 #define  ALLEGRO_RESIZABLE              1 4 lshift
-#define  ALLEGRO_NOFRAME               1 5 lshift
-#define  ALLEGRO_GENERATE_EXPOSE_EVENTS     1 6 lshift
+#define  ALLEGRO_NOFRAME                1 5 lshift
+#define  ALLEGRO_GENERATE_EXPOSE_EVENTS 1 6 lshift
 #define  ALLEGRO_OPENGL_3_0             1 7 lshift
 #define  ALLEGRO_OPENGL_FORWARD_COMPATIBLE   1 8 lshift
-#define  ALLEGRO_FULLSCREEN_WINDOW        1 9 lshift
+#define  ALLEGRO_FULLSCREEN_WINDOW      1 9 lshift
 #define  ALLEGRO_MINIMIZED              1 10 lshift
-#define  ALLEGRO_PROGRAMMABLE_PIPELINE       1 11 lshift
+#define  ALLEGRO_PROGRAMMABLE_PIPELINE  1 11 lshift
+#define  ALLEGRO_GTK_TOPLEVEL_INTERNAL  1 12 lshift
+#define  ALLEGRO_MAXIMIZED              1 13 lshift
+#define  ALLEGRO_OPENGL_ES_PROFILE      1 14 lshift
+
 \ /* Possible parameters for al_set_display_option.
 \  * Make sure to update ALLEGRO_EXTRA_DISPLAY_SETTINGS if you modify
 \  * anything here.
