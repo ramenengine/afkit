@@ -77,6 +77,7 @@ function: al_create_bitmap ( int-w int-h -- bitmap )
 function: al_create_sub_bitmap ( bmp int-x int-y int-w int-h -- subbmp )
 function: al_clone_bitmap ( bitmap -- bitmap )
 function: al_destroy_bitmap ( ALLEGRO_BITMAP-*bitmap -- )
+function: al_set_new_bitmap_depth ( n -- )
 
 function: al_convert_mask_to_alpha ( ALLEGRO_BITMAP-*bitmap, float-r float-g float-b float-a -- )
 
@@ -158,6 +159,7 @@ function: al_set_separate_blender ( int-op int-source int-dest int-alpha_op int-
 function: al_get_blender ( int-op int-source int-dest -- )
 function: al_get_separate_blender ( int-op int-source int-dest int-alpha_op int-alpha_source int-alpha_dest -- )
 function: al_set_blend_color  ( float-r float-g float-b float-a -- )
+
 
 \ addon: opengl
 function: al_get_opengl_proc_address     ( const-char-*name -- addr )
