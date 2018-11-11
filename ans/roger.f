@@ -43,6 +43,7 @@
 : :is  :noname  postpone [  [compile] is  ] ;
 : reverse   ( ... count -- ... ) 1+ 1 max 1 ?do i 1- roll loop ;
 : cfill  fill ;
+: ;then  s" exit then" evaluate ; immediate
 
 \ Random numbers
 0 VALUE seed
@@ -50,10 +51,18 @@
 : random ( -- u ) seed $107465 * $234567 + DUP TO seed ;
 : rnd ( n -- 0..n-1 ) random um* nip ;
 
-\ vocabulary helper
+\ readability helper: slang words.  callable once then they self-destruct.  
+: ?compile  state @ if compile, else execute then ;
+: does-slang  does> dup @ ?compile  0 swap body> >name c! ;
+: :slang  ( -- <name> <code> ; )   create immediate here 0 , does-slang  :noname swap ! ;
+
+
+\ vocabulary helpers
 : define
     >in @  vocabulary
     >in !  also ' execute definitions ;
+: using  only forth definitions also ;
+
 
 \ on-stack vector stuff (roger)
 : 2!  swap over cell+ ! ! ;
