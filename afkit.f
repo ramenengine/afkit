@@ -25,21 +25,15 @@ include afkit/ans/version.f
     marker (empty)
 [then]
 
-
-include afkit/ans/section.f
-
-[section] Libraries
 \ Load support libraries
 include afkit/plat/win/fpext.f      \ depends on FPMATH
 include afkit/ans/strops.f         \ ANS
 include afkit/ans/files.f          \ ANS
 include afkit/ans/roger.f          \ ANS
 
-[section] Audio
 [defined] allegro-audio [if]  include afkit/audio-allegro.f  [then]
 
 \ --------------------------------------------------------------------------------------------------
-[section] Variables
 0 value al-default-font
 0 value fps
 0 value allegro?
@@ -47,9 +41,23 @@ include afkit/ans/roger.f          \ ANS
 0 value display
 create uesrc 32 cells /allot
 variable fs    \  enables fullscreen when on
+[defined] initial-scale [if] initial-scale [else] 1 [then] value #globalscale
+[undefined] initial-res [if]  : initial-res  640 480 ;  [then]
+[undefined] initial-pos [if]  : initial-pos  0 0 ;  [then]
+create native  /ALLEGRO_DISPLAY_MODE /allot
+create res  initial-res swap , ,
+defer >ide
+_AL_MAX_JOYSTICK_STICKS constant MAX_STICKS
+create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
+16 cells constant /transform
+/ALLEGRO_KEYBOARD_STATE 17 * constant /kstates
+create kbstate  /kstates /allot \ current frame's state (* 17 inputs)
+create kblast  /kstates /allot  \ last frame's state
+create penx  0 ,  here 0 ,  constant peny
+0 value oldblender
+0 value currentblender
 
 \ --------------------------------------------------------------------------------------------------
-[section] Display
 \ Initializing Allegro and creating the display window
 \   need only one for now
 \   simplified to sidestep degenerative stalling bug
@@ -65,8 +73,7 @@ include afkit/al.f
 assertAllegro
 
 \ Native and Display Resolutions
-create native  /ALLEGRO_DISPLAY_MODE /allot
-  al_get_num_display_modes 1 -  native  al_get_display_mode
+al_get_num_display_modes 1 -  native  al_get_display_mode
 : xy@   dup @ swap cell+ @ ;
 : x@  xy@ drop ;
 : y@  xy@ nip ;
@@ -75,11 +82,6 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 : displaywh  displayw displayh ;
 
 \ ------------------------------------ initializing the display ------------------------------------
-
-
-[defined] initial-scale [if] initial-scale [else] 1 [then] value #globalscale
-[undefined] initial-res [if]  : initial-res  640 480 ;  [then]
-[undefined] initial-pos [if]  : initial-pos  0 0 ;  [then]
 
 : initDisplay  ( w h -- )
     locals| h w |
@@ -116,17 +118,12 @@ create native  /ALLEGRO_DISPLAY_MODE /allot
 ;
 
 : valid?  ['] @ catch nip 0 = ;
-
-
-create res  initial-res swap , ,
-
 : scaled-res  res xy@ #globalscale * swap #globalscale * swap ;
 : +display  display valid? ?exit  scaled-res initDisplay ;
 : -display  display valid? -exit
     display al_destroy_display  0 to display
     eventq al_destroy_event_queue  0 to eventq ;
 : -allegro  -display  false to allegro?  al_uninstall_system ;
-
 : resolution  res 2!  fs @ 0= if  -display  +display  then ;
 
 \ ----------------------------------- words for switching windows ----------------------------------
@@ -152,22 +149,17 @@ create res  initial-res swap , ,
     : >display  ( -- )  display al_get_win_window_handle btf ;
 [then]
 
-defer >ide
 :noname [ is >ide ]  ( -- )  HWND btf ;
 >ide
 
-[section] Input
-\ keyboard and joystick support, integer/float version
 \ ----------------------------------------------- keyboard -----------------------------------------
-create kbstate  /ALLEGRO_KEYBOARD_STATE 17 * /allot \ current frame's state (* 17 inputs)
-create kblast  /ALLEGRO_KEYBOARD_STATE 17 * /allot  \ last frame's state
-: pollKB
+: pollKB  ( -- )
   kbstate kblast /ALLEGRO_KEYBOARD_STATE move
   kbstate al_get_keyboard_state ;
-: clearkb
-  kblast /ALLEGRO_KEYBOARD_STATE 17 * erase
-  kbstate /ALLEGRO_KEYBOARD_STATE 17 * erase ;
-: resetkb
+: clearkb  ( -- )
+  kblast /kstates erase
+  kbstate /kstates erase ;
+: resetkb  ( -- )
   clearkb
   al_uninstall_keyboard
   al_install_keyboard  not abort" Error re-establishing the keyboard :/"
@@ -177,8 +169,6 @@ create kblast  /ALLEGRO_KEYBOARD_STATE 17 * /allot  \ last frame's state
 \ NTS: we don't handle connecting/disconnecting devices yet,
 \   though Allegro 5 /does/ support it. (via an event)
 
-_AL_MAX_JOYSTICK_STICKS constant MAX_STICKS
-create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 : joystick[]  /ALLEGRO_JOYSTICK_STATE *  joysticks + ;
 : >joyhandle  al_get_joystick ;
 : stick  ( joy# stick# - f: x y )  \ get stick position
@@ -191,13 +181,10 @@ create joysticks   MAX_STICKS /ALLEGRO_JOYSTICK_STATE * /allot
 \ ----------------------------------------- end joysticks ------------------------------------------
 
 \ --------------------------------------------------------------------------------------------------
-[section] Graphics
 \ Graphics essentials; no-fixed-point version
-16 cells constant /transform
 : transform  create  here  /transform allot  al_identity_transform ;
 transform (identity)
 : identity  (identity) swap /transform move ;
-
 
 \ integer stuff
 : bmpw   ( bmp -- n )  al_get_bitmap_width  ;
@@ -212,8 +199,6 @@ create write-src  ALLEGRO_ADD , ALLEGRO_ONE   , ALLEGRO_ZERO          , ALLEGRO_
 create add-src    ALLEGRO_ADD , ALLEGRO_ALPHA , ALLEGRO_ONE           , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ONE  , 
 create interp-src ALLEGRO_ADD , ALLEGRO_ALPHA , ALLEGRO_INVERSE_ALPHA , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ONE  , 
 
-0 value oldblender
-0 value currentblender
 : blend  ( blender -- ) 
     dup to currentblender
     @+ swap @+ swap @+ swap @+ swap @+ swap @ al_set_separate_blender ;
@@ -222,16 +207,12 @@ create interp-src ALLEGRO_ADD , ALLEGRO_ALPHA , ALLEGRO_INVERSE_ALPHA , ALLEGRO_
 interp-src blend
 
 \ Pen
-create penx  0 ,  here 0 ,  constant peny
 : at   ( x y -- )  penx 2! ;
 : +at  ( x y -- )  penx 2+! ;
 : at@  ( -- x y )  penx 2@ ;
 
 \ --------------------------------------------------------------------------------------------------
-[section] Piston
 include afkit/piston.f
 \ --------------------------------------------------------------------------------------------------
-[section] Init
 +display
 >ide
-
