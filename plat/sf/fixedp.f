@@ -217,9 +217,12 @@ only forth definitions fixpointing +order
 : only
     state @ if  postpone [']  postpone (only)
             else  '  (only)  then  ; immediate
+
 : definitions
     get-order over fixpointing = if  fixpointing -order  definitions  fixpointing +order
     else  definitions  then  set-order ;
+
+: using  only forth definitions also ;
 
 
 fixed
