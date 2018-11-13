@@ -59,10 +59,12 @@
 
 \ vocabulary helpers
 : define
-    >in @  vocabulary
+    >in @
+    exists if >in ! also ' execute definitions exit then  \ already defined
+    dup >in !  vocabulary
     >in !  also ' execute definitions ;
 : using  only forth definitions also ;
-
+vocabulary internal
 
 \ on-stack vector stuff (roger)
 : 2!  swap over cell+ ! ! ;

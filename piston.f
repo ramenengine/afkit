@@ -43,12 +43,16 @@ z" AKFS" @ constant FULLSCREEN_EVENT
 : poll  pollKB  pollJoys ;
 : break  true to breaking? ;
 
-transform m1
-variable clipx
-variable clipy
-variable clipw
-variable cliph
 
+define internal
+    transform m1
+    variable clipx
+    variable clipy
+    variable clipw
+    variable cliph
+
+
+using internal
 : clip ( x y w h -- ) 
     #globalscale * s>f cliph sf!
     #globalscale * s>f clipw sf!
@@ -194,17 +198,19 @@ variable newfs
 : go  /go    begin  frame  breaking? until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square
-variable x  variable vx  1 vx !
-variable y  variable vy  1 vy !
-:noname
-    show>
-    0e 0e 0.5e 1e 4sf al_clear_to_color
-    x @ y @ over 50 + over 50 + 4s>f 4sf 1e 1e 1e 1e 4sf al_draw_filled_rectangle
-    vx @ x +!  vy @ y +!
-    vx @ 0< if  x @ 0 < if  vx @ negate vx !  then then
-    vy @ 0< if  y @ 0 < if  vy @ negate vy !  then then
-    vx @ 0> if  x @ res x@ 50 - >= if  vx @ negate vx !  then then
-    vy @ 0> if  y @ res y@ 50 - >= if  vy @ negate vy !  then then
-    ;  execute
+define internal
+    variable x  variable vx  1 vx !
+    variable y  variable vy  1 vy !
+    :noname
+        show>
+        0e 0e 0.5e 1e 4sf al_clear_to_color
+        x @ y @ over 50 + over 50 + 4s>f 4sf 1e 1e 1e 1e 4sf al_draw_filled_rectangle
+        vx @ x +!  vy @ y +!
+        vx @ 0< if  x @ 0 < if  vx @ negate vx !  then then
+        vy @ 0< if  y @ 0 < if  vy @ negate vy !  then then
+        vx @ 0> if  x @ res x@ 50 - >= if  vx @ negate vx !  then then
+        vy @ 0> if  y @ res y@ 50 - >= if  vy @ negate vy !  then then
+        ;  execute
+only forth definitions
 
 oscursor on
