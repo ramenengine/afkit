@@ -83,7 +83,7 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
 
 \ ------------------------------------ initializing the display ------------------------------------
 
-: initDisplay  ( w h -- )
+: initDisplay  ( w h - )
     locals| h w |
     
     assertAllegro
@@ -146,20 +146,20 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
 [else]
     : btf  ( winapi-window - )
       dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
-    : >display  ( -- )  display al_get_win_window_handle btf ;
+    : >display  ( - )  display al_get_win_window_handle btf ;
 [then]
 
-:noname [ is >ide ]  ( -- )  HWND btf ;
+:noname [ is >ide ]  ( - )  HWND btf ;
 >ide
 
 \ ----------------------------------------------- keyboard -----------------------------------------
-: pollKB  ( -- )
+: pollKB  ( - )
   kbstate kblast /ALLEGRO_KEYBOARD_STATE move
   kbstate al_get_keyboard_state ;
-: clearkb  ( -- )
+: clearkb  ( - )
   kblast /kstates erase
   kbstate /kstates erase ;
-: resetkb  ( -- )
+: resetkb  ( - )
   clearkb
   al_uninstall_keyboard
   al_install_keyboard  not abort" Error re-establishing the keyboard :/"
@@ -177,7 +177,7 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
 : btn  ( joy# button# - n# )  \ get button state
   cells swap joystick[] ALLEGRO_JOYSTICK_STATE.buttons + @ ;
 : #joys  al_get_num_joysticks ;
-: pollJoys ( -- )  #joys for  i >joyhandle i joystick[] al_get_joystick_state  loop ;
+: pollJoys ( - )  #joys for  i >joyhandle i joystick[] al_get_joystick_state  loop ;
 \ ----------------------------------------- end joysticks ------------------------------------------
 
 \ --------------------------------------------------------------------------------------------------
@@ -187,29 +187,29 @@ transform (identity)
 : identity  (identity) swap /transform move ;
 
 \ integer stuff
-: bmpw   ( bmp -- n )  al_get_bitmap_width  ;
-: bmph   ( bmp -- n )  al_get_bitmap_height  ;
-: bmpwh  ( bmp -- w h )  dup bmpw swap bmph ;
-: hold>  ( -- <code> )  1 al_hold_bitmap_drawing  r> call  0 al_hold_bitmap_drawing ;
-: loadbmp  ( adr c -- bmp ) zstring al_load_bitmap ;
-: savebmp  ( bmp adr c -- ) zstring swap al_save_bitmap 0= abort" Allegro: Error saving bitmap." ;
+: bmpw   ( bmp - n )  al_get_bitmap_width  ;
+: bmph   ( bmp - n )  al_get_bitmap_height  ;
+: bmpwh  ( bmp - w h )  dup bmpw swap bmph ;
+: hold>  ( - <code> )  1 al_hold_bitmap_drawing  r> call  0 al_hold_bitmap_drawing ;
+: loadbmp  ( adr c - bmp ) zstring al_load_bitmap ;
+: savebmp  ( bmp adr c - ) zstring swap al_save_bitmap 0= abort" Allegro: Error saving bitmap." ;
 : -bmp  ?dup -exit al_destroy_bitmap ;
 
 create write-src  ALLEGRO_ADD , ALLEGRO_ONE   , ALLEGRO_ZERO          , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ZERO , 
 create add-src    ALLEGRO_ADD , ALLEGRO_ALPHA , ALLEGRO_ONE           , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ONE  , 
 create interp-src ALLEGRO_ADD , ALLEGRO_ALPHA , ALLEGRO_INVERSE_ALPHA , ALLEGRO_ADD , ALLEGRO_ONE , ALLEGRO_ONE  , 
 
-: blend  ( blender -- ) 
+: blend  ( blender - ) 
     dup to currentblender
     @+ swap @+ swap @+ swap @+ swap @+ swap @ al_set_separate_blender ;
-: blend>  ( blender -- ) 
+: blend>  ( blender - ) 
     currentblender to oldblender  blend  r> call  oldblender blend ;
 interp-src blend
 
 \ Pen
-: at   ( x y -- )  penx 2! ;
-: +at  ( x y -- )  penx 2+! ;
-: at@  ( -- x y )  penx 2@ ;
+: at   ( x y - )  penx 2! ;
+: +at  ( x y - )  penx 2+! ;
+: at@  ( - x y )  penx 2@ ;
 
 \ State
 define internal

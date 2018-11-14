@@ -85,11 +85,9 @@ wordlist constant fixpointing
 ?: p.  1pf f. ;
 
 fixpointing +order definitions
-    : *  ( n n -- n )  p* ;
-    : /  ( n n -- n )  p/ ;
-    : /mod  ( n n -- r q ) 2dup mod -rot p/ pfloor ;
-    : ++  1.0 swap +! ;
-    : --  -1.0 swap +! ;
+    : *  ( n n - n )  p* ;
+    : /  ( n n - n )  p/ ;
+    : /mod  ( n n - r q ) 2dup mod -rot p/ pfloor ;
     : 2*  rot p* >r p* r> ;
     : 2/  rot swap p/ >r p/ r> ;
     : .   ints @ if  i.  else  p.  then ;
@@ -103,7 +101,7 @@ fixpointing +order definitions
 only forth definitions
 \ extend literals to support fixed-point
 variable sign
-: pconvert ( a -- 0 | a -1 ) ( -- | r )
+: pconvert ( a - 0 | a -1 ) ( - | r )
    <sign>    ( a c f)  drop [char] - = sign !
    <digits>  ( a d n)  0= if 2drop drop 0 exit then d>f
    <dot>     ( a c f)  0= if fdrop 2drop 0 exit then drop
@@ -112,13 +110,13 @@ variable sign
 \   <e>       ( a c f)  if fdrop 2drop 0 exit then drop
    -1 ;
 
-: >pfloat ( caddr n -- true | false ) ( -- r )
+: >pfloat ( caddr n - true | false ) ( - r )
    r-buf  r@ zplace
    r@ pconvert ( 0 | a\f ) if
       r> zcount + = dup ?exit fdrop exit
    then r> drop 0 ;
 
-: pnumber? ( addr len 0 | p.. xt -- addr len 0 | p.. xt )
+: pnumber? ( addr len 0 | p.. xt - addr len 0 | p.. xt )
   dup ?exit drop
   2dup >pfloat if
     2drop
@@ -128,7 +126,7 @@ variable sign
   0 ;
 
 \ decimal-point-less conversion
-: pnumber2? (  addr len 0  |  ... xt  --  addr len 0  |  ... xt  )
+: pnumber2? (  addr len 0  |  ... xt  -  addr len 0  |  ... xt  )
   dup ?exit drop
   base @ 10 =  ints @ 0 = and  if
     2dup
@@ -139,7 +137,7 @@ variable sign
   then  0  ;
 
 fixpointing +order definitions
-\    : .S ( ? -- ? )
+\    : .S ( ? - ? )
 \      CR DEPTH 0> IF DEPTH 0 ?DO S0 @ I 1+ CELLS - @ . LOOP THEN
 \      DEPTH 0< ABORT" Underflow"
 \      FDEPTH ?DUP IF
@@ -153,14 +151,14 @@ only forth definitions fixpointing +order
 PACKAGE STATUS-TOOLS
     public
     [undefined] linux [if]
-        : SB.BASE2  ( -- )
+        : SB.BASE2  ( - )
           ints @ 0 = if
             s" FIX"
           else
             BASE @ PSTK (.BASE)
           then
           1 SF-STATUS PANE-TYPE ;
-        : SB.STACK2 ( -- )
+        : SB.STACK2 ( - )
           ints @ if
             PSTK Z(.S) ZCOUNT s[
           else
@@ -181,7 +179,7 @@ PACKAGE STATUS-TOOLS
           THEN
           ]s 0 SF-STATUS PANE-RIGHT ;
 
-        : STATUS.STACK2 ( -- )    SB.BASE2  SB.STACK2 ;
+        : STATUS.STACK2 ( - )    SB.BASE2  SB.STACK2 ;
 
         ' status.stack2 is .stack
     [then] \ not linux

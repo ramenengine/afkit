@@ -18,11 +18,11 @@ create backup 11 cells allot
         backup cell+ swap backup @ move
     drop ;
 
-: (QUIT) ( -- )
+: (QUIT) ( - )
     .STACK  BEGIN
     REFILL DROP  INTERPRET  savestack  PROMPT  AGAIN ;
 
-: QUIT ( -- )
+: QUIT ( - )
    BEGIN
       R0 @ RP!         \ clear return stack
       /INTERPRETER

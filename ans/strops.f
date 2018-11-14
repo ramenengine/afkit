@@ -1,7 +1,7 @@
-: zcount ( zaddr -- addr n )   dup dup if  65535 0 scan drop over - then ;
-: zlength ( zaddr -- n )   zcount nip ;
-: zplace ( from n to -- )   tuck over + >r  cmove  0 r> c! ;
-: zappend ( from n to -- )   zcount + zplace ;
+: zcount ( zaddr - addr n )   dup dup if  65535 0 scan drop over - then ;
+: zlength ( zaddr - n )   zcount nip ;
+: zplace ( from n to - )   tuck over + >r  cmove  0 r> c! ;
+: zappend ( from n to - )   zcount + zplace ;
 create $buffers  16384 allot  \ string concatenation buffer stack (circular)
 variable >s                   \ pointer into $buffers
 : s[  ( adr c - )  >s @ 256 + 16383 and >s !  >s @ $buffers + place ;
@@ -21,4 +21,4 @@ create zbuf 1024 allot
 : uncount  ( adr c - adr-1 )   drop 1 - ;
 : strjoin  ( first c second c - first+second c )   2swap s[ +s ]s ;
 : input  ( adr c - )   over 1 +  swap accept  swap  c! ;
-: <filespec>  ( -- <rol> addr c )  0 parse -trailing bl skip ;       \ rol=remainder of line
+: <filespec>  ( - <rol> addr c )  0 parse -trailing bl skip ;       \ rol=remainder of line

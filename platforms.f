@@ -1,4 +1,4 @@
-: PARSE-WORD ( "<spaces>name" -- c-addr u )   /SOURCE OVER >R  BL SKIP DROP R> - >IN +!  BL PARSE ;
+: PARSE-WORD ( "<spaces>name" - c-addr u )   /SOURCE OVER >R  BL SKIP DROP R> - >IN +!  BL PARSE ;
 : [platform]     platform parse-word compare 0= ; immediate
 : [in-platform]  platform parse-word search nip nip ; immediate
 

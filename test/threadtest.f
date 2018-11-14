@@ -3,7 +3,7 @@
 
 include afkit/kit.f
 
-: CALLBACK ( xt -- res )  execute ;
+: CALLBACK ( xt - res )  execute ;
 
 
 LABEL RUNCB

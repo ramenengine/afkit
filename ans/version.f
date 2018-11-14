@@ -1,6 +1,6 @@
 [undefined] [version] [if]
 : packver  swap 8 lshift or swap 24 lshift or ;
-: (checkver)  ( ver ver -- )
+: (checkver)  ( ver ver - )
     over 0 = if 2drop exit then
     2dup
     swap $ff000000 and swap $ff000000 and <> abort" Incompatible major version!"
@@ -12,8 +12,8 @@
             space tib #tib @ type   then
 ;
 : .line  cr tib #tib @ type ;
-: [version]  ( M m R -- <name> )  .line packver constant ;
-: [checkver]  ( M m R packver -- )
+: [version]  ( M m R - <name> )  .line packver constant ;
+: [checkver]  ( M m R packver - )
     depth 4 < abort" Missing version spec!"
     >r packver r> (checkver) ;
 

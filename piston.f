@@ -30,9 +30,9 @@ variable oscursor   \ turn off to hide the OS's mouse cursor
 variable ide-loaded
 
 \ Defers
-defer ?overlay  ' noop is ?overlay  \ render ide  ( -- )
-defer ?system   ' noop is ?system   \ system events ( -- )
-defer onDisplayClose  :is onDisplayClose  bye ;  ( -- )
+defer ?overlay  ' noop is ?overlay  \ render ide  ( - )
+defer ?system   ' noop is ?system   \ system events ( - )
+defer onDisplayClose  :is onDisplayClose  bye ;  ( - )
 defer repl?     :noname  0 ; is repl?
 
 \ Event stuff
@@ -53,7 +53,7 @@ define internal
 
 
 using internal
-: clip ( x y w h -- ) 
+: clip ( x y w h - ) 
     #globalscale * s>f cliph sf!
     #globalscale * s>f clipw sf!
     s>f  clipy sf!
@@ -65,7 +65,7 @@ using internal
     cliph sf@ f>s al_set_clipping_rectangle
 ;
 
-: mount  ( -- )
+: mount  ( - )
     m1 al_identity_transform
     m1 #globalscale s>f 1sf dup al_scale_transform
     fs @ if
@@ -146,7 +146,7 @@ variable winx  variable winy
         fs @ if     display winx winy al_get_window_position  then
     then ;
 
-: al-emit-user-event  ( type -- )  \ EVT is expected to be filled, except for the type
+: al-emit-user-event  ( type - )  \ EVT is expected to be filled, except for the type
     evt ALLEGRO_EVENT.type !  uesrc evt 0 al_emit_user_event ;
 
 0 value #lastscale
@@ -174,7 +174,7 @@ variable newfs
 
 : ?hidemouse  display oscursor @ if al_show_mouse_cursor else al_hide_mouse_cursor then ; 
 
-: onto  ( bmp -- )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
+: onto  ( bmp - )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
 : ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
 : (show)  me >r  'show try to showerr  r> to me ;
 : show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  ;
@@ -183,11 +183,11 @@ variable newfs
 : step  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
 : /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
 : go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
-: show>  r>  to 'show ;  ( -- <code> )  ( -- )
-: step>  r>  to 'step ;  ( -- <code> )  ( -- )
-: pump>  r> to 'pump ;  ( -- <code> )  ( -- )
+: show>  r>  to 'show ;  ( - <code> )  ( - )
+: step>  r>  to 'step ;  ( - <code> )  ( - )
+: pump>  r> to 'pump ;  ( - <code> )  ( - )
 : get-next-event  eco @ if al_wait_for_event #1 else al_get_next_event then ;
-: @event  ( -- flag )  eventq evt get-next-event ;
+: @event  ( - flag )  eventq evt get-next-event ;
 : pump  repl? ?exit  'pump try to pumperr ;
 : attend
     begin  @event  breaking? not and  while
