@@ -8,6 +8,7 @@
 : ?lit  state @ if postpone literal then ; 
 : do postpone ?do ; immediate
 : for  s" 0 do" evaluate ; immediate
+: /allot  here over allot swap erase ;
 : allotment  here swap /allot ;
 : move,   here over allot swap move ;
 : h?  @ h. ;
