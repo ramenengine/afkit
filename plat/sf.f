@@ -22,7 +22,7 @@ create backup 11 cells allot
     .STACK  BEGIN
     REFILL DROP  INTERPRET  savestack  PROMPT  AGAIN ;
 
-: QUIT ( - )
+: asdfQUIT ( - )
    BEGIN
       R0 @ RP!         \ clear return stack
       /INTERPRETER
@@ -48,7 +48,7 @@ create backup 11 cells allot
     \   0  DO  I' I - 1- FPICK N.  LOOP
     \ THEN ;
 
-' newprompt is prompt
+\ ' newprompt is prompt
 
 : /s  s0 @ sp! ;
 : empty  /s empty ;
