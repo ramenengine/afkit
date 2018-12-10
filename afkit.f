@@ -65,7 +65,7 @@ create penx  0 ,  here 0 ,  constant peny
 
 include afkit/al.f
 
-: assertAllegro
+: assertAllegro ( - ) 
     allegro? ?exit   true to allegro?  init-allegro-all
     initaudio
 ;
@@ -74,12 +74,12 @@ assertAllegro
 
 \ Native and Display Resolutions
 al_get_num_display_modes 1 -  native  al_get_display_mode
-: xy@   dup @ swap cell+ @ ;
-: x@  xy@ drop ;
-: y@  xy@ nip ;
-: displayw  display al_get_display_width ;
-: displayh  display al_get_display_height ;
-: displaywh  displayw displayh ;
+: xy@ ( adr - x y )  dup @ swap cell+ @ ;
+: x@ ( adr - x ) xy@ drop ;
+: y@ ( adr - y ) xy@ nip ;
+: displayw  ( - n ) display al_get_display_width ;
+: displayh  ( - n ) display al_get_display_height ;
+: displaywh ( - w h ) displayw displayh ;
 
 \ ------------------------------------ initializing the display ------------------------------------
 
@@ -117,14 +117,14 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
     ALLEGRO_DEPTH_TEST 0 al_set_render_state
 ;
 
-: valid?  ['] @ catch nip 0 = ;
-: scaled-res  res xy@ #globalscale * swap #globalscale * swap ;
-: +display  display valid? ?exit  scaled-res initDisplay ;
-: -display  display valid? -exit
+: valid?  ( adr - flag ) ['] @ catch nip 0 = ;
+: scaled-res  ( - w h ) res xy@ #globalscale * swap #globalscale * swap ;
+: +display  ( - ) display valid? ?exit  scaled-res initDisplay ;
+: -display  ( - ) display valid? -exit
     display al_destroy_display  0 to display
     eventq al_destroy_event_queue  0 to eventq ;
-: -allegro  -display  false to allegro?  al_uninstall_system ;
-: resolution  res 2!  fs @ 0= if  -display  +display  then ;
+: -allegro  ( - ) -display  false to allegro?  al_uninstall_system ;
+: resolution  ( w h - ) res 2!  fs @ 0= if  -display  +display  then ;
 
 \ ----------------------------------- words for switching windows ----------------------------------
 [defined] linux [if]
@@ -134,15 +134,15 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
     0 XOpenDisplay _disp !
     _disp @ _hwnd here XGetInputFocus
 
-    : HWND  _hwnd @ ;
+    : HWND  ( - handle ) _hwnd @ ;
 
-    : btf
+    : btf ( window - )
         0 XOpenDisplay _disp !
         _disp @ over 0 0 XSetInputFocus
         _disp @ swap XRaiseWindow
         _disp @ 0 XSync ;
 
-    : >display  display al_get_x_window_id focus ;
+    : >display ( - ) display al_get_x_window_id focus ;
 [else]
     : btf  ( winapi-window - )
       dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
@@ -169,14 +169,14 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
 \ NTS: we don't handle connecting/disconnecting devices yet,
 \   though Allegro 5 /does/ support it. (via an event)
 
-: joystick[]  /ALLEGRO_JOYSTICK_STATE *  joysticks + ;
-: >joyhandle  al_get_joystick ;
+: joystick[] ( n - adr ) /ALLEGRO_JOYSTICK_STATE *  joysticks + ;
+: >joyhandle ( n - ALLEGRO_JOYSTICK_STATE ) al_get_joystick ;
 : stick  ( joy# stick# - f: x y )  \ get stick position
   /ALLEGRO_JOYSTICK_STATE_STICK *  swap joystick[]
   ALLEGRO_JOYSTICK_STATE.sticks + dup sf@ cell+ sf@ ;
 : btn  ( joy# button# - n# )  \ get button state
   cells swap joystick[] ALLEGRO_JOYSTICK_STATE.buttons + @ ;
-: #joys  al_get_num_joysticks ;
+: #joys ( - n ) al_get_num_joysticks ;
 : pollJoys ( - )  #joys for  i >joyhandle i joystick[] al_get_joystick_state  loop ;
 \ ----------------------------------------- end joysticks ------------------------------------------
 
@@ -217,7 +217,7 @@ define internal
   variable >state
   : (state)  >state @ 15 and  /ALLEGRO_STATE *  states + ;
 using internal
-: +state  (state) ALLEGRO_STATE_TARGET_BITMAP
+: +state  ( - ) (state) ALLEGRO_STATE_TARGET_BITMAP
                   ALLEGRO_STATE_DISPLAY                 or
                   ALLEGRO_STATE_BLENDER                 or
                   ALLEGRO_STATE_NEW_FILE_INTERFACE      or
@@ -225,7 +225,7 @@ using internal
                   ALLEGRO_STATE_PROJECTION_TRANSFORM    or  al_store_state
             1 >state +!
 ;
-: -state  -1 >state +!  (state) al_restore_state ;
+: -state  ( - ) -1 >state +!  (state) al_restore_state ;
 previous
 
 \ --------------------------------------------------------------------------------------------------
