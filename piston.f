@@ -37,11 +37,11 @@ defer repl?     :noname  0 ; is repl?
 
 \ Event stuff
 create evt  256 /allot
-: etype  evt ALLEGRO_EVENT.TYPE @ ;
+: etype  ( - ALLEGRO_EVENT_TYPE )  evt ALLEGRO_EVENT.TYPE @ ;
 z" AKFS" @ constant FULLSCREEN_EVENT
 
-: poll  pollKB  pollJoys ;
-: break  true to breaking? ;
+: poll  ( - ) pollKB  pollJoys ;
+: break ( - ) true to breaking? ;
 
 
 define internal
@@ -83,7 +83,7 @@ using internal
         al_set_separate_blender
     
 ;
-: unmount
+: unmount ( - ) 
     m1 al_identity_transform
     \ m1 0.625e 0.625e 2sf al_translate_transform
     m1 al_use_transform
@@ -94,9 +94,9 @@ using internal
 ;
 
 variable (catch)
-: try  dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
+: try ( xt - IOR ) dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
 
-: suspend
+: suspend ( - ) 
     -audio
     begin
         eventq evt al_wait_for_event
@@ -107,7 +107,7 @@ variable (catch)
     again    
 ;
 
-: standard-events
+: standard-events ( - )
     etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize  then
     etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
     ide-loaded @ if  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  suspend  then  then
@@ -139,7 +139,7 @@ variable (catch)
     then ;
 
 variable winx  variable winy
-: ?poswin   \ save/restore window position when toggling in and out of fullscreen
+: ?poswin ( - )   \ save/restore window position when toggling in and out of fullscreen
     display al_get_display_flags ALLEGRO_FULLSCREEN_WINDOW and if
         fs @ 0= if  r> call  display winx @ winy @ al_set_window_position  then
     else
@@ -151,8 +151,8 @@ variable winx  variable winy
 
 0 value #lastscale
 variable newfs
-: 2s>f  swap s>f s>f ;
-: ?fs
+: 2s>f ( ix iy - f: x y ) swap s>f s>f ;
+: ?fs ( - )
     ?poswin
     fs @ newfs @ = ?exit
     display ALLEGRO_FULLSCREEN_WINDOW fs @ $1 and al_toggle_display_flag drop
@@ -175,27 +175,27 @@ variable newfs
 : ?hidemouse  display oscursor @ if al_show_mouse_cursor else al_hide_mouse_cursor then ; 
 
 : onto  ( bmp - )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
-: ?greybg  fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
-: (show)  me >r  'show try to showerr  r> to me ;
-: show  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  ;
-: present  al_flip_display ;
-: ?suppress  repl? if clearkb then ;
-: step  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
-: /go  resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
-: go/  eventq al_flush_event_queue  >ide  false to breaking?  ;
-: show>  r>  to 'show ;  ( - <code> )  ( - )
-: step>  r>  to 'step ;  ( - <code> )  ( - )
-: pump>  r> to 'pump ;  ( - <code> )  ( - )
-: get-next-event  eco @ if al_wait_for_event #1 else al_get_next_event then ;
-: @event  ( - flag )  eventq evt get-next-event ;
-: pump  repl? ?exit  'pump try to pumperr ;
-: attend
+: ?greybg ( - ) fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
+: (show) ( - )  me >r  'show try to showerr  r> to me ;
+: show ( - ) ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  ;
+: present ( - ) al_flip_display ;
+: ?suppress ( - ) repl? if clearkb then ;
+: step ( - )  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
+: /go ( - ) resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
+: go/ ( - ) eventq al_flush_event_queue  >ide  false to breaking?  ;
+: show> ( - <code> ) r>  to 'show ;  ( - <code> )  ( - )
+: step> ( - <code> ) r>  to 'step ;  ( - <code> )  ( - )
+: pump> ( - <code> ) r> to 'pump ;  ( - <code> )  ( - )
+: get-next-event ( - ) eco @ if al_wait_for_event #1 else al_get_next_event then ;
+: @event ( - flag ) eventq evt get-next-event ;
+: pump ( - ) repl? ?exit  'pump try to pumperr ;
+: attend ( - )
     begin  @event  breaking? not and  while
         me >r  pump  standard-events  r> to me  ['] ?system catch throw
         eco @ ?exit
     repeat ;
-: frame  show present attend poll step ?fs ?hidemouse ;
-: go  /go    begin  frame  breaking? until  go/ ;
+: frame ( - ) show present attend poll step ?fs ?hidemouse ;
+: go ( - ) /go    begin  frame  breaking? until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square
 define internal
