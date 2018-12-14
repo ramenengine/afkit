@@ -28,6 +28,7 @@ variable info  \ enables debugging mode display
 variable eco   \ enable to save CPU (for repl/editors etc)
 variable oscursor   \ turn off to hide the OS's mouse cursor
 variable ide-loaded
+variable repl   \ <>0 = repl active/visible
 
 \ Defers
 defer ?overlay  ' noop is ?overlay  \ render ide  ( - )
@@ -70,8 +71,11 @@ using internal
     m1 #globalscale s>f 1sf dup al_scale_transform
     fs @ if
         m1
-            native x@ 2 / res x@ #globalscale * 2 / -  s>f 1sf 
-            native y@ 2 / res y@ #globalscale * 2 / -  s>f 1sf  al_translate_transform
+            native x@ 2 / res x@ #globalscale * 2 / -  s>f 1sf
+            repl @ if 0 else 
+                native y@ 2 / res y@ #globalscale * 2 / -  s>f 1sf
+            then
+                al_translate_transform
     then
     \ m1 0.625e 0.625e 2sf al_translate_transform
     m1 al_use_transform
