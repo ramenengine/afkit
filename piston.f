@@ -16,6 +16,7 @@
 0 value pumperr
 0 value alt?  \ part of fix for alt-enter bug when game doesn't have focus
 0 value ctrl?
+0 value shift?
 0 value breaking?
 0 value 'pump
 0 value 'step
@@ -127,6 +128,8 @@ variable (catch)
             <altgr>  of  true to alt?  endof
             <lctrl>  of  true to ctrl?  endof
             <rctrl>  of  true to ctrl?  endof
+            <lshift>  of  true to shift?  endof
+            <rshift>  of  true to shift?  endof
             <enter>  of  alt? -exit  fs @ not fs ! endof
             <f4>     of  alt? -exit  bye  endof
             <f12>    of  break  endof
@@ -139,6 +142,8 @@ variable (catch)
             <altgr>  of  false to alt?  endof
             <lctrl>  of  false to ctrl?  endof
             <rctrl>  of  false to ctrl?  endof
+            <lshift>  of  false to ctrl?  endof
+            <rshift>  of  false to ctrl?  endof
         endcase
     then ;
 
@@ -185,7 +190,7 @@ variable newfs
 : present ( - ) al_flip_display ;
 : ?suppress ( - ) repl? if clearkb then ;
 : step ( - )  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
-: /go ( - ) resetkb  false to breaking?   >display  false to alt?  false to ctrl? ;
+: /go ( - ) resetkb  false to breaking?   >display  false to alt?  false to ctrl?  false to shift? ;
 : go/ ( - ) eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show> ( - <code> ) r>  to 'show ;  ( - <code> )  ( - )
 : step> ( - <code> ) r>  to 'step ;  ( - <code> )  ( - )
