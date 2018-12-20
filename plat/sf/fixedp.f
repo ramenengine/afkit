@@ -204,6 +204,8 @@ only forth fixpointing +order definitions
     : imove  1i imove ;
     : kbytes  1i #1024 i* ;
     : megs    1i #1024 i* #1024 i* ;
+    : roll    1i roll ;
+    : reverse  ( ... count - ... ) 1 + 1 ?do i 1 - roll loop ;
 
 only forth definitions fixpointing +order
 : fixed   fixpointing +order  ints off #10 base ! ;
@@ -215,6 +217,7 @@ only forth definitions fixpointing +order
 : only
     state @ if  postpone [']  postpone (only)
             else  '  (only)  then  ; immediate
+
 
 : definitions
     get-order over fixpointing = if  fixpointing -order  definitions  fixpointing +order
