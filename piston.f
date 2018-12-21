@@ -164,6 +164,7 @@ variable newfs
 : ?fs ( - )
     ?poswin
     fs @ newfs @ = ?exit
+    display fs @ if native 2@ else res 2@ #lastscale * swap #lastscale * swap then al_resize_display drop
     display ALLEGRO_FULLSCREEN_WINDOW fs @ $1 and al_toggle_display_flag drop
     fs @ newfs !
     fs @ if
@@ -174,7 +175,7 @@ variable newfs
         else
             native x@ res x@ /
         then
-            to #globalscale
+            4 min to #globalscale
     else
         #lastscale to #globalscale
     then
