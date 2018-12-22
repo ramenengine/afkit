@@ -39,7 +39,7 @@
 : 2,  swap , , ;
 : 3,  rot , swap , , ;
 : 4,  2swap swap , , swap , , ;
-: :is  :noname  postpone [  [compile] is  ] ;
+: :make  :noname  postpone [  [compile] is  ] ;
 : reverse   ( ... count - ... ) 1 + 1 ?do i 1 - roll loop ;
 : cfill  fill ;
 : ;then  s" exit then" evaluate ; immediate
@@ -91,4 +91,4 @@ vocabulary internal
 include afkit/ans/depend.f
 
 defer alert  ( a c - )
-:is alert  type true abort ;
+:make alert  type true abort ;

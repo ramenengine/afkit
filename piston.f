@@ -34,7 +34,7 @@ variable repl   \ <>0 = repl active/visible
 \ Defers
 defer ?overlay  ' noop is ?overlay  \ render ide  ( - )
 defer ?system   ' noop is ?system   \ system events ( - )
-defer onDisplayClose  :is onDisplayClose  bye ;  ( - )
+defer onDisplayClose  :make onDisplayClose  bye ;  ( - )
 defer repl?     :noname  0 ; is repl?
 
 \ Event stuff
