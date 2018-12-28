@@ -202,8 +202,7 @@ only forth fixpointing +order definitions
     : ifill  swap 1i swap ifill ;
     : ierase  0 ifill ;
     : imove  1i imove ;
-    : kbytes  1i #1024 i* ;
-    : megs    1i #1024 i* #1024 i* ;
+    : kb    1i #1024 i* ;
     : roll    1i roll ;
     : reverse  ( ... count - ... ) 1 + 1 ?do i 1 - roll loop ;
 
