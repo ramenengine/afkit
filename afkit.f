@@ -103,7 +103,7 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
             w h al_create_display  to display    
     [then]
     
-    display al_get_display_refresh_rate ?dup 0= if 60 then to fps
+    display al_get_display_refresh_rate dup 0= if drop 60 then to fps
 
     al_create_builtin_font to al-default-font
 

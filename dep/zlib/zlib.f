@@ -12,6 +12,6 @@ function: uncompress ( dest-adr &destlen src-adr srclen -- result )
 variable destlen
 : decompress  ( src #len dest #len - #outputlen )
     destlen !
-    destlen 2swap uncompress ?dup if  h.  -1 abort" Zlib error"  then
+    destlen 2swap uncompress dup if  h.  -1 abort" Zlib error"  else drop then
     destlen @ ;
 

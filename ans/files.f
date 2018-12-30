@@ -5,10 +5,10 @@ decimal
   r@ write-file throw
   r> close-file throw ;
 
-: @file  ( filename c dest maxsize - size )  \ fetch file into a mem range
+: @file  ( filename c dest maxsize - )  \ fetch file into a mem range
   locals| maxsize dest c filename |
   filename c r/o open-file throw >r
-  r@ file-size throw drop maxsize min  r@ read-file throw
+  dest r@ file-size throw drop maxsize min  r@ read-file throw drop
   r> close-file throw ;
 
 
@@ -46,3 +46,6 @@ decimal
 : -PATH ( a n - a n )   slashes  [CHAR] \ ENDING  0 MAX ;
 [then]
 
+: 0file  ( adr c len - )
+  locals| len c adr |
+    here len erase  here len adr c file! ;

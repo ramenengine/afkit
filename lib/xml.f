@@ -20,8 +20,8 @@ define xmling
 
     \ get # of child elements of given name
     : #elements  ( dom-nnn adr c - n ) 0 locals| n c adr |
-        >first begin ?dup while  dom.element istype if  adr c named? if  1 +to n  then  then
-        >next  repeat  n ;
+        >first begin dup while  dom.element istype if  adr c named? if  1 +to n  then  then
+        >next  repeat  drop n ;
 
     : (find)  ( dom-nnn adr c type - dom-nnn | 0 )  locals| type c adr |
         begin dup while  type istype if  adr c named? ?exit  then  >next  repeat ;
