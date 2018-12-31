@@ -187,7 +187,7 @@ variable newfs
 : onto  ( bmp - )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
 : ?greybg ( - ) fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
 : (show) ( - )  me >r  'show try to showerr  r> to me ;
-: show ( - ) ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  ;
+: show ( - )  at@ 2>r  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  2r> at ;
 : present ( - ) al_flip_display ;
 : ?suppress ( - ) repl? if clearkb then ;
 : step ( - )  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
