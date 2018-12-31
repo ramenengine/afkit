@@ -21,6 +21,7 @@
 : and!  dup >r @ and r> ! ;
 : or!   dup >r @ or r> ! ;
 : xor!   dup >r @ xor r> ! ;
+: not!   >r invert r> and! ;
 : @!  dup @ >r ! r> ;
 : bounds  over + swap ;
 : lastbody  last @ name> >body ;
