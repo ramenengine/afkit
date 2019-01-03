@@ -6,10 +6,13 @@
     swap $ff000000 and swap $ff000000 and <> abort" Incompatible major version!"
     2dup
     swap $00ffffff and swap $00ffffff and > abort" Incompatible minor version and/or revision!"
-    swap $00ffff00 and swap $00ffff00 and < if  cr  #2 attribute ." Version mismatch warning: "
-          #3 attribute
-            space including -path type ." : "
-            space tib #tib @ type   then
+    swap $00ffff00 and swap $00ffff00 and < if
+        cr  #2 attribute ." Version mismatch warning: "
+        #3 attribute
+        space including -path type ." : "
+        space tib #tib @ type
+        #0 attribute
+    then
 ;
 : .line  cr tib #tib @ type ;
 : [version]  ( M m R - <name> )  .line packver constant ;
