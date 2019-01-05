@@ -10,7 +10,7 @@
 
 
 \ Values
-0 value frmctr
+0 value now  \ in frames  ( read-only )
 0 value showerr
 0 value steperr
 0 value pumperr
@@ -190,7 +190,7 @@ variable newfs
 : show ( - )  at@ 2>r  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  2r> at ;
 : present ( - ) al_flip_display ;
 : ?suppress ( - ) repl? if clearkb then ;
-: step ( - )  me >r  ?suppress  'step try to steperr  1 +to frmctr  r> to me  ;
+: step ( - )  me >r  ?suppress  'step try to steperr  1 +to now  r> to me  ;
 : /go ( - ) resetkb  false to breaking?   >display  false to alt?  false to ctrl?  false to shift? ;
 : go/ ( - ) eventq al_flush_event_queue  >ide  false to breaking?  ;
 : show> ( - <code> ) r>  to 'show ;  ( - <code> )  ( - )
