@@ -27,7 +27,7 @@
 \ Flags
 variable info  \ enables debugging mode display
 variable eco   \ enable to save CPU (for repl/editors etc)
-variable oscursor   \ turn off to hide the OS's mouse cursor
+variable oscursor   oscursor on  \ turn off to hide the OS's mouse cursor
 variable ide-loaded
 variable repl   \ <>0 = repl active/visible
 
@@ -142,8 +142,8 @@ variable (catch)
             <altgr>  of  false to alt?  endof
             <lctrl>  of  false to ctrl?  endof
             <rctrl>  of  false to ctrl?  endof
-            <lshift>  of  false to ctrl?  endof
-            <rshift>  of  false to ctrl?  endof
+            <lshift>  of  false to shift?  endof
+            <rshift>  of  false to shift?  endof
         endcase
     then ;
 
@@ -222,5 +222,3 @@ define internal
         vy @ 0> if  y @ res y@ 50 - >= if  vy @ negate vy !  then then
         ;  execute
 only forth definitions
-
-oscursor on

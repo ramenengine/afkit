@@ -1,6 +1,6 @@
 [undefined] depend [if] 
 
-: defined  ( - <word> flag ) bl word find ;
+: defined ( - <word> c-addr 0 | xt -1 | - xt 1 )  bl word find ;
 : exists ( - <word> flag )   defined 0 <> nip ;
 
 \ Conditional INCLUDE
