@@ -3,7 +3,7 @@
 \  The previous version tried to have frameskipping and framepacing, but it became choppy after
 \    an hour or two running and I couldn't figure out the cause.
 \  The loop has some common controls:
-\    F12 - break the loop
+\    ALT-F12 - break the loop
 \    ALT-F4 - quit the process
 \    ALT-ENTER - toggle fullscreen
 \    ALT-I - toggles a flag called INFO
@@ -45,14 +45,12 @@ z" AKFS" @ constant FULLSCREEN_EVENT
 : poll  ( - ) pollKB  pollJoys ;
 : break ( - ) true to breaking? ;
 
-
 define internal
     transform m1
     variable clipx
     variable clipy
     variable clipw
     variable cliph
-
 
 using internal
 : clip ( x y w h - ) 
@@ -102,11 +100,10 @@ variable (catch)
 : try ( xt - IOR ) dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
 
 : suspend ( - ) 
-    -audio
     begin
         eventq evt al_wait_for_event
         etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if
-            clearkb  false to alt?  +audio
+            clearkb  false to alt?
             exit 
         then
     again    
@@ -132,7 +129,7 @@ variable (catch)
             <rshift>  of  true to shift?  endof
             <enter>  of  alt? -exit  fs @ not fs ! endof
             <f4>     of  alt? -exit  bye  endof
-            <f12>    of  break  endof
+            <f12>    of  alt? -exit  break  endof
             <i>      of  alt? -exit  info @ not info !  endof
         endcase
     then
