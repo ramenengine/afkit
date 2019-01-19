@@ -69,3 +69,4 @@ create ldr 64 allot
    ( * ) DUP IF  POSTPONE [   THEN
    NR> RESTORE-INPUT DROP ( * ) THROW ;
 
+warning off

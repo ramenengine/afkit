@@ -3,7 +3,7 @@
 \  The previous version tried to have frameskipping and framepacing, but it became choppy after
 \    an hour or two running and I couldn't figure out the cause.
 \  The loop has some common controls:
-\    ALT-F12 - break the loop
+\    F12 - break the loop
 \    ALT-F4 - quit the process
 \    ALT-ENTER - toggle fullscreen
 \    ALT-I - toggles a flag called INFO
@@ -45,12 +45,14 @@ z" AKFS" @ constant FULLSCREEN_EVENT
 : poll  ( - ) pollKB  pollJoys ;
 : break ( - ) true to breaking? ;
 
+
 define internal
     transform m1
     variable clipx
     variable clipy
     variable clipw
     variable cliph
+
 
 using internal
 : clip ( x y w h - ) 
