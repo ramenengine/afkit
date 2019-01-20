@@ -25,6 +25,7 @@
 : @!  dup @ >r ! r> ;
 : bounds  over + swap ;
 : lastbody  last @ name> >body ;
+: .name  body> >name count type space ;
 
 \ WITHIN? - lo and hi are inclusive
 : within? ( n lo hi - flag )  over - >r - r> #1 + u< ;
@@ -34,7 +35,7 @@
 : imove  ( from to count - )  cells move ;
 : time?  ( xt - ) ucounter 2>r  execute  ucounter 2r> d-  d>s  . ;
 
-: kbytes  #1024 * ;
+: kb      #1024 * ;
 : megs    #1024 * #1024 * ;
 : udup  over swap ;
 : 2,  swap , , ;

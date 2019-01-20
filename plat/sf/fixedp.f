@@ -203,6 +203,7 @@ only forth fixpointing +order definitions
     : ierase  0 ifill ;
     : imove  1i imove ;
     : kb    1i #1024 i* ;
+    : megs  1i #1024 i* ;
     : reverse  ( ... count - ... ) 1 + 1 ?do i 1 - 1i roll loop ;
 
 only forth definitions fixpointing +order
