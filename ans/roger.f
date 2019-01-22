@@ -25,7 +25,7 @@
 : @!  dup @ >r ! r> ;
 : bounds  over + swap ;
 : lastbody  last @ name> >body ;
-: .name  body> >name count type space ;
+: .name  dup if body> >name count type space else . then ;
 
 \ WITHIN? - lo and hi are inclusive
 : within? ( n lo hi - flag )  over - >r - r> #1 + u< ;
