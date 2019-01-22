@@ -8,7 +8,6 @@
 \    ALT-ENTER - toggle fullscreen
 \    ALT-I - toggles a flag called INFO
 
-
 \ Values
 0 value now  \ in frames  ( read-only )
 0 value showerr
@@ -99,7 +98,7 @@ using internal
 ;
 
 variable (catch)
-: try ( xt - IOR ) dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
+: try ( code - IOR ) dup -exit  sp@ cell+ >r  code> catch (catch) !  r> sp!  (catch) @ ;
 
 : suspend ( - ) 
     begin
@@ -185,25 +184,34 @@ variable newfs
 
 : onto  ( bmp - )  dup display = if al_get_backbuffer then al_set_target_bitmap ;
 : ?greybg ( - ) fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
-: (show) ( - )  me >r  'show try to showerr  r> to me ;
-: show ( - )  at@ 2>r  ?greybg  mount  display onto  (show)  unmount  display onto  ?overlay  2r> at ;
+: show ( - )
+    at@ 2>r  
+        me >r
+            ?greybg  mount  display onto
+            'show try (catch) !
+            unmount  display onto  ?overlay
+        r> to me  
+    2r> at
+    (catch) @ ( ior ) throw ;
+: ?show ( - )  ['] show catch to showerr ;
 : present ( - ) al_flip_display ;
 : ?suppress ( - ) repl? if clearkb then ;
-: step ( - )  me >r  ?suppress  'step try to steperr  1 +to now  r> to me  ;
+: step ( - )  me >r  ?suppress  'step try  1 +to now  r> to me  throw ;
+: ?step  ( - )  ['] step catch to steperr ;
 : /go ( - ) resetkb  false to breaking?   >display  false to alt?  false to ctrl?  false to shift? ;
 : go/ ( - ) eventq al_flush_event_queue  >ide  false to breaking?  ;
-: show> ( - <code> ) r>  to 'show ;  ( - <code> )  ( - )
-: step> ( - <code> ) r>  to 'step ;  ( - <code> )  ( - )
+: show> ( - <code> ) r> to 'show ;  ( - <code> )  ( - )
+: step> ( - <code> ) r> to 'step ;  ( - <code> )  ( - )
 : pump> ( - <code> ) r> to 'pump ;  ( - <code> )  ( - )
 : get-next-event ( - ) eco @ if al_wait_for_event #1 else al_get_next_event then ;
 : @event ( - flag ) eventq evt get-next-event ;
 : pump ( - ) repl? ?exit  'pump try to pumperr ;
 : attend ( - )
     begin  @event  breaking? not and  while
-        me >r  pump  standard-events  r> to me  ['] ?system catch throw
+        me >r  pump  standard-events  r> to me  ?system
         eco @ ?exit
     repeat ;
-: frame ( - ) show present attend poll step ?fs ?hidemouse ;
+: frame ( - ) ?show present attend poll ?step ?fs ?hidemouse ;
 : go ( - ) /go    begin  frame  breaking? until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square

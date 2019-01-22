@@ -21,7 +21,7 @@ include afkit/ans/version.f
         cd ../../..
     [then]
 
-    : empty  only forth s" (empty) marker (empty)" evaluate ;
+    : empty  only forth definitions s" (empty) marker (empty)" evaluate ;
     marker (empty)
 [then]
 
