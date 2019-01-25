@@ -6,7 +6,10 @@
 \   1( 123 321 )  \ throws an error
 \   1( )          \ throws an error
 
-: 1(  ( - )  s" depth >r" evaluate ; immediate
+0 value (depth)
+: 1(  ( - )  state @ if  s" depth >r" evaluate  else  depth to (depth)  then ; immediate
 : (stackerr)  - #1 <> abort" stack check error" ;
-: )   ( ... - ... )  s" depth r> (stackerr) " evaluate ; immediate
+: )   ( ... - ... )
+    state @ if  s" depth r> (stackerr) " evaluate
+            else  depth (depth) (stackerr) then ; immediate
 
