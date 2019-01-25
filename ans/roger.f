@@ -25,7 +25,16 @@
 : @!  dup @ >r ! r> ;
 : bounds  over + swap ;
 : lastbody  last @ name> >body ;
-: .name  dup if body> >name count type space else . then ;
+: ccount  dup c@ 1 u+ ;
+: .name  dup if body> >name ccount type space else . then ;
+
+: count  dup @ cell u+ ;
+: string,  dup , move, ;
+: place  2dup ! cell+ swap move ;
+: append  2dup 2>r count + swap move 2r> +! ;
+: count!  ! ;
+: count+!  +! ;
+
 
 \ WITHIN? - lo and hi are inclusive
 : within? ( n lo hi - flag )  over - >r - r> #1 + u< ;
