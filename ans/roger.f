@@ -34,6 +34,7 @@
 : append  2dup 2>r count + swap move 2r> +! ;
 : count!  ! ;
 : count+!  +! ;
+: ,"  [char] " parse string, ;
 
 
 \ WITHIN? - lo and hi are inclusive
