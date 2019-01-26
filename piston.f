@@ -21,7 +21,7 @@
 0 value 'step
 0 value 'show
 0 value me    \ for Ramen
-0 value (me)  \ save/restore
+0 value offsetTable
 
 \ Flags
 variable info  \ enables debugging mode display
@@ -186,17 +186,17 @@ variable newfs
 : ?greybg ( - ) fs @ -exit  display onto  unmount  0.1e 0.1e 0.1e 1e 4sf al_clear_to_color ;
 : show ( - )
     at@ 2>r  
-        me >r
+        me >r  offsetTable >r
             ?greybg  mount  display onto
             'show try (catch) !
             unmount  display onto  ?overlay
-        r> to me  
+        r> to offsetTable  r> to me  
     2r> at
     (catch) @ ( ior ) throw ;
 : ?show ( - )  ['] show catch to showerr ;
 : present ( - ) al_flip_display ;
 : ?suppress ( - ) repl? if clearkb then ;
-: step ( - )  me >r  ?suppress  'step try  1 +to now  r> to me  throw ;
+: step ( - )  me >r  offsetTable >r  ?suppress  'step try  1 +to now  r> to offsetTable  r> to me  throw ;
 : ?step  ( - )  ['] step catch to steperr ;
 : /go ( - ) resetkb  false to breaking?   >display  false to alt?  false to ctrl?  false to shift? ;
 : go/ ( - ) eventq al_flush_event_queue  >ide  false to breaking?  ;
@@ -208,7 +208,7 @@ variable newfs
 : pump ( - ) repl? ?exit  'pump try to pumperr ;
 : attend ( - )
     begin  @event  breaking? not and  while
-        me >r  pump  standard-events  r> to me  ?system
+        me >r  offsetTable >r  pump  standard-events  r> to offsetTable  r> to me  ?system
         eco @ ?exit
     repeat ;
 : frame ( - ) ?show present attend poll ?step ?fs ?hidemouse ;
