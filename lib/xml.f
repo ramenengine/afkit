@@ -42,7 +42,7 @@ define xmling
             if  name c type  true abort" XML attribute not found"  then
         value@ ;
 
-    : pval  ( dom-nnn name c - n )  val evaluate ;
+    : pval  ( dom-nnn name c - n )  val number ;
     : ival  decimal pval fixed ;
 
     : text  ( dom-nnn - text c | 0 )  s" " dom.text findchild value@ ;
