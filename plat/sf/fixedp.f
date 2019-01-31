@@ -204,6 +204,8 @@ only forth fixpointing +order definitions
     : imove  1i imove ;
     : kbytes  1i #1024 i* ;
     : megs    1i #1048576 i* ;
+    : ++  1.0 swap +! ;
+    : --  -1.0 swap +! ;
     : reverse  ( ... count - ... ) 1 + 1 ?do i 1 - 1i roll loop ;
 
 only forth definitions fixpointing +order
