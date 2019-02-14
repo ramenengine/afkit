@@ -55,7 +55,9 @@ function: al_transform_coordinates ( const-ALLEGRO_TRANSFORM*-trans float*-x flo
 function: al_compose_transform ( ALLEGRO_TRANSFORM*-trans const-ALLEGRO_TRANSFORM*-other -- )
 function: al_get_current_transform ( -- transform )
 function: al_invert_transform ( ALLEGRO_TRANSFORM-*trans -- )
-function: al_check_inverse ( const ALLEGRO_TRANSFORM-*trans float-tol -- )
+function: al_check_inverse ( const-ALLEGRO_TRANSFORM-*trans float-tol -- )
+function: al_horizontal_shear_transform ( const-ALLEGRO_TRANSFORM-*trans float-x -- )
+function: al_vertical_shear_transform ( const-ALLEGRO_TRANSFORM-*trans float-y -- )
 
 \ since 5.1.3
 \ function: al_translate_transform_3d ( ALLEGRO_TRANSFORM*-trans float-x float-y z -- )
