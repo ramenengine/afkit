@@ -10,7 +10,6 @@
     cr .( be able to play anything but WAV files or call certain other functions.)
     cr
 [then]
-\ " \ <--- this is to heal Komodo Edit's string highlighting bug 
 
 [in-platform] win32 [if] true constant win32 [then]
 [in-platform] linux [if] true constant linux [then]

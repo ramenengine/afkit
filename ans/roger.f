@@ -27,6 +27,7 @@
 : lastbody  last @ name> >body ;
 : ccount  dup c@ 1 u+ ;
 : .name  dup if body> >name ccount type space else . then ;
+: $=  compare 0= ;
 
 : count  dup @ cell u+ ;
 : string,  dup , move, ;
@@ -35,7 +36,7 @@
 : count!  ! ;
 : count+!  +! ;
 : ,"  [char] " parse string, ;
-
+: included  2dup cr ." [Include] " type included ;
 
 \ WITHIN? - lo and hi are inclusive
 : within? ( n lo hi - flag )  over - >r - r> #1 + u< ;
@@ -53,8 +54,8 @@
 : 4,  2swap swap , , swap , , ;
 : :make  :noname  postpone [  [compile] is  ] ;
 : reverse   ( ... count - ... ) 1 + 1 ?do i 1 - roll loop ;
-: cfill  fill ;
 : ;then  s" exit then" evaluate ; immediate
+: free  dup 0= if ;then free ;
 
 \ Random numbers
 0 VALUE seed
@@ -66,7 +67,6 @@
 : ?compile  state @ if compile, else execute then ;
 : does-slang  does> dup @ ?compile  0 swap body> >name c! ;
 : :slang  ( - <name> <code> ; )   create immediate here 0 , does-slang  :noname swap ! ;
-
 
 \ vocabulary helpers
 : define
@@ -91,7 +91,6 @@ vocabulary internal
 : 2-  rot swap - >r - r> ;
 : 2negate  negate swap negate swap ;
 : 2clamp  ( x y lowx lowy highx highy - x y ) 2>r 2max 2r> 2min ;
-: $=  compare 0= ;
 
 \ Word tools
 : defined ( - c-addr 0 | xt -1 | - xt 1 )  bl word find ;

@@ -196,7 +196,10 @@ variable newfs
 : ?show ( - )  ['] show catch to showerr ;
 : present ( - ) al_flip_display ;
 : ?suppress ( - ) repl? if clearkb then ;
-: step ( - )  me >r  offsetTable >r  ?suppress  'step try  1 +to now  r> to offsetTable  r> to me  throw ;
+: step ( - )
+    me >r  offsetTable >r  at@ 2>r
+    ?suppress  'step try  1 +to now
+    2r> at  r> to offsetTable  r> to me  throw ;
 : ?step  ( - )  ['] step catch to steperr ;
 : /go ( - ) resetkb  false to breaking?   >display  false to alt?  false to ctrl?  false to shift? ;
 : go/ ( - ) eventq al_flush_event_queue  >ide  false to breaking?  ;
