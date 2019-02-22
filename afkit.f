@@ -182,9 +182,9 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
 
 \ --------------------------------------------------------------------------------------------------
 \ Graphics essentials; no-fixed-point version
-: transform  create  here  /transform allot  al_identity_transform ;
-transform (identity)
-: identity  (identity) swap /transform move ;
+: transform:  create  here  /transform allot  al_identity_transform ;
+transform: (identity)
+: 0transform  (identity) swap /transform move ;
 
 \ integer stuff
 : bmpw   ( bmp - n )  al_get_bitmap_width  ;

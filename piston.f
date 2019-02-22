@@ -46,7 +46,7 @@ z" AKFS" @ constant FULLSCREEN_EVENT
 
 
 define internal
-    transform m1
+    transform: m1
     variable clipx
     variable clipy
     variable clipw
