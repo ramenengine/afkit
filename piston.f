@@ -27,13 +27,11 @@
 variable info  \ enables debugging mode display
 variable eco   \ enable to save CPU (for repl/editors etc)
 variable oscursor   oscursor on  \ turn off to hide the OS's mouse cursor
-variable ide-loaded
 variable repl   \ <>0 = repl active/visible
 
 \ Defers
 defer ?overlay  ' noop is ?overlay  \ render ide  ( - )
 defer ?system   ' noop is ?system   \ system events ( - )
-defer onDisplayClose  :make onDisplayClose  bye ;  ( - )
 defer repl?     :noname  0 ; is repl?
 
 \ Event stuff
@@ -44,6 +42,8 @@ z" AKFS" @ constant FULLSCREEN_EVENT
 : poll  ( - ) pollKB  pollJoys ;
 : break ( - ) true to breaking? ;
 
+defer bye
+:make bye  al_uninstall_system  0 ExitProcess ; 
 
 define internal
     transform: m1
@@ -71,9 +71,9 @@ using internal
     m1 #globalscale s>f 1sf dup al_scale_transform
     fs @ if
         m1
-            native x@ 2 / res x@ #globalscale * 2 / -  s>f 1sf
+            nativew 2 / res x@ #globalscale * 2 / -  s>f 1sf
             repl @ if 0 else 
-                native y@ 2 / res y@ #globalscale * 2 / -  s>f 1sf
+                nativeh 2 / res y@ #globalscale * 2 / -  s>f 1sf
             then
                 al_translate_transform
     then
@@ -112,8 +112,8 @@ variable (catch)
 
 : standard-events ( - )
     etype ALLEGRO_EVENT_DISPLAY_RESIZE = if  display al_acknowledge_resize  then
-    etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  onDisplayClose  then
-    ide-loaded @ if  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  suspend  then  then
+    etype ALLEGRO_EVENT_DISPLAY_CLOSE = if  bye  then
+    [defined] dev [if]  etype ALLEGRO_EVENT_DISPLAY_SWITCH_OUT = if  suspend  then  [then]
     
     \ still needed in published games, don't remove
     etype ALLEGRO_EVENT_DISPLAY_SWITCH_IN = if
@@ -130,8 +130,10 @@ variable (catch)
             <rshift>  of  true to shift?  endof
             <enter>  of  alt? -exit  fs @ not fs ! endof
             <f4>     of  alt? -exit  bye  endof
-            <f12>    of  alt? -exit  break  endof
-            <i>      of  alt? -exit  info @ not info !  endof
+            [defined] dev [if]
+                <f12>    of  alt? -exit  break  endof  
+                <i>      of  alt? -exit  info @ not info !  endof
+            [then]
         endcase
     then
     etype ALLEGRO_EVENT_KEY_UP = if
@@ -162,20 +164,29 @@ variable newfs
 : ?fs ( - )
     ?poswin
     fs @ newfs @ = ?exit
-    display fs @ if native 2@ else res 2@ #lastscale * swap #lastscale * swap then al_resize_display drop
-    display ALLEGRO_FULLSCREEN_WINDOW fs @ $1 and al_toggle_display_flag drop
+    -display
+    fs @ 0= if
+        #lastscale to #globalscale
+    \    display scaled-res al_resize_display drop
+        windowed +display
+    else
+        \ display #1920 #1080 al_resize_display drop
+        fullscreen +display
+    then
+    
+    \ display ALLEGRO_FULLSCREEN_WINDOW fs @ #1 and al_set_display_flag drop
+    
     fs @ newfs !
     fs @ if
         #globalscale to #lastscale
-        native xy@ 2s>f f/ 
+        \ find biggest integer scaling that fits
+        nativewh 2s>f f/ 
         res xy@ 2s>f f/ f> if
-            native y@ res y@ /
+            nativeh res y@ /
         else
-            native x@ res x@ /
+            nativew res x@ /
         then
             4 min to #globalscale
-    else
-        #lastscale to #globalscale
     then
     FULLSCREEN_EVENT al-emit-user-event
 ;
@@ -215,7 +226,7 @@ variable newfs
         eco @ ?exit
     repeat ;
 : frame ( - ) ?show present attend poll ?step ?fs ?hidemouse ;
-: go ( - ) /go    begin  frame  breaking? until  go/ ;
+: go ( - )   /go    begin  frame  breaking? until  go/ ;
 
 \ default demo: dark blue screen with bouncing white square
 define internal

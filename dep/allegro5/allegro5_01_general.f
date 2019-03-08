@@ -7,9 +7,9 @@ function: al_get_window_position ( ALLEGRO_DISPLAY-*display *int-x *int-y -- )
 function: al_set_new_display_adapter ( int-adapter -- )
 
 \ monitor stuff - note, you have to load bitmaps twice AFAIK, using
-\   al_set_target_backbuffer.
+\   al_set_target_backbuffer.  ??? not sure what I meant here
 function: al_get_num_video_adapters ( -- n )
-function: al_get_monitor_info ( adapter-id ALLEGRO_MONITOR_INFO_*info -- )
+function: al_get_monitor_info ( adapter-id ALLEGRO_MONITOR_INFO_*info -- bool )
 function: al_get_new_display_adapter ( -- adapter-id )
 
 0
@@ -233,7 +233,6 @@ constant /ALLEGRO_DISPLAY_MODE
 \ display object stuff
 function: al_get_display_flags ( display -- n )
 function: al_set_display_flag ( display flag bool -- f )
-: al_toggle_display_flag  al_set_display_flag ;
 function: al_get_display_width ( display -- w )
 function: al_get_display_height ( display -- h )
 

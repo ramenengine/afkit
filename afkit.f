@@ -44,7 +44,6 @@ variable fs    \  enables fullscreen when on
 [defined] initial-scale [if] initial-scale [else] 1 [then] value #globalscale
 [undefined] initial-res [if]  : initial-res  640 480 ;  [then]
 [undefined] initial-pos [if]  : initial-pos  0 0 ;  [then]
-create native  /ALLEGRO_DISPLAY_MODE /allot
 create res  initial-res swap , ,
 defer >ide
 _AL_MAX_JOYSTICK_STICKS constant MAX_STICKS
@@ -56,51 +55,85 @@ create kblast  /kstates /allot  \ last frame's state
 create penx  0 ,  here 0 ,  constant peny
 0 value oldblender
 0 value currentblender
+0 constant FLIP_NONE
+1 constant FLIP_H
+2 constant FLIP_V
+3 constant FLIP_HV
 
 \ --------------------------------------------------------------------------------------------------
 \ Initializing Allegro and creating the display window
-\   need only one for now
-\   simplified to sidestep degenerative stalling bug
-\   derived from Bubble
 
-include afkit/al.f
+: init-allegro-all
+  al_init
+    not if  s" Couldn't initialize Allegro." alert     -1 abort then
+  al_init_image_addon
+    not if  s" Allegro: Couldn't initialize image addon." alert      -1 abort then
+  al_init_primitives_addon
+    not if  s" Allegro: Couldn't initialize primitives addon." alert -1 abort then
+  al_init_font_addon
+    not if  s" Allegro: Couldn't initialize font addon." alert       -1 abort then
+  al_init_ttf_addon
+    not if  s" Allegro: Couldn't initialize TTF addon." alert       -1 abort then
+  al_install_mouse
+    not if  s" Allegro: Couldn't initialize mouse." alert            -1 abort then
+  al_install_keyboard
+    not if  s" Allegro: Couldn't initialize keyboard." alert         -1 abort then
+  al_install_joystick
+    not if  s" Allegro: Couldn't initialize joystick." alert         -1 abort then
+;
+
+create native  /ALLEGRO_MONITOR_INFO /allot
+: nativewh  ( - w h )  native 2 cells + 2@ native 2@ 2- ;
+: nativew  ( - n ) nativewh drop ;
+: nativeh  ( - n ) nativewh nip ;
+
+\ ------------------------------------ initializing the display ------------------------------------
+
+: windowed
+    fs off
+    ALLEGRO_WINDOWED
+    ALLEGRO_RESIZABLE or
+    ALLEGRO_OPENGL or
+    al_set_new_display_flags ;
+windowed
+
+: fullscreen
+    fs on
+    ALLEGRO_FULLSCREEN_WINDOW
+    ALLEGRO_OPENGL or
+    al_set_new_display_flags ;
 
 : assertAllegro ( - ) 
     allegro? ?exit   true to allegro?  init-allegro-all
-    initaudio
-;
+    0 native al_get_monitor_info 0= abort" Couldn't get monitor info; try replugging the monitor or restarting"
+    [defined] allegro-audio [if]  initaudio  [then]
+; 
 
-assertAllegro
-
-\ Native and Display Resolutions
-al_get_num_display_modes 1 -  native  al_get_display_mode
 : xy@ ( adr - x y )  dup @ swap cell+ @ ;
 : x@ ( adr - x ) xy@ drop ;
 : y@ ( adr - y ) xy@ nip ;
+
 : displayw  ( - n ) display al_get_display_width ;
 : displayh  ( - n ) display al_get_display_height ;
 : displaywh ( - w h ) displayw displayh ;
 
-\ ------------------------------------ initializing the display ------------------------------------
-
-: initDisplay  ( w h - )
+: init-display  ( w h - )
     locals| h w |
-    
     assertAllegro
-    
+
     ALLEGRO_DEPTH_SIZE #24 ALLEGRO_SUGGEST  al_set_new_display_option
     ALLEGRO_VSYNC 1 ALLEGRO_SUGGEST  al_set_new_display_option
-    allegro-display-flags al_set_new_display_flags
 
     [defined] dev [if]
-        \ top left corner:
-        initial-pos 40 + al_set_new_window_position
-            w h al_create_display  to display    
-        display initial-pos al_set_window_position
+        fs @ if  0 0  else  initial-pos 40 +  then  al_set_new_window_position
+        w h al_create_display  to display    
+        fs @ 0= if   display initial-pos al_set_window_position  then
     [else]
         \ centered:
-        native x@ 2 / w 2 / - native y@ 2 / h 2 / - 40 - al_set_new_window_position
-            w h al_create_display  to display    
+        fs @ if  0 0 al_set_new_window_position  else  
+            nativew 2 / w 2 / - nativeh 2 / h 2 / - 40 - al_set_new_window_position
+        then
+        w h al_create_display  to display    
     [then]
     
     display al_get_display_refresh_rate dup 0= if drop 60 then to fps
@@ -118,8 +151,8 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
 ;
 
 : valid?  ( adr - flag ) ['] @ catch nip 0 = ;
-: scaled-res  ( - w h ) res xy@ #globalscale * swap #globalscale * swap ;
-: +display  ( - ) display valid? ?exit  scaled-res initDisplay ;
+: scaled-res  ( - w h ) res x@ #globalscale * res y@ #globalscale * ;
+: +display  ( - ) display valid? ?exit  scaled-res init-display ;
 : -display  ( - ) display valid? -exit
     display al_destroy_display  0 to display
     eventq al_destroy_event_queue  0 to eventq ;
@@ -142,28 +175,34 @@ al_get_num_display_modes 1 -  native  al_get_display_mode
         _disp @ swap XRaiseWindow
         _disp @ 0 XSync ;
 
-    : >display ( - ) display al_get_x_window_id focus ;
+    : >display ( - )
+        display al_get_x_window_id focus ;
 [else]
     : btf  ( winapi-window - )
-      dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
-    : >display  ( - )  display al_get_win_window_handle btf ;
+        dup 1 ShowWindow drop  dup BringWindowToTop drop  SetForegroundWindow drop ;
+    : >display  ( - )
+        display al_get_win_window_handle btf ;
 [then]
 
-:noname [ is >ide ]  ( - )  HWND btf ;
+:make >ide HWND btf ;
 >ide
 
 \ ----------------------------------------------- keyboard -----------------------------------------
+
 : pollKB  ( - )
-  kbstate kblast /ALLEGRO_KEYBOARD_STATE move
-  kbstate al_get_keyboard_state ;
+    kbstate kblast /ALLEGRO_KEYBOARD_STATE move
+    kbstate al_get_keyboard_state ;
+
 : clearkb  ( - )
-  kblast /kstates erase
-  kbstate /kstates erase ;
+    kblast /kstates erase
+    kbstate /kstates erase ;
+
 : resetkb  ( - )
-  clearkb
-  al_uninstall_keyboard
-  al_install_keyboard  not abort" Error re-establishing the keyboard :/"
-  eventq  al_get_keyboard_event_source al_register_event_source ;
+    clearkb
+    al_uninstall_keyboard
+    al_install_keyboard  not abort" Error re-establishing the keyboard :/"
+    eventq  al_get_keyboard_event_source al_register_event_source ;
+
 \ ----------------------------------------- end keyboard -------------------------------------------
 \ ----------------------------------------- joysticks ----------------------------------------------
 \ NTS: we don't handle connecting/disconnecting devices yet,
@@ -228,8 +267,9 @@ using internal
 : -state  ( - ) -1 >state +!  (state) al_restore_state ;
 previous
 
+windowed  +display 
 \ --------------------------------------------------------------------------------------------------
 include afkit/piston.f
 \ --------------------------------------------------------------------------------------------------
-+display
+
 >ide
