@@ -159,17 +159,18 @@ variable newfs
 : ?fs ( - )
     ?poswin
     fs @ newfs @ = ?exit
-    -display
     fs @ 0= if
         #lastscale to #globalscale
-    \    display scaled-res al_resize_display drop
-        windowed +display
-    else
-        \ display #1920 #1080 al_resize_display drop
-        fullscreen +display
     then
     
-    \ display ALLEGRO_FULLSCREEN_WINDOW fs @ #1 and al_set_display_flag drop
+    display ALLEGRO_FULLSCREEN_WINDOW fs @ #1 and al_set_display_flag 0= if
+        -display
+        fs @ 0= if
+            windowed +display
+        else
+            fullscreen +display
+        then
+    then
     
     fs @ newfs !
     fs @ if
