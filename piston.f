@@ -3,10 +3,9 @@
 \  The previous version tried to have frameskipping and framepacing, but it became choppy after
 \    an hour or two running and I couldn't figure out the cause.
 \  The loop has some common controls:
-\    F12 - break the loop
+\    ALT-F12 - break the loop
 \    ALT-F4 - quit the process
 \    ALT-ENTER - toggle fullscreen
-\    ALT-I - toggles a flag called INFO
 
 \ Values
 0 value now  \ in frames  ( read-only )
@@ -24,7 +23,6 @@
 0 value offsetTable
 
 \ Flags
-variable info  \ enables debugging mode display
 variable eco   \ enable to save CPU (for repl/editors etc)
 variable oscursor   oscursor on  \ turn off to hide the OS's mouse cursor
 variable repl   \ <>0 = repl active/visible
@@ -130,10 +128,7 @@ variable (catch)
             <rshift>  of  true to shift?  endof
             <enter>  of  alt? -exit  fs @ not fs ! endof
             <f4>     of  alt? -exit  bye  endof
-            [defined] dev [if]
-                <f12>    of  alt? -exit  break  endof  
-                <i>      of  alt? -exit  info @ not info !  endof
-            [then]
+            <f12>    of  alt? -exit  break  endof  
         endcase
     then
     etype ALLEGRO_EVENT_KEY_UP = if
