@@ -184,6 +184,8 @@ variable newfs
             4 min to #globalscale
     then
     FULLSCREEN_EVENT al-emit-user-event
+    
+    false to alt?
 ;
 
 : ?hidemouse  display oscursor @ if al_show_mouse_cursor else al_hide_mouse_cursor then ; 
