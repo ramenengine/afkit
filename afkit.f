@@ -3,10 +3,14 @@ include afkit/ans/version.f
 
 \ Load external libraries
 [undefined] EXTERNALS_LOADED [if]  \ ensure that external libs are only ever loaded once.
-    s" kitconfig.f" file-exists [if]
-        include kitconfig.f
+    s" \kitconfig.f" file-exists [if]
+        include \kitconfig.f
     [else]
+      s" kitconfig.f" file-exists [if]
+        include kitconfig.f
+      [else]
         s" Missing kitconfig.f!!! " type QUIT
+      [then]
     [then]
     include afkit/platforms.f
 
