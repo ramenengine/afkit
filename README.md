@@ -1,6 +1,6 @@
 # README
 
-AllegroForthKit \(aka AFKit\) is a framework for making games \(and other apps\) in standard Forth using [Allegro 5](www.liballeg.org).
+AllegroForthKit \(aka AFKit\) is a framework for making games \(and other apps\) in standard Forth using [Allegro 5](http://www.liballeg.org).
 
 [Documentation on GitBook](https://rogerlevy.gitbook.io/afkit/v/docs/)
 
